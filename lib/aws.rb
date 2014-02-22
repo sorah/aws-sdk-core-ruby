@@ -15,6 +15,8 @@ module Aws
   autoload :PageableResponse, "#{SRC}/pageable_response"
   autoload :RequestHandler, "#{SRC}/request_handler"
   autoload :ResponseHandler, "#{SRC}/response_handler"
+  autoload :Resource, "#{SRC}/resource"
+  autoload :Resources, "#{SRC}/resources"
   autoload :Service, "#{SRC}/service"
   autoload :Structure, "#{SRC}/structure"
   autoload :TimestampFormatter, "#{SRC}/timestamp_formatter"
