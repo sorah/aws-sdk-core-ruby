@@ -1,0 +1,148 @@
+{
+  "resources": {
+    "Group": {
+      "shape": "Group",
+      "identifiers": ["Name"],
+      "load": {
+        "request": {
+          "operation": "GetGroup",
+          "params": [
+            { "target":"GroupName", "sourceType":"identifier", "source":"Name" }
+          ]
+        },
+        "shapePath": "Group"
+      },
+      "create": {
+        "request": { "operation": "CreateGroup" },
+        "resource": {
+          "identifiers": [
+            { "target":"Name", "sourceType":"requestParameter", "source":"GroupName" }
+          ],
+          "shapePath": "Group"
+        }
+      },
+      "enumerate": {
+        "request": { "operation": "ListGroups" },
+        "resource": {
+          "identifiers": [
+            { "target":"Name", "sourceType":"responsePath", "source":"Groups[].GroupName" }
+          ],
+          "shapePath": "Groups[]"
+        }
+      },
+      "actions": {
+        "AddUser": {
+          "request": {
+            "operation": "AddUserToGroup",
+            "params": [
+              { "target":"GroupName", "sourceType":"identifier", "source":"Name" }
+            ]
+          }
+        },
+        "Create": {
+          "request": {
+            "operation": "CreateGroup",
+            "params": [
+              { "target":"GroupName", "sourceType":"identifier", "source":"Name" }
+            ]
+          }
+        },
+        "Delete": {
+          "request": {
+            "operation": "DeleteGroup",
+            "params": [
+              { "target":"GroupName", "sourceType":"identifier", "source":"Name" }
+            ]
+          }
+        }
+      },
+      "associations": [
+        {
+          "hasMany": "User",
+          "enumerate": {
+            "request": {
+              "operation": "GetGroup",
+              "params": [
+                { "target":"GroupName", "sourceType":"identifier", "source":"Name" }
+              ]
+            },
+            "resource": {
+              "identifiers": [
+                { "target":"Name", "sourceType":"responsePath", "source":"Users[].UserName" }
+              ],
+              "shapePath": "Users[]"
+            }
+          }
+        }
+      ]
+    },
+    "User": {
+      "shape": "User",
+      "identifiers": ["Name"],
+      "load": {
+        "request": {
+          "operation": "GetUser",
+          "params": [
+            { "target":"UserName", "sourceType":"identifier", "source":"Name" }
+          ]
+        },
+        "shapePath": "User"
+      },
+      "create": {
+        "request": { "operation": "CreateUser" },
+        "resource": {
+          "identifiers": [
+            { "target":"Name", "sourceType":"requestParameter", "source":"UserName" }
+          ],
+          "shapePath": "User"
+        }
+      },
+      "enumerate": {
+        "request": { "operation": "ListUsers" },
+        "resource": {
+          "identifiers": [
+            { "target":"Name", "sourceType":"responsePath", "source":"Users[].UserName" }
+          ],
+          "shapePath": "Users[]"
+        }
+      },
+      "actions": {
+        "AddGroup": {
+          "request": {
+            "operation": "AddUserToGroup",
+            "params": [
+              { "target":"UserName", "sourceType":"identifier", "source":"Name" }
+            ]
+          }
+        },
+        "Delete": {
+          "request": {
+            "operation": "DeleteUser",
+            "params": [
+              { "target":"UserName", "sourceType":"identifier", "source":"Name" }
+            ]
+          }
+        }
+      },
+      "associations": [
+        {
+          "hasMany": "Group",
+          "enumerate": {
+            "request": {
+              "operation": "ListGroupsForUser",
+              "params": [
+                { "target":"UserName", "sourceType":"identifier", "source":"Name" }
+              ]
+            },
+            "resource": {
+              "identifiers": [
+                { "target":"Name", "sourceType":"responsePath", "source":"Groups[].GroupName" }
+              ],
+              "shapePath": "Groups[]"
+            }
+          }
+        }
+      ]
+    }
+  }
+}
