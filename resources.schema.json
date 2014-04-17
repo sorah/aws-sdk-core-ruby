@@ -7,67 +7,51 @@
       "type": "object",
       "additionalProperties": {
         "type": "object",
-        "required": [
-          "shape",
-          "identifiers"
-        ],
+        "required": [],
         "additionalProperties": false,
         "properties": {
           "shape":        { "$ref": "#/definitions/ShapeName" },
           "identifiers":  { "$ref": "#/definitions/IdentifierList" },
-          "load":         { "$ref": "#/definitions/LoadOperation" },
-          "create":       { "$ref": "#/definitions/CreateOperation" },
-          "enumerate":    { "$ref": "#/definitions/EnumerateOperation" },
+          "load":         { "$ref": "#/definitions/DataOperation" },
           "actions":      { "$ref": "#/definitions/ActionMap" },
-          "associations": { "$ref": "#/definitions/AssociationMap" }
+          "hasOne":       { "$ref": "#/definitions/ReferenceMap" },
+          "hasSome":      { "$ref": "#/definitions/ReferenceMap" },
+          "hasMany":      { "$ref": "#/definitions/HasManyMap" }
         }
       }
     }
   },
   "definitions": {
     "Action": {
-      "type": "object",
-      "required": ["request"],
-      "additinalProperties": false,
-      "properties": {
-        "request": { "$ref": "#/definitions/Request" }
-      }
+      "oneOf": [
+        { "$ref": "#/definitions/Operation" },
+        { "$ref": "#/definitions/DataOperation" },
+        { "$ref": "#/definitions/ResourceOperation" }
+      ]
     },
     "ActionMap": {
       "type": "object",
       "additionalProperties": { "$ref": "#/definitions/Action" }
     },
-    "Association": {
-      "oneOf": [
-        { "$ref": "#/definitions/HasAssociation" },
-        { "$ref": "#/definitions/HasManyAssociation" }
-      ]
-    },
-    "AssociationMap": {
+    "DataOperation": {
       "type": "object",
-      "additionalProperties": { "$ref": "#/definitions/Association" }
-    },
-    "CreateOperation": { "$ref": "#/definitions/OperationWithResourceResponse" },
-    "EnumerateOperation": { "$ref": "#/definitions/OperationWithResourceResponse" },
-    "HasAssociation": {
-      "type": "object",
-      "required": ["has", "resource"],
+      "required": [
+        "request",
+        "path"
+      ],
       "additionalProperties": false,
       "properties": {
-        "has": { "$ref": "#/definitions/ResourceName" },
-        "resource": { "$ref": "#/definitions/ResourceReference" }
+        "request": { "$ref": "#/definitions/Request" },
+        "path": { "$ref": "#/definitions/JMESPathExpression" }
       }
     },
-    "HasManyAssociation": {
+    "HasManyMap": {
       "type": "object",
-      "required": ["hasMany", "enumerate"],
-      "additionalProperties": false,
-      "properties": {
-        "hasMany": { "$ref": "#/definitions/ResourceName" },
-        "create": { "$ref": "#/definitions/CreateOperation" },
-        "enumerate": { "$ref": "#/definitions/EnumerateOperation" },
-        "resource": { "$ref": "#/definitions/ResourceReference" }
-      }
+      "additionalProperties": { "$ref": "#/definitions/ResourceOperation" }
+    },
+    "JMESPathExpression": {
+      "type": "string",
+      "minLength": 1
     },
     "IdentifierList": {
       "type": "array",
@@ -76,34 +60,18 @@
       "items": { "$ref": "#/definitions/IdentifierName" }
     },
     "IdentifierName": { "$ref": "#/definitions/UpperCamelCaseString" },
-    "LoadOperation": {
+    "Operation": {
       "type": "object",
-      "required": [
-        "request",
-        "shapePath"
-      ],
+      "required": ["request"],
       "additionalProperties": false,
       "properties": {
-        "request": { "$ref": "#/definitions/Request" },
-        "shapePath": { "$ref": "#/definitions/ShapePath" }
+        "request": { "$ref": "#/definitions/Request" }
       }
     },
     "OperationName": { "$ref": "#/definitions/UpperCamelCaseString" },
-    "OperationWithResourceResponse": {
+    "ReferenceMap": {
       "type": "object",
-      "required": [
-        "request",
-        "resource"
-      ],
-      "additionalProperties": false,
-      "properties": {
-        "request": { "$ref": "#/definitions/Request" },
-        "resource": { "$ref": "#/definitions/ResourceReference" }
-      }
-    },
-    "JAMESPathExpression": {
-      "type": "string",
-      "minLength": 1
+      "additionalProperties": { "$ref": "#/definitions/ResourceReference" }
     },
     "Request": {
       "type": "object",
@@ -113,6 +81,29 @@
         "operation": { "$ref": "#/definitions/OperationName" },
         "params":  { "$ref": "#/definitions/RequestParamList" }
       }
+    },
+    "RequestParam": {
+      "type": "object",
+      "required": [
+        "target",
+        "sourceType",
+        "source"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "target": { "type": "string" },
+        "sourceType": {
+          "type": "string",
+          "enum": ["identifier", "dataMember", "string", "integer"]
+        },
+        "source": { "type": "string" }
+      }
+    },
+    "RequestParamList": {
+      "type": "array",
+      "minItems": 1,
+      "additionalItems": false,
+      "items": { "$ref": "#/definitions/RequestParam" }
     },
     "ResourceIdentifier": {
       "type": "object",
@@ -143,40 +134,50 @@
       "items": { "$ref": "#/definitions/ResourceIdentifier" }
     },
     "ResourceName": { "$ref": "#/definitions/UpperCamelCaseString" },
-    "RequestParam": {
+    "ResourceOperation": {
       "type": "object",
       "required": [
-        "target",
-        "sourceType",
-        "source"
+        "request",
+        "resource"
       ],
       "additionalProperties": false,
       "properties": {
-        "target": { "type": "string" },
-        "sourceType": {
-          "type": "string",
-          "enum": ["identifier", "dataMember", "string", "integer"]
-        },
-        "source": { "type": "string" }
+        "request": { "$ref": "#/definitions/Request" },
+        "resource": { "$ref": "#/definitions/ResourceReference" }
       }
     },
-    "RequestParamList": {
-      "type": "array",
-      "minItems": 1,
-      "additionalItems": false,
-      "items": { "$ref": "#/definitions/RequestParam" }
-    },
     "ResourceReference": {
+      "type": "object",
+      "required": ["type", "identifiers"],
+      "additionalProperties": false,
+      "properties": {
+        "type": { "$ref": "#/definitions/ResourceName" },
+        "identifiers": { "$ref": "#/definitions/ResourceIdentifierList" },
+        "path": { "$ref": "#/definitions/JMESPathExpression" }
+      }
+    },
+    "ResourceTypeReference": {
       "type": "object",
       "required": ["identifiers"],
       "additionalProperties": false,
       "properties": {
         "identifiers": { "$ref": "#/definitions/ResourceIdentifierList" },
-        "shapePath":  { "$ref": "#/definitions/ShapePath" }
+        "path": { "$ref": "#/definitions/JMESPathExpression" }
+      }
+    },
+    "ResourceTypeOperation": {
+      "type": "object",
+      "required": [
+        "request",
+        "resource"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "request": { "$ref": "#/definitions/Request" },
+        "resource": { "$ref": "#/definitions/ResourceTypeReference" }
       }
     },
     "ShapeName": { "$ref": "#/definitions/UpperCamelCaseString" },
-    "ShapePath": { "$ref": "#/definitions/JAMESPathExpression" },
     "UpperCamelCaseString": {
       "type": "string",
       "minLength": 1,
