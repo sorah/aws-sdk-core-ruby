@@ -1,8 +1,14 @@
 {
   "type": "object",
-  "required": ["resources"],
+  "required": ["service","resources"],
   "additionalProperties": false,
   "properties": {
+    "service": {
+      "actions": { "$ref": "#/definitions/ActionMap" },
+      "hasMany": { "$ref": "#/definitions/HasManyMap" },
+      "hasSome": { "$ref": "#/definitions/HasSomeMap" },
+      "hasOne":  { "$ref": "#/definitions/HasOneMap" }
+    },
     "resources": {
       "type": "object",
       "additionalProperties": {
@@ -10,13 +16,13 @@
         "required": [],
         "additionalProperties": false,
         "properties": {
-          "shape":        { "$ref": "#/definitions/ShapeName" },
-          "identifiers":  { "$ref": "#/definitions/IdentifierList" },
-          "load":         { "$ref": "#/definitions/DataOperation" },
-          "actions":      { "$ref": "#/definitions/ActionMap" },
-          "hasOne":       { "$ref": "#/definitions/ReferenceMap" },
-          "hasSome":      { "$ref": "#/definitions/ReferenceMap" },
-          "hasMany":      { "$ref": "#/definitions/HasManyMap" }
+          "shape":       { "$ref": "#/definitions/ShapeName" },
+          "identifiers": { "$ref": "#/definitions/IdentifierList" },
+          "load":        { "$ref": "#/definitions/DataOperation" },
+          "actions":     { "$ref": "#/definitions/ActionMap" },
+          "hasMany":     { "$ref": "#/definitions/HasManyMap" },
+          "hasSome":     { "$ref": "#/definitions/HasSomeMap" },
+          "hasOne":      { "$ref": "#/definitions/HasOneMap" }
         }
       }
     }
@@ -45,9 +51,51 @@
         "path": { "$ref": "#/definitions/JMESPathExpression" }
       }
     },
+    "HasManyDefinition": {
+      "type": "object",
+      "required": [
+        "request",
+        "resource",
+        "singularName"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "request": { "$ref": "#/definitions/Request" },
+        "resource": { "$ref": "#/definitions/ResourceReference" },
+        "singularName": { "$ref": "#/definitions/UpperCamelCaseString" }
+      }
+    },
     "HasManyMap": {
       "type": "object",
-      "additionalProperties": { "$ref": "#/definitions/ResourceOperation" }
+      "additionalProperties": { "$ref": "#/definitions/HasManyDefinition" }
+    },
+    "HasOneDefinition": {
+      "type": "object",
+      "required": ["resource"],
+      "additionalProperties": false,
+      "properties": {
+        "resource": { "$ref": "#/definitions/ResourceReference" }
+      }
+    },
+    "HasOneMap": {
+      "type": "object",
+      "additionalProperties": { "$ref": "#/definitions/HasOneDefinition" }
+    },
+    "HasSomeDefinition": {
+      "type": "object",
+      "required": [
+        "resource",
+        "singularName"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "resource": { "$ref": "#/definitions/ResourceReference" },
+        "singularName": { "$ref": "#/definitions/UpperCamelCaseString" }
+      }
+    },
+    "HasSomeMap": {
+      "type": "object",
+      "additionalProperties": { "$ref": "#/definitions/HasSomeDefinition" }
     },
     "JMESPathExpression": {
       "type": "string",
@@ -69,10 +117,6 @@
       }
     },
     "OperationName": { "$ref": "#/definitions/UpperCamelCaseString" },
-    "ReferenceMap": {
-      "type": "object",
-      "additionalProperties": { "$ref": "#/definitions/ResourceReference" }
-    },
     "Request": {
       "type": "object",
       "required": ["operation"],
@@ -154,27 +198,6 @@
         "type": { "$ref": "#/definitions/ResourceName" },
         "identifiers": { "$ref": "#/definitions/ResourceIdentifierList" },
         "path": { "$ref": "#/definitions/JMESPathExpression" }
-      }
-    },
-    "ResourceTypeReference": {
-      "type": "object",
-      "required": ["identifiers"],
-      "additionalProperties": false,
-      "properties": {
-        "identifiers": { "$ref": "#/definitions/ResourceIdentifierList" },
-        "path": { "$ref": "#/definitions/JMESPathExpression" }
-      }
-    },
-    "ResourceTypeOperation": {
-      "type": "object",
-      "required": [
-        "request",
-        "resource"
-      ],
-      "additionalProperties": false,
-      "properties": {
-        "request": { "$ref": "#/definitions/Request" },
-        "resource": { "$ref": "#/definitions/ResourceTypeReference" }
       }
     },
     "ShapeName": { "$ref": "#/definitions/UpperCamelCaseString" },
