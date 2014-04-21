@@ -1,0 +1,91 @@
+{
+  "resources" : {
+    "Topic" : {
+      "shape": "Topic",
+      "identifiers": ["Arn"],
+      "create": {
+        "request": { "operation":"CreateTopic" },
+        "resource": {
+          "identifiers": [
+            { "target":"Arn", "sourceType":"responsePath", "source":"TopicArn" }
+          ]
+        }
+      },
+      "enumerate": {
+        "request": { "operation": "ListTopics" },
+        "resource": {
+          "identifiers": [
+            { "target":"Arn", "sourceType":"responsePath", "source":"Topics[].TopicArn" }
+          ]
+        }
+      },
+      "actions": {
+        "Delete": {
+          "request": {
+            "operation": "DeleteTopic",
+            "params": [
+              { "target":"TopicArn", "sourceType":"identifier", "source":"Arn" }
+            ]
+          }
+        }
+      },
+      "associations": {
+        "Subscriptions": {
+          "hasMany": "Subscription",
+          "create": {
+            "request": {
+              "operation": "Subscribe",
+              "params": [
+                { "target":"TopicArn", "sourceType":"identifier", "source":"Arn" }
+              ]
+            },
+            "resource": {
+              "identifiers": [
+                { "target":"TopicArn", "sourceType":"identifier", "source":"Arn" },
+                { "target":"Arn", "sourceType":"responsePath", "source":"SubscriptionArn"}
+              ]
+            }
+          },
+          "enumerate": {
+            "request": {
+              "operation": "ListSubscriptionsByTopic",
+              "params": [
+                { "target":"TopicArn", "sourceType":"identifier", "source":"Arn" }
+              ]
+            },
+            "resource": {
+              "identifiers": [
+                { "target":"TopicArn", "sourceType":"identifier", "source":"Arn" },
+                { "target":"Arn", "sourceType":"responsePath", "source":"Subscriptions[].SubscriptionArn"}
+              ]
+            }
+          }
+        }
+      }
+    },
+    "Subscription": {
+      "shape": "Subscription",
+      "identifiers": ["TopicArn", "Arn"],
+      "actions": {
+        "Delete": {
+          "request": {
+            "operation": "Unsubscribe",
+            "params": [
+              { "target":"SubscriptionArn", "sourceType":"identifier", "source":"Arn" }
+            ]
+          }
+        }
+      },
+      "associations": {
+        "Topic": {
+          "has": "Topic",
+          "resource": {
+            "identifiers": [
+              { "target":"Arn", "sourceType":"identifier", "source":"TopicArn" }
+            ]
+          }
+        }
+      }
+    }
+  }
+}

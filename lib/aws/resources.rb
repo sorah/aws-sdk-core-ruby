@@ -10,6 +10,7 @@ module Aws
     DEFINITION_PATHS = {
       S3: 'apis/source/s3-2006-03-01.resources.json',
       IAM: 'apis/source/iam-2010-05-08.resources.json',
+      SNS: 'apis/source/sns-2010-03-31.resources.json',
     }
     private_constant :DEFINITION_PATHS
 
