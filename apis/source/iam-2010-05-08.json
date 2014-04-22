@@ -867,44 +867,44 @@
         "documentation": "\n\t\t<p>Contains the result of a successful invocation of the <a>CreateRole</a> action.</p>\n\t"
       },
       "errors": [
-        {
-          "shape_name": "LimitExceededException",
-          "type": "structure",
-          "members": {
-            "message": {
-              "shape_name": "limitExceededMessage",
-              "type": "string",
-              "documentation": " "
-            }
-          },
-          "documentation": "\n\t\t<p>The request was rejected because it attempted to create resources beyond the current AWS\n\t\t\taccount limits. The error message describes the limit exceeded.</p>\n\t"
+      {
+        "shape_name": "LimitExceededException",
+        "type": "structure",
+        "members": {
+          "message": {
+            "shape_name": "limitExceededMessage",
+            "type": "string",
+            "documentation": " "
+          }
         },
-        {
-          "shape_name": "EntityAlreadyExistsException",
-          "type": "structure",
-          "members": {
-            "message": {
-              "shape_name": "entityAlreadyExistsMessage",
-              "type": "string",
-              "documentation": " "
-            }
-          },
-          "documentation": "\n\t\t<p>The request was rejected because it attempted to create a resource that already exists.</p>\n\t"
+        "documentation": "\n\t\t<p>The request was rejected because it attempted to create resources beyond the current AWS\n\t\t\taccount limits. The error message describes the limit exceeded.</p>\n\t"
+      },
+      {
+        "shape_name": "EntityAlreadyExistsException",
+        "type": "structure",
+        "members": {
+          "message": {
+            "shape_name": "entityAlreadyExistsMessage",
+            "type": "string",
+            "documentation": " "
+          }
         },
-        {
-          "shape_name": "MalformedPolicyDocumentException",
-          "type": "structure",
-          "members": {
-            "message": {
-              "shape_name": "malformedPolicyDocumentMessage",
-              "type": "string",
-              "documentation": " "
-            }
-          },
-          "documentation": "\n\t\t<p>The request was rejected because the policy document was malformed. The error message\n\t\t\tdescribes the specific error.</p>\n\t"
-        }
+        "documentation": "\n\t\t<p>The request was rejected because it attempted to create a resource that already exists.</p>\n\t"
+      },
+      {
+        "shape_name": "MalformedPolicyDocumentException",
+        "type": "structure",
+        "members": {
+          "message": {
+            "shape_name": "malformedPolicyDocumentMessage",
+            "type": "string",
+            "documentation": " "
+          }
+        },
+        "documentation": "\n\t\t<p>The request was rejected because the policy document was malformed. The error message\n\t\t\tdescribes the specific error.</p>\n\t"
+      }
       ],
-      "documentation": "\n\t\t<p>Creates a new role for your AWS account. For more information about roles, go to <a href=\"http://docs.aws.amazon.com/IAM/latest/UserGuide/WorkingWithRoles.html\">Working with Roles</a>.\n\t\t\tFor information about limitations on role names and the number of roles you can create, go to\n\t\t\t\t<a href=\"http://docs.aws.amazon.com/IAM/latest/UserGuide/index.html?LimitationsOnEntities.html\" target=\"_blank\">Limitations on IAM Entities</a> in <i>Using AWS Identity and Access\n\t\t\t\tManagement</i>.</p>\n\t\t<p>The policy grants permission to an EC2 instance to assume the role. The policy is URL-encoded\n\t\t\taccording to RFC 3986. For more information about RFC 3986, go to <a href=\"http://www.faqs.org/rfcs/rfc3986.html\">http://www.faqs.org/rfcs/rfc3986.html</a>.\n\t\t\tCurrently, only EC2 instances can assume roles.</p>\n\t\t<examples>\n\t\t\t<queryrequest>\nhttps://iam.amazonaws.com/\n?Action=CreateRole\n&RoleName=S3Access\n&Path=/application_abc/component_xyz/\n&AssumeRolePolicyDocument={\"Version\":\"2012-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\"Principal\":{\"Service\":[\"ec2.amazonaws.com\"]},\"Action\":[\"sts:AssumeRole\"]}]}\n&Version=2010-05-08\n&AUTHPARAMS\n\t\t\t</queryrequest>\n\t\t\t<queryresponse>\n<CreateRoleResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n  <CreateRoleResult>\n    <Role>\n      <Path>/application_abc/component_xyz/</Path>\n      <Arn>arn:aws:iam::123456789012:role/application_abc/component_xyz/S3Access</Arn>\n      <RoleName>S3Access</RoleName>\n      <AssumeRolePolicyDocument>{\"Version\":\"2012-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\"Principal\":{\"Service\":[\"ec2.amazonaws.com\"]},\"Action\":[\"sts:AssumeRole\"]}]}</AssumeRolePolicyDocument>\n      <CreateDate>2012-05-08T23:34:01.495Z</CreateDate>\n      <RoleId>AROADBQP57FF2AEXAMPLE</RoleId>\n    </Role>\n  </CreateRoleResult>\n  <ResponseMetadata>\n    <RequestId>4a93ceee-9966-11e1-b624-b1aEXAMPLE7c</RequestId>\n  </ResponseMetadata>\n</CreateRoleResponse>\n      </queryresponse>\n\t\t</examples>\n\t"
+        "documentation": "\n\t\t<p>Creates a new role for your AWS account. For more information about roles, go to <a href=\"http://docs.aws.amazon.com/IAM/latest/UserGuide/WorkingWithRoles.html\">Working with Roles</a>.\n\t\t\tFor information about limitations on role names and the number of roles you can create, go to\n\t\t\t\t<a href=\"http://docs.aws.amazon.com/IAM/latest/UserGuide/index.html?LimitationsOnEntities.html\" target=\"_blank\">Limitations on IAM Entities</a> in <i>Using AWS Identity and Access\n\t\t\t\tManagement</i>.</p>\n\t\t<p>The policy grants permission to an EC2 instance to assume the role. The policy is URL-encoded\n\t\t\taccording to RFC 3986. For more information about RFC 3986, go to <a href=\"http://www.faqs.org/rfcs/rfc3986.html\">http://www.faqs.org/rfcs/rfc3986.html</a>.\n\t\t\tCurrently, only EC2 instances can assume roles.</p>\n\t\t<examples>\n\t\t\t<queryrequest>\nhttps://iam.amazonaws.com/\n?Action=CreateRole\n&RoleName=S3Access\n&Path=/application_abc/component_xyz/\n&AssumeRolePolicyDocument={\"Version\":\"2012-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\"Principal\":{\"Service\":[\"ec2.amazonaws.com\"]},\"Action\":[\"sts:AssumeRole\"]}]}\n&Version=2010-05-08\n&AUTHPARAMS\n\t\t\t</queryrequest>\n\t\t\t<queryresponse>\n<CreateRoleResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n  <CreateRoleResult>\n    <Role>\n      <Path>/application_abc/component_xyz/</Path>\n      <Arn>arn:aws:iam::123456789012:role/application_abc/component_xyz/S3Access</Arn>\n      <RoleName>S3Access</RoleName>\n      <AssumeRolePolicyDocument>{\"Version\":\"2012-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\"Principal\":{\"Service\":[\"ec2.amazonaws.com\"]},\"Action\":[\"sts:AssumeRole\"]}]}</AssumeRolePolicyDocument>\n      <CreateDate>2012-05-08T23:34:01.495Z</CreateDate>\n      <RoleId>AROADBQP57FF2AEXAMPLE</RoleId>\n    </Role>\n  </CreateRoleResult>\n  <ResponseMetadata>\n    <RequestId>4a93ceee-9966-11e1-b624-b1aEXAMPLE7c</RequestId>\n  </ResponseMetadata>\n</CreateRoleResponse>\n      </queryresponse>\n\t\t</examples>\n\t"
     },
     "CreateSAMLProvider": {
       "name": "CreateSAMLProvider",
@@ -947,44 +947,44 @@
         "documentation": "\n\t\t<p>Contains the result of a successful invocation of the <a>CreateSAMLProvider</a> action.</p>\n\t"
       },
       "errors": [
-        {
-          "shape_name": "InvalidInputException",
-          "type": "structure",
-          "members": {
-            "message": {
-              "shape_name": "invalidInputMessage",
-              "type": "string",
-              "documentation": null
-            }
-          },
-          "documentation": null
+      {
+        "shape_name": "InvalidInputException",
+        "type": "structure",
+        "members": {
+          "message": {
+            "shape_name": "invalidInputMessage",
+            "type": "string",
+            "documentation": null
+          }
         },
-        {
-          "shape_name": "EntityAlreadyExistsException",
-          "type": "structure",
-          "members": {
-            "message": {
-              "shape_name": "entityAlreadyExistsMessage",
-              "type": "string",
-              "documentation": " "
-            }
-          },
-          "documentation": "\n\t\t<p>The request was rejected because it attempted to create a resource that already exists.</p>\n\t"
+        "documentation": null
+      },
+      {
+        "shape_name": "EntityAlreadyExistsException",
+        "type": "structure",
+        "members": {
+          "message": {
+            "shape_name": "entityAlreadyExistsMessage",
+            "type": "string",
+            "documentation": " "
+          }
         },
-        {
-          "shape_name": "LimitExceededException",
-          "type": "structure",
-          "members": {
-            "message": {
-              "shape_name": "limitExceededMessage",
-              "type": "string",
-              "documentation": " "
-            }
-          },
-          "documentation": "\n\t\t<p>The request was rejected because it attempted to create resources beyond the current AWS\n\t\t\taccount limits. The error message describes the limit exceeded.</p>\n\t"
-        }
+        "documentation": "\n\t\t<p>The request was rejected because it attempted to create a resource that already exists.</p>\n\t"
+      },
+      {
+        "shape_name": "LimitExceededException",
+        "type": "structure",
+        "members": {
+          "message": {
+            "shape_name": "limitExceededMessage",
+            "type": "string",
+            "documentation": " "
+          }
+        },
+        "documentation": "\n\t\t<p>The request was rejected because it attempted to create resources beyond the current AWS\n\t\t\taccount limits. The error message describes the limit exceeded.</p>\n\t"
+      }
       ],
-      "documentation": "\n\t\t<p>Creates an IAM entity to describe an identity provider (IdP) that supports SAML 2.0.</p>\n\t\t<p>The SAML provider that you create with this operation can be used as a principal in a role's\n\t\t\ttrust policy to establish a trust relationship between AWS and a SAML identity provider. You\n\t\t\tcan create an IAM role that supports Web-based single sign-on (SSO) to the AWS Management Console or one\n\t\t\tthat supports API access to AWS. </p>\n\t\t\n\t\t<p>When you create the SAML provider, you upload an a SAML metadata document that you get from\n\t\t\tyour IdP and that includes the issuer's name, expiration information, and keys that can be\n\t\t\tused to validate the SAML authentication response (assertions) that are received from the IdP.\n\t\t\tYou must generate the metadata document using the identity management software that is used as\n\t\t\tyour organization's IdP. </p>\n\t\t\n\t\t<note>This operation requires <a href=\"http://docs.aws.amazon.com/general/latest/gr/signature-version-4.html\">Signature Version\n\t\t\t4</a>.</note>\n\t\t\n\t\t<p>For more information, see <a href=\"http://aws-docs-alpha.integ.amazon.com/STS/latest/UsingSTS/STSMgmtConsole-SAML.html\">Giving Console Access Using SAML</a> and <a href=\"http://aws-docs-alpha.integ.amazon.com/STS/latest/UsingSTS/CreatingSAML.html\">Creating\n\t\t\t\tTemporary Security Credentials for SAML Federation</a> in the <i>Using Temporary\n\t\t\t\tCredentials</i> guide. </p>\n\t\t<examples>\n\t\t\t<queryrequest>\nhttps://iam.amazonaws.com/\n?Action=CreateSAMLProvider\n&Name=MyUniversity\n&SAMLProviderDocument=VGhpcyBpcyB3aGVyZSB5b3UgcHV0IHRoZSBTQU1MIHByb3ZpZGVyIG1ldGFkYXRhIGRvY3VtZW50\nLCBCYXNlNjQtZW5jb2RlZCBpbnRvIGEgYmlnIHN0cmluZy4=\n&Version=2010-05-08\n&AUTHPARAMS\n      </queryrequest>\n\t\t\t<queryresponse>\n<CreateSAMLProviderResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n  <CreateSAMLProviderResult>\n    <SAMLProviderArn>arn:aws:iam::123456789012:saml-metadata/MyUniversity</SAMLProviderArn>\n  </CreateSAMLProviderResult>\n  <ResponseMetadata>\n    <RequestId>29f47818-99f5-11e1-a4c3-27EXAMPLE804</RequestId>\n  </ResponseMetadata>\n</CreateSAMLProviderResponse>\n      </queryresponse>\n\t\t</examples>\n\t"
+        "documentation": "\n\t\t<p>Creates an IAM entity to describe an identity provider (IdP) that supports SAML 2.0.</p>\n\t\t<p>The SAML provider that you create with this operation can be used as a principal in a role's\n\t\t\ttrust policy to establish a trust relationship between AWS and a SAML identity provider. You\n\t\t\tcan create an IAM role that supports Web-based single sign-on (SSO) to the AWS Management Console or one\n\t\t\tthat supports API access to AWS. </p>\n\t\t\n\t\t<p>When you create the SAML provider, you upload an a SAML metadata document that you get from\n\t\t\tyour IdP and that includes the issuer's name, expiration information, and keys that can be\n\t\t\tused to validate the SAML authentication response (assertions) that are received from the IdP.\n\t\t\tYou must generate the metadata document using the identity management software that is used as\n\t\t\tyour organization's IdP. </p>\n\t\t\n\t\t<note>This operation requires <a href=\"http://docs.aws.amazon.com/general/latest/gr/signature-version-4.html\">Signature Version\n\t\t\t4</a>.</note>\n\t\t\n\t\t<p>For more information, see <a href=\"http://aws-docs-alpha.integ.amazon.com/STS/latest/UsingSTS/STSMgmtConsole-SAML.html\">Giving Console Access Using SAML</a> and <a href=\"http://aws-docs-alpha.integ.amazon.com/STS/latest/UsingSTS/CreatingSAML.html\">Creating\n\t\t\t\tTemporary Security Credentials for SAML Federation</a> in the <i>Using Temporary\n\t\t\t\tCredentials</i> guide. </p>\n\t\t<examples>\n\t\t\t<queryrequest>\nhttps://iam.amazonaws.com/\n?Action=CreateSAMLProvider\n&Name=MyUniversity\n&SAMLProviderDocument=VGhpcyBpcyB3aGVyZSB5b3UgcHV0IHRoZSBTQU1MIHByb3ZpZGVyIG1ldGFkYXRhIGRvY3VtZW50\nLCBCYXNlNjQtZW5jb2RlZCBpbnRvIGEgYmlnIHN0cmluZy4=\n&Version=2010-05-08\n&AUTHPARAMS\n      </queryrequest>\n\t\t\t<queryresponse>\n<CreateSAMLProviderResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n  <CreateSAMLProviderResult>\n    <SAMLProviderArn>arn:aws:iam::123456789012:saml-metadata/MyUniversity</SAMLProviderArn>\n  </CreateSAMLProviderResult>\n  <ResponseMetadata>\n    <RequestId>29f47818-99f5-11e1-a4c3-27EXAMPLE804</RequestId>\n  </ResponseMetadata>\n</CreateSAMLProviderResponse>\n      </queryresponse>\n\t\t</examples>\n\t"
     },
     "CreateUser": {
       "name": "CreateUser",
@@ -1068,44 +1068,44 @@
         "documentation": "\n\t\t<p>Contains the result of a successful invocation of the <a>CreateUser</a> action.</p>\n\t"
       },
       "errors": [
-        {
-          "shape_name": "LimitExceededException",
-          "type": "structure",
-          "members": {
-            "message": {
-              "shape_name": "limitExceededMessage",
-              "type": "string",
-              "documentation": " "
-            }
-          },
-          "documentation": "\n\t\t<p>The request was rejected because it attempted to create resources beyond the current AWS\n\t\t\taccount limits. The error message describes the limit exceeded.</p>\n\t"
+      {
+        "shape_name": "LimitExceededException",
+        "type": "structure",
+        "members": {
+          "message": {
+            "shape_name": "limitExceededMessage",
+            "type": "string",
+            "documentation": " "
+          }
         },
-        {
-          "shape_name": "EntityAlreadyExistsException",
-          "type": "structure",
-          "members": {
-            "message": {
-              "shape_name": "entityAlreadyExistsMessage",
-              "type": "string",
-              "documentation": " "
-            }
-          },
-          "documentation": "\n\t\t<p>The request was rejected because it attempted to create a resource that already exists.</p>\n\t"
+        "documentation": "\n\t\t<p>The request was rejected because it attempted to create resources beyond the current AWS\n\t\t\taccount limits. The error message describes the limit exceeded.</p>\n\t"
+      },
+      {
+        "shape_name": "EntityAlreadyExistsException",
+        "type": "structure",
+        "members": {
+          "message": {
+            "shape_name": "entityAlreadyExistsMessage",
+            "type": "string",
+            "documentation": " "
+          }
         },
-        {
-          "shape_name": "NoSuchEntityException",
-          "type": "structure",
-          "members": {
-            "message": {
-              "shape_name": "noSuchEntityMessage",
-              "type": "string",
-              "documentation": " "
-            }
-          },
-          "documentation": "\n\t\t<p>The request was rejected because it referenced an entity that does not exist. The error\n\t\t\tmessage describes the entity.</p>\n\t"
-        }
+        "documentation": "\n\t\t<p>The request was rejected because it attempted to create a resource that already exists.</p>\n\t"
+      },
+      {
+        "shape_name": "NoSuchEntityException",
+        "type": "structure",
+        "members": {
+          "message": {
+            "shape_name": "noSuchEntityMessage",
+            "type": "string",
+            "documentation": " "
+          }
+        },
+        "documentation": "\n\t\t<p>The request was rejected because it referenced an entity that does not exist. The error\n\t\t\tmessage describes the entity.</p>\n\t"
+      }
       ],
-      "documentation": "\n\t\t<p>Creates a new user for your AWS account.</p>\n\t\t<p>For information about limitations on the number of users you can create, see <a href=\"http://docs.aws.amazon.com/IAM/latest/UserGuide/index.html?LimitationsOnEntities.html\" target=\"_blank\">Limitations on IAM Entities</a> in <i>Using AWS Identity and Access\n\t\t\t\tManagement</i>.</p>\n\t\t<examples>\n\t\t\t<queryrequest>\nhttps://iam.amazonaws.com/\n?Action=CreateUser\n&Path=/division_abc/subdivision_xyz/\n&UserName=Bob\n&Version=2010-05-08\n&AUTHPARAMS\n\t\t\t</queryrequest>\n\t\t\t<queryresponse>\n<CreateUserResponse>\n   <CreateUserResult>\n      <User>\n         <Path>/division_abc/subdivision_xyz/</Path>\n         <UserName>Bob</UserName>\n         <UserId>AIDACKCEVSQ6C2EXAMPLE</UserId>\n         <Arn>arn:aws:iam::123456789012:user/division_abc/subdivision_xyz/Bob\n         </Arn>\n     </User>\n   </CreateUserResult>\n   <ResponseMetadata>\n      <RequestId>7a62c49f-347e-4fc4-9331-6e8eEXAMPLE</RequestId>\n   </ResponseMetadata>\n</CreateUserResponse>\n      </queryresponse>\n\t\t</examples>\n\t"
+        "documentation": "\n\t\t<p>Creates a new user for your AWS account.</p>\n\t\t<p>For information about limitations on the number of users you can create, see <a href=\"http://docs.aws.amazon.com/IAM/latest/UserGuide/index.html?LimitationsOnEntities.html\" target=\"_blank\">Limitations on IAM Entities</a> in <i>Using AWS Identity and Access\n\t\t\t\tManagement</i>.</p>\n\t\t<examples>\n\t\t\t<queryrequest>\nhttps://iam.amazonaws.com/\n?Action=CreateUser\n&Path=/division_abc/subdivision_xyz/\n&UserName=Bob\n&Version=2010-05-08\n&AUTHPARAMS\n\t\t\t</queryrequest>\n\t\t\t<queryresponse>\n<CreateUserResponse>\n   <CreateUserResult>\n      <User>\n         <Path>/division_abc/subdivision_xyz/</Path>\n         <UserName>Bob</UserName>\n         <UserId>AIDACKCEVSQ6C2EXAMPLE</UserId>\n         <Arn>arn:aws:iam::123456789012:user/division_abc/subdivision_xyz/Bob\n         </Arn>\n     </User>\n   </CreateUserResult>\n   <ResponseMetadata>\n      <RequestId>7a62c49f-347e-4fc4-9331-6e8eEXAMPLE</RequestId>\n   </ResponseMetadata>\n</CreateUserResponse>\n      </queryresponse>\n\t\t</examples>\n\t"
     },
     "CreateVirtualMFADevice": {
       "name": "CreateVirtualMFADevice",
@@ -1222,32 +1222,32 @@
         "documentation": "\n\t\t<p>Contains the result of a successful invocation of the <a>CreateVirtualMFADevice</a>\n\t\t\taction.</p>\n\t"
       },
       "errors": [
-        {
-          "shape_name": "LimitExceededException",
-          "type": "structure",
-          "members": {
-            "message": {
-              "shape_name": "limitExceededMessage",
-              "type": "string",
-              "documentation": " "
-            }
-          },
-          "documentation": "\n\t\t<p>The request was rejected because it attempted to create resources beyond the current AWS\n\t\t\taccount limits. The error message describes the limit exceeded.</p>\n\t"
+      {
+        "shape_name": "LimitExceededException",
+        "type": "structure",
+        "members": {
+          "message": {
+            "shape_name": "limitExceededMessage",
+            "type": "string",
+            "documentation": " "
+          }
         },
-        {
-          "shape_name": "EntityAlreadyExistsException",
-          "type": "structure",
-          "members": {
-            "message": {
-              "shape_name": "entityAlreadyExistsMessage",
-              "type": "string",
-              "documentation": " "
-            }
-          },
-          "documentation": "\n\t\t<p>The request was rejected because it attempted to create a resource that already exists.</p>\n\t"
-        }
+        "documentation": "\n\t\t<p>The request was rejected because it attempted to create resources beyond the current AWS\n\t\t\taccount limits. The error message describes the limit exceeded.</p>\n\t"
+      },
+      {
+        "shape_name": "EntityAlreadyExistsException",
+        "type": "structure",
+        "members": {
+          "message": {
+            "shape_name": "entityAlreadyExistsMessage",
+            "type": "string",
+            "documentation": " "
+          }
+        },
+        "documentation": "\n\t\t<p>The request was rejected because it attempted to create a resource that already exists.</p>\n\t"
+      }
       ],
-      "documentation": "\n\t\t<p>Creates a new virtual MFA device for the AWS account. After creating the virtual MFA, use <a href=\"http://docs.aws.amazon.com/IAM/latest/APIReference/API_EnableMFADevice.html\" target=\"_blank\">EnableMFADevice</a> to attach the MFA device to an IAM user. For more information about\n\t\t\tcreating and working with virtual MFA devices, go to <a href=\"http://docs.aws.amazon.com/IAM/latest/UserGuide/index.html?Using_VirtualMFA.html\" target=\"_blank\">Using a Virtual MFA Device</a> in <i>Using AWS Identity and Access Management</i>.</p>\n\t\t<p>For information about limits on the number of MFA devices you can create, see <a href=\"http://docs.aws.amazon.com/IAM/latest/UserGuide/index.html?LimitationsOnEntities.html\" target=\"_blank\">Limitations on Entities</a> in <i>Using AWS Identity and Access\n\t\t\t\tManagement</i>.</p>\n\t\t<important>The seed information contained in the QR code and the Base32 string should be treated\n\t\t\tlike any other secret access information, such as your AWS access keys or your passwords.\n\t\t\tAfter you provision your virtual device, you should ensure that the information is destroyed\n\t\t\tfollowing secure procedures.</important>\n\t\t<examples>\n\t\t\t<queryrequest>\nhttps://iam.amazonaws.com/\n?Action=CreateVirtualMFADevice\n&VirtualMFADeviceName=ExampleName\n&Path=/\n&Version=2010-05-08\n&AUTHPARAMS\n</queryrequest>\n\t\t\t<queryresponse>\n<CreateVirtualMFADeviceResponse>\n  <CreateVirtualMFADeviceResult>\n    <VirtualMFADevice>\n      <SerialNumber>arn:aws:iam::123456789012:mfa/ExampleName</SerialNumber>\n      <Base32StringSeed>2K5K5XTLA7GGE75TQLYEXAMPLEEXAMPLEEXAMPLECHDFW4KJYZ6\n      UFQ75LL7COCYKM</Base32StringSeed>\n      <QRCodePNG>89504E470D0A1A0AASDFAHSDFKJKLJFKALSDFJASDF</QRCodePNG> <!-- byte array of png file -->\n    </VirtualMFADevice>\n  </CreateVirtualMFADeviceResult>\n  <ResponseMetadata>\n    <RequestId>7a62c49f-347e-4fc4-9331-6e8eEXAMPLE</RequestId>\n  </ResponseMetadata>\n</CreateVirtualMFADeviceResponse>\n</queryresponse>\n\t\t</examples>\n\t"
+        "documentation": "\n\t\t<p>Creates a new virtual MFA device for the AWS account. After creating the virtual MFA, use <a href=\"http://docs.aws.amazon.com/IAM/latest/APIReference/API_EnableMFADevice.html\" target=\"_blank\">EnableMFADevice</a> to attach the MFA device to an IAM user. For more information about\n\t\t\tcreating and working with virtual MFA devices, go to <a href=\"http://docs.aws.amazon.com/IAM/latest/UserGuide/index.html?Using_VirtualMFA.html\" target=\"_blank\">Using a Virtual MFA Device</a> in <i>Using AWS Identity and Access Management</i>.</p>\n\t\t<p>For information about limits on the number of MFA devices you can create, see <a href=\"http://docs.aws.amazon.com/IAM/latest/UserGuide/index.html?LimitationsOnEntities.html\" target=\"_blank\">Limitations on Entities</a> in <i>Using AWS Identity and Access\n\t\t\t\tManagement</i>.</p>\n\t\t<important>The seed information contained in the QR code and the Base32 string should be treated\n\t\t\tlike any other secret access information, such as your AWS access keys or your passwords.\n\t\t\tAfter you provision your virtual device, you should ensure that the information is destroyed\n\t\t\tfollowing secure procedures.</important>\n\t\t<examples>\n\t\t\t<queryrequest>\nhttps://iam.amazonaws.com/\n?Action=CreateVirtualMFADevice\n&VirtualMFADeviceName=ExampleName\n&Path=/\n&Version=2010-05-08\n&AUTHPARAMS\n</queryrequest>\n\t\t\t<queryresponse>\n<CreateVirtualMFADeviceResponse>\n  <CreateVirtualMFADeviceResult>\n    <VirtualMFADevice>\n      <SerialNumber>arn:aws:iam::123456789012:mfa/ExampleName</SerialNumber>\n      <Base32StringSeed>2K5K5XTLA7GGE75TQLYEXAMPLEEXAMPLEEXAMPLECHDFW4KJYZ6\n      UFQ75LL7COCYKM</Base32StringSeed>\n      <QRCodePNG>89504E470D0A1A0AASDFAHSDFKJKLJFKALSDFJASDF</QRCodePNG> <!-- byte array of png file -->\n    </VirtualMFADevice>\n  </CreateVirtualMFADeviceResult>\n  <ResponseMetadata>\n    <RequestId>7a62c49f-347e-4fc4-9331-6e8eEXAMPLE</RequestId>\n  </ResponseMetadata>\n</CreateVirtualMFADeviceResponse>\n</queryresponse>\n\t\t</examples>\n\t"
     },
     "DeactivateMFADevice": {
       "name": "DeactivateMFADevice",
@@ -1278,44 +1278,44 @@
       },
       "output": null,
       "errors": [
-        {
-          "shape_name": "EntityTemporarilyUnmodifiableException",
-          "type": "structure",
-          "members": {
-            "message": {
-              "shape_name": "entityTemporarilyUnmodifiableMessage",
-              "type": "string",
-              "documentation": " "
-            }
-          },
-          "documentation": "\n\t\t<p>The request was rejected because it referenced an entity that is temporarily unmodifiable,\n\t\t\tsuch as a user name that was deleted and then recreated. The error indicates that the request\n\t\t\tis likely to succeed if you try again after waiting several minutes. The error message\n\t\t\tdescribes the entity.</p>\n\t"
+      {
+        "shape_name": "EntityTemporarilyUnmodifiableException",
+        "type": "structure",
+        "members": {
+          "message": {
+            "shape_name": "entityTemporarilyUnmodifiableMessage",
+            "type": "string",
+            "documentation": " "
+          }
         },
-        {
-          "shape_name": "NoSuchEntityException",
-          "type": "structure",
-          "members": {
-            "message": {
-              "shape_name": "noSuchEntityMessage",
-              "type": "string",
-              "documentation": " "
-            }
-          },
-          "documentation": "\n\t\t<p>The request was rejected because it referenced an entity that does not exist. The error\n\t\t\tmessage describes the entity.</p>\n\t"
+        "documentation": "\n\t\t<p>The request was rejected because it referenced an entity that is temporarily unmodifiable,\n\t\t\tsuch as a user name that was deleted and then recreated. The error indicates that the request\n\t\t\tis likely to succeed if you try again after waiting several minutes. The error message\n\t\t\tdescribes the entity.</p>\n\t"
+      },
+      {
+        "shape_name": "NoSuchEntityException",
+        "type": "structure",
+        "members": {
+          "message": {
+            "shape_name": "noSuchEntityMessage",
+            "type": "string",
+            "documentation": " "
+          }
         },
-        {
-          "shape_name": "LimitExceededException",
-          "type": "structure",
-          "members": {
-            "message": {
-              "shape_name": "limitExceededMessage",
-              "type": "string",
-              "documentation": " "
-            }
-          },
-          "documentation": "\n\t\t<p>The request was rejected because it attempted to create resources beyond the current AWS\n\t\t\taccount limits. The error message describes the limit exceeded.</p>\n\t"
-        }
+        "documentation": "\n\t\t<p>The request was rejected because it referenced an entity that does not exist. The error\n\t\t\tmessage describes the entity.</p>\n\t"
+      },
+      {
+        "shape_name": "LimitExceededException",
+        "type": "structure",
+        "members": {
+          "message": {
+            "shape_name": "limitExceededMessage",
+            "type": "string",
+            "documentation": " "
+          }
+        },
+        "documentation": "\n\t\t<p>The request was rejected because it attempted to create resources beyond the current AWS\n\t\t\taccount limits. The error message describes the limit exceeded.</p>\n\t"
+      }
       ],
-      "documentation": "\n\t\t<p>Deactivates the specified MFA device and removes it from association with the user name for\n\t\t\twhich it was originally enabled.</p>\n\t\t<examples>\n\t\t\t<queryrequest>\nhttps://iam.amazonaws.com/\n?Action=DeactivateMFADevice\n&UserName=Bob\n&SerialNumber=R1234\n&AUTHPARAMS\n      </queryrequest>\n\t\t\t<queryresponse>\n<DeactivateMFADeviceResponse>\n   <ResponseMetadata>\n      <RequestId>7a62c49f-347e-4fc4-9331-6e8eEXAMPLE</RequestId>\n   </ResponseMetadata>\n</DeactivateMFADeviceResponse>\n      </queryresponse>\n\t\t</examples>\n\t"
+        "documentation": "\n\t\t<p>Deactivates the specified MFA device and removes it from association with the user name for\n\t\t\twhich it was originally enabled.</p>\n\t\t<examples>\n\t\t\t<queryrequest>\nhttps://iam.amazonaws.com/\n?Action=DeactivateMFADevice\n&UserName=Bob\n&SerialNumber=R1234\n&AUTHPARAMS\n      </queryrequest>\n\t\t\t<queryresponse>\n<DeactivateMFADeviceResponse>\n   <ResponseMetadata>\n      <RequestId>7a62c49f-347e-4fc4-9331-6e8eEXAMPLE</RequestId>\n   </ResponseMetadata>\n</DeactivateMFADeviceResponse>\n      </queryresponse>\n\t\t</examples>\n\t"
     },
     "DeleteAccessKey": {
       "name": "DeleteAccessKey",
@@ -1345,32 +1345,32 @@
       },
       "output": null,
       "errors": [
-        {
-          "shape_name": "NoSuchEntityException",
-          "type": "structure",
-          "members": {
-            "message": {
-              "shape_name": "noSuchEntityMessage",
-              "type": "string",
-              "documentation": " "
-            }
-          },
-          "documentation": "\n\t\t<p>The request was rejected because it referenced an entity that does not exist. The error\n\t\t\tmessage describes the entity.</p>\n\t"
+      {
+        "shape_name": "NoSuchEntityException",
+        "type": "structure",
+        "members": {
+          "message": {
+            "shape_name": "noSuchEntityMessage",
+            "type": "string",
+            "documentation": " "
+          }
         },
-        {
-          "shape_name": "LimitExceededException",
-          "type": "structure",
-          "members": {
-            "message": {
-              "shape_name": "limitExceededMessage",
-              "type": "string",
-              "documentation": " "
-            }
-          },
-          "documentation": "\n\t\t<p>The request was rejected because it attempted to create resources beyond the current AWS\n\t\t\taccount limits. The error message describes the limit exceeded.</p>\n\t"
-        }
+        "documentation": "\n\t\t<p>The request was rejected because it referenced an entity that does not exist. The error\n\t\t\tmessage describes the entity.</p>\n\t"
+      },
+      {
+        "shape_name": "LimitExceededException",
+        "type": "structure",
+        "members": {
+          "message": {
+            "shape_name": "limitExceededMessage",
+            "type": "string",
+            "documentation": " "
+          }
+        },
+        "documentation": "\n\t\t<p>The request was rejected because it attempted to create resources beyond the current AWS\n\t\t\taccount limits. The error message describes the limit exceeded.</p>\n\t"
+      }
       ],
-      "documentation": "\n\t\t<p>Deletes the access key associated with the specified user.</p>\n\t\t<p>If you do not specify a user name, IAM determines the user name implicitly based on the AWS\n\t\t\taccess key ID signing the request. Because this action works for access keys under the AWS\n\t\t\taccount, you can use this API to manage root credentials even if the AWS account has no\n\t\t\tassociated users.</p>\n\t\t<examples>\n\t\t\t<queryrequest>\nhttps://iam.amazonaws.com/\n?Action=DeleteAccessKey\n&UserName=Bob\n&AccessKeyId=AKIAIOSFODNN7EXAMPLE\n&Version=2010-05-08\n&AUTHPARAMS\n      </queryrequest>\n\t\t\t<queryresponse>\n<DeleteAccessKeyResponse>\n   <ResponseMetadata>\n      <RequestId>7a62c49f-347e-4fc4-9331-6e8eEXAMPLE</RequestId>\n   </ResponseMetadata>\n</DeleteAccessKeyResponse>\n      </queryresponse>\n\t\t</examples>\n\t"
+        "documentation": "\n\t\t<p>Deletes the access key associated with the specified user.</p>\n\t\t<p>If you do not specify a user name, IAM determines the user name implicitly based on the AWS\n\t\t\taccess key ID signing the request. Because this action works for access keys under the AWS\n\t\t\taccount, you can use this API to manage root credentials even if the AWS account has no\n\t\t\tassociated users.</p>\n\t\t<examples>\n\t\t\t<queryrequest>\nhttps://iam.amazonaws.com/\n?Action=DeleteAccessKey\n&UserName=Bob\n&AccessKeyId=AKIAIOSFODNN7EXAMPLE\n&Version=2010-05-08\n&AUTHPARAMS\n      </queryrequest>\n\t\t\t<queryresponse>\n<DeleteAccessKeyResponse>\n   <ResponseMetadata>\n      <RequestId>7a62c49f-347e-4fc4-9331-6e8eEXAMPLE</RequestId>\n   </ResponseMetadata>\n</DeleteAccessKeyResponse>\n      </queryresponse>\n\t\t</examples>\n\t"
     },
     "DeleteAccountAlias": {
       "name": "DeleteAccountAlias",
@@ -1392,52 +1392,52 @@
       },
       "output": null,
       "errors": [
-        {
-          "shape_name": "NoSuchEntityException",
-          "type": "structure",
-          "members": {
-            "message": {
-              "shape_name": "noSuchEntityMessage",
-              "type": "string",
-              "documentation": " "
-            }
-          },
-          "documentation": "\n\t\t<p>The request was rejected because it referenced an entity that does not exist. The error\n\t\t\tmessage describes the entity.</p>\n\t"
+      {
+        "shape_name": "NoSuchEntityException",
+        "type": "structure",
+        "members": {
+          "message": {
+            "shape_name": "noSuchEntityMessage",
+            "type": "string",
+            "documentation": " "
+          }
         },
-        {
-          "shape_name": "LimitExceededException",
-          "type": "structure",
-          "members": {
-            "message": {
-              "shape_name": "limitExceededMessage",
-              "type": "string",
-              "documentation": " "
-            }
-          },
-          "documentation": "\n\t\t<p>The request was rejected because it attempted to create resources beyond the current AWS\n\t\t\taccount limits. The error message describes the limit exceeded.</p>\n\t"
-        }
+        "documentation": "\n\t\t<p>The request was rejected because it referenced an entity that does not exist. The error\n\t\t\tmessage describes the entity.</p>\n\t"
+      },
+      {
+        "shape_name": "LimitExceededException",
+        "type": "structure",
+        "members": {
+          "message": {
+            "shape_name": "limitExceededMessage",
+            "type": "string",
+            "documentation": " "
+          }
+        },
+        "documentation": "\n\t\t<p>The request was rejected because it attempted to create resources beyond the current AWS\n\t\t\taccount limits. The error message describes the limit exceeded.</p>\n\t"
+      }
       ],
-      "documentation": "\n\t\t<p>Deletes the specified AWS account alias. For information about using an AWS account alias,\n\t\t\tsee <a href=\"http://docs.aws.amazon.com/IAM/latest/UserGuide/AccountAlias.html\" target=\"_blank\">Using an\n\t\t\t\tAlias for Your AWS Account ID</a> in <i>Using AWS Identity and Access Management</i>.</p>\n\t\t<examples>\n\t\t\t<queryrequest>\nhttps://iam.amazonaws.com/\n?Action=DeleteAccountAlias\n&AccountAlias=foocorporation\n&Version=2010-05-08\n&AUTHPARAMS\n      </queryrequest>\n\t\t\t<queryresponse>\n<DeleteAccountAliasResponse>\n  <ResponseMetadata>\n    <RequestId>7a62c49f-347e-4fc4-9331-6e8eEXAMPLE</RequestId>\n  </ResponseMetadata>\n</DeleteAccountAliasResponse>\n      </queryresponse>\n\t\t</examples>\n\t"
+        "documentation": "\n\t\t<p>Deletes the specified AWS account alias. For information about using an AWS account alias,\n\t\t\tsee <a href=\"http://docs.aws.amazon.com/IAM/latest/UserGuide/AccountAlias.html\" target=\"_blank\">Using an\n\t\t\t\tAlias for Your AWS Account ID</a> in <i>Using AWS Identity and Access Management</i>.</p>\n\t\t<examples>\n\t\t\t<queryrequest>\nhttps://iam.amazonaws.com/\n?Action=DeleteAccountAlias\n&AccountAlias=foocorporation\n&Version=2010-05-08\n&AUTHPARAMS\n      </queryrequest>\n\t\t\t<queryresponse>\n<DeleteAccountAliasResponse>\n  <ResponseMetadata>\n    <RequestId>7a62c49f-347e-4fc4-9331-6e8eEXAMPLE</RequestId>\n  </ResponseMetadata>\n</DeleteAccountAliasResponse>\n      </queryresponse>\n\t\t</examples>\n\t"
     },
     "DeleteAccountPasswordPolicy": {
       "name": "DeleteAccountPasswordPolicy",
       "input": null,
       "output": null,
       "errors": [
-        {
-          "shape_name": "NoSuchEntityException",
-          "type": "structure",
-          "members": {
-            "message": {
-              "shape_name": "noSuchEntityMessage",
-              "type": "string",
-              "documentation": " "
-            }
-          },
-          "documentation": "\n\t\t<p>The request was rejected because it referenced an entity that does not exist. The error\n\t\t\tmessage describes the entity.</p>\n\t"
-        }
+      {
+        "shape_name": "NoSuchEntityException",
+        "type": "structure",
+        "members": {
+          "message": {
+            "shape_name": "noSuchEntityMessage",
+            "type": "string",
+            "documentation": " "
+          }
+        },
+        "documentation": "\n\t\t<p>The request was rejected because it referenced an entity that does not exist. The error\n\t\t\tmessage describes the entity.</p>\n\t"
+      }
       ],
-      "documentation": "\n\t\t<p>Deletes the password policy for the AWS account.</p>\n\t\t<examples>\n\t\t\t<queryrequest>\nhttps://iam.amazonaws.com/\n?Action=DeleteAccountPasswordPolicy\n&Version=2010-05-08\n&AUTHPARAMS\n</queryrequest>\n\t\t\t<queryresponse>\n<DeleteAccountPasswordPolicyResponse>\n   <ResponseMetadata>\n\t   <RequestId>7a62c49f-347e-4fc4-9331-6e8eEXAMPLE</RequestId>\n\t</ResponseMetadata>\n</DeleteAccountPasswordPolicy>\n</queryresponse>\n\t\t</examples>\n\t"
+        "documentation": "\n\t\t<p>Deletes the password policy for the AWS account.</p>\n\t\t<examples>\n\t\t\t<queryrequest>\nhttps://iam.amazonaws.com/\n?Action=DeleteAccountPasswordPolicy\n&Version=2010-05-08\n&AUTHPARAMS\n</queryrequest>\n\t\t\t<queryresponse>\n<DeleteAccountPasswordPolicyResponse>\n   <ResponseMetadata>\n\t   <RequestId>7a62c49f-347e-4fc4-9331-6e8eEXAMPLE</RequestId>\n\t</ResponseMetadata>\n</DeleteAccountPasswordPolicy>\n</queryresponse>\n\t\t</examples>\n\t"
     },
     "DeleteGroup": {
       "name": "DeleteGroup",
@@ -1459,44 +1459,44 @@
       },
       "output": null,
       "errors": [
-        {
-          "shape_name": "NoSuchEntityException",
-          "type": "structure",
-          "members": {
-            "message": {
-              "shape_name": "noSuchEntityMessage",
-              "type": "string",
-              "documentation": " "
-            }
-          },
-          "documentation": "\n\t\t<p>The request was rejected because it referenced an entity that does not exist. The error\n\t\t\tmessage describes the entity.</p>\n\t"
+      {
+        "shape_name": "NoSuchEntityException",
+        "type": "structure",
+        "members": {
+          "message": {
+            "shape_name": "noSuchEntityMessage",
+            "type": "string",
+            "documentation": " "
+          }
         },
-        {
-          "shape_name": "DeleteConflictException",
-          "type": "structure",
-          "members": {
-            "message": {
-              "shape_name": "deleteConflictMessage",
-              "type": "string",
-              "documentation": " "
-            }
-          },
-          "documentation": "\n\t\t<p>The request was rejected because it attempted to delete a resource that has attached\n\t\t\tsubordinate entities. The error message describes these entities.</p>\n\t"
+        "documentation": "\n\t\t<p>The request was rejected because it referenced an entity that does not exist. The error\n\t\t\tmessage describes the entity.</p>\n\t"
+      },
+      {
+        "shape_name": "DeleteConflictException",
+        "type": "structure",
+        "members": {
+          "message": {
+            "shape_name": "deleteConflictMessage",
+            "type": "string",
+            "documentation": " "
+          }
         },
-        {
-          "shape_name": "LimitExceededException",
-          "type": "structure",
-          "members": {
-            "message": {
-              "shape_name": "limitExceededMessage",
-              "type": "string",
-              "documentation": " "
-            }
-          },
-          "documentation": "\n\t\t<p>The request was rejected because it attempted to create resources beyond the current AWS\n\t\t\taccount limits. The error message describes the limit exceeded.</p>\n\t"
-        }
+        "documentation": "\n\t\t<p>The request was rejected because it attempted to delete a resource that has attached\n\t\t\tsubordinate entities. The error message describes these entities.</p>\n\t"
+      },
+      {
+        "shape_name": "LimitExceededException",
+        "type": "structure",
+        "members": {
+          "message": {
+            "shape_name": "limitExceededMessage",
+            "type": "string",
+            "documentation": " "
+          }
+        },
+        "documentation": "\n\t\t<p>The request was rejected because it attempted to create resources beyond the current AWS\n\t\t\taccount limits. The error message describes the limit exceeded.</p>\n\t"
+      }
       ],
-      "documentation": "\n\t\t<p>Deletes the specified group. The group must not contain any users or have any attached\n\t\t\tpolicies.</p>\n\t\t<examples>\n\t\t\t<queryrequest>\nhttps://iam.amazonaws.com/\n?Action=DeleteGroup\n&Group=Test\n&Version=2010-05-08\n&AUTHPARAMS\n      </queryrequest>\n\t\t\t<queryresponse>\n<DeleteGroupResponse>\n   <ResponseMetadata>\n      <RequestId>7a62c49f-347e-4fc4-9331-6e8eEXAMPLE</RequestId>\n   </ResponseMetadata>\n</DeleteGroupResponse>\n      </queryresponse>\n\t\t</examples>\n\t"
+        "documentation": "\n\t\t<p>Deletes the specified group. The group must not contain any users or have any attached\n\t\t\tpolicies.</p>\n\t\t<examples>\n\t\t\t<queryrequest>\nhttps://iam.amazonaws.com/\n?Action=DeleteGroup\n&Group=Test\n&Version=2010-05-08\n&AUTHPARAMS\n      </queryrequest>\n\t\t\t<queryresponse>\n<DeleteGroupResponse>\n   <ResponseMetadata>\n      <RequestId>7a62c49f-347e-4fc4-9331-6e8eEXAMPLE</RequestId>\n   </ResponseMetadata>\n</DeleteGroupResponse>\n      </queryresponse>\n\t\t</examples>\n\t"
     },
     "DeleteGroupPolicy": {
       "name": "DeleteGroupPolicy",
@@ -1527,32 +1527,32 @@
       },
       "output": null,
       "errors": [
-        {
-          "shape_name": "NoSuchEntityException",
-          "type": "structure",
-          "members": {
-            "message": {
-              "shape_name": "noSuchEntityMessage",
-              "type": "string",
-              "documentation": " "
-            }
-          },
-          "documentation": "\n\t\t<p>The request was rejected because it referenced an entity that does not exist. The error\n\t\t\tmessage describes the entity.</p>\n\t"
+      {
+        "shape_name": "NoSuchEntityException",
+        "type": "structure",
+        "members": {
+          "message": {
+            "shape_name": "noSuchEntityMessage",
+            "type": "string",
+            "documentation": " "
+          }
         },
-        {
-          "shape_name": "LimitExceededException",
-          "type": "structure",
-          "members": {
-            "message": {
-              "shape_name": "limitExceededMessage",
-              "type": "string",
-              "documentation": " "
-            }
-          },
-          "documentation": "\n\t\t<p>The request was rejected because it attempted to create resources beyond the current AWS\n\t\t\taccount limits. The error message describes the limit exceeded.</p>\n\t"
-        }
+        "documentation": "\n\t\t<p>The request was rejected because it referenced an entity that does not exist. The error\n\t\t\tmessage describes the entity.</p>\n\t"
+      },
+      {
+        "shape_name": "LimitExceededException",
+        "type": "structure",
+        "members": {
+          "message": {
+            "shape_name": "limitExceededMessage",
+            "type": "string",
+            "documentation": " "
+          }
+        },
+        "documentation": "\n\t\t<p>The request was rejected because it attempted to create resources beyond the current AWS\n\t\t\taccount limits. The error message describes the limit exceeded.</p>\n\t"
+      }
       ],
-      "documentation": "\n\t\t<p>Deletes the specified policy that is associated with the specified group.</p>\n\t\t<examples>\n\t\t\t<queryrequest>\nhttps://iam.amazonaws.com/\n?Action=DeleteGroupPolicy\n&GroupName=Admins\n&PolicyName=AdminRoot\n&AUTHPARAMS\n      </queryrequest>\n\t\t\t<queryresponse>\n<DeleteGroupPolicyResponse>\n   <ResponseMetadata>\n      <RequestId>7a62c49f-347e-4fc4-9331-6e8eEXAMPLE</RequestId>\n   </ResponseMetadata>\n</DeleteGroupPolicyResponse>\n      </queryresponse>\n\t\t</examples>\n\t"
+        "documentation": "\n\t\t<p>Deletes the specified policy that is associated with the specified group.</p>\n\t\t<examples>\n\t\t\t<queryrequest>\nhttps://iam.amazonaws.com/\n?Action=DeleteGroupPolicy\n&GroupName=Admins\n&PolicyName=AdminRoot\n&AUTHPARAMS\n      </queryrequest>\n\t\t\t<queryresponse>\n<DeleteGroupPolicyResponse>\n   <ResponseMetadata>\n      <RequestId>7a62c49f-347e-4fc4-9331-6e8eEXAMPLE</RequestId>\n   </ResponseMetadata>\n</DeleteGroupPolicyResponse>\n      </queryresponse>\n\t\t</examples>\n\t"
     },
     "DeleteInstanceProfile": {
       "name": "DeleteInstanceProfile",
@@ -1574,44 +1574,44 @@
       },
       "output": null,
       "errors": [
-        {
-          "shape_name": "NoSuchEntityException",
-          "type": "structure",
-          "members": {
-            "message": {
-              "shape_name": "noSuchEntityMessage",
-              "type": "string",
-              "documentation": " "
-            }
-          },
-          "documentation": "\n\t\t<p>The request was rejected because it referenced an entity that does not exist. The error\n\t\t\tmessage describes the entity.</p>\n\t"
+      {
+        "shape_name": "NoSuchEntityException",
+        "type": "structure",
+        "members": {
+          "message": {
+            "shape_name": "noSuchEntityMessage",
+            "type": "string",
+            "documentation": " "
+          }
         },
-        {
-          "shape_name": "DeleteConflictException",
-          "type": "structure",
-          "members": {
-            "message": {
-              "shape_name": "deleteConflictMessage",
-              "type": "string",
-              "documentation": " "
-            }
-          },
-          "documentation": "\n\t\t<p>The request was rejected because it attempted to delete a resource that has attached\n\t\t\tsubordinate entities. The error message describes these entities.</p>\n\t"
+        "documentation": "\n\t\t<p>The request was rejected because it referenced an entity that does not exist. The error\n\t\t\tmessage describes the entity.</p>\n\t"
+      },
+      {
+        "shape_name": "DeleteConflictException",
+        "type": "structure",
+        "members": {
+          "message": {
+            "shape_name": "deleteConflictMessage",
+            "type": "string",
+            "documentation": " "
+          }
         },
-        {
-          "shape_name": "LimitExceededException",
-          "type": "structure",
-          "members": {
-            "message": {
-              "shape_name": "limitExceededMessage",
-              "type": "string",
-              "documentation": " "
-            }
-          },
-          "documentation": "\n\t\t<p>The request was rejected because it attempted to create resources beyond the current AWS\n\t\t\taccount limits. The error message describes the limit exceeded.</p>\n\t"
-        }
+        "documentation": "\n\t\t<p>The request was rejected because it attempted to delete a resource that has attached\n\t\t\tsubordinate entities. The error message describes these entities.</p>\n\t"
+      },
+      {
+        "shape_name": "LimitExceededException",
+        "type": "structure",
+        "members": {
+          "message": {
+            "shape_name": "limitExceededMessage",
+            "type": "string",
+            "documentation": " "
+          }
+        },
+        "documentation": "\n\t\t<p>The request was rejected because it attempted to create resources beyond the current AWS\n\t\t\taccount limits. The error message describes the limit exceeded.</p>\n\t"
+      }
       ],
-      "documentation": "\n\t\t<p>Deletes the specified instance profile. The instance profile must not have an associated\n\t\t\trole.</p>\n\t\t<important>Make sure you do not have any Amazon EC2 instances running with the instance profile\n\t\t\tyou are about to delete. Deleting a role or instance profile that is associated with a running\n\t\t\tinstance will break any applications running on the instance.</important>\n\t\t<p>For more information about instance profiles, go to <a href=\"http://docs.aws.amazon.com/IAM/latest/UserGuide/AboutInstanceProfiles.html\">About Instance\n\t\t\t\tProfiles</a>.</p>\n\t\t<examples>\n\t\t\t<queryrequest>\nhttps://iam.amazonaws.com/\n?Action=DeleteInstanceProfile\n&InstanceProfileName=Webserver\n&Version=2010-05-08\n&AUTHPARAMS\n      </queryrequest>\n\t\t\t<queryresponse>\n<DeleteInstanceProfileResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n  <ResponseMetadata>\n    <RequestId>90c18667-99f3-11e1-a4c3-27EXAMPLE804</RequestId>\n  </ResponseMetadata>\n</DeleteInstanceProfileResponse>\n      </queryresponse>\n\t\t</examples>\n\t"
+        "documentation": "\n\t\t<p>Deletes the specified instance profile. The instance profile must not have an associated\n\t\t\trole.</p>\n\t\t<important>Make sure you do not have any Amazon EC2 instances running with the instance profile\n\t\t\tyou are about to delete. Deleting a role or instance profile that is associated with a running\n\t\t\tinstance will break any applications running on the instance.</important>\n\t\t<p>For more information about instance profiles, go to <a href=\"http://docs.aws.amazon.com/IAM/latest/UserGuide/AboutInstanceProfiles.html\">About Instance\n\t\t\t\tProfiles</a>.</p>\n\t\t<examples>\n\t\t\t<queryrequest>\nhttps://iam.amazonaws.com/\n?Action=DeleteInstanceProfile\n&InstanceProfileName=Webserver\n&Version=2010-05-08\n&AUTHPARAMS\n      </queryrequest>\n\t\t\t<queryresponse>\n<DeleteInstanceProfileResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n  <ResponseMetadata>\n    <RequestId>90c18667-99f3-11e1-a4c3-27EXAMPLE804</RequestId>\n  </ResponseMetadata>\n</DeleteInstanceProfileResponse>\n      </queryresponse>\n\t\t</examples>\n\t"
     },
     "DeleteLoginProfile": {
       "name": "DeleteLoginProfile",
@@ -1633,44 +1633,44 @@
       },
       "output": null,
       "errors": [
-        {
-          "shape_name": "EntityTemporarilyUnmodifiableException",
-          "type": "structure",
-          "members": {
-            "message": {
-              "shape_name": "entityTemporarilyUnmodifiableMessage",
-              "type": "string",
-              "documentation": " "
-            }
-          },
-          "documentation": "\n\t\t<p>The request was rejected because it referenced an entity that is temporarily unmodifiable,\n\t\t\tsuch as a user name that was deleted and then recreated. The error indicates that the request\n\t\t\tis likely to succeed if you try again after waiting several minutes. The error message\n\t\t\tdescribes the entity.</p>\n\t"
+      {
+        "shape_name": "EntityTemporarilyUnmodifiableException",
+        "type": "structure",
+        "members": {
+          "message": {
+            "shape_name": "entityTemporarilyUnmodifiableMessage",
+            "type": "string",
+            "documentation": " "
+          }
         },
-        {
-          "shape_name": "NoSuchEntityException",
-          "type": "structure",
-          "members": {
-            "message": {
-              "shape_name": "noSuchEntityMessage",
-              "type": "string",
-              "documentation": " "
-            }
-          },
-          "documentation": "\n\t\t<p>The request was rejected because it referenced an entity that does not exist. The error\n\t\t\tmessage describes the entity.</p>\n\t"
+        "documentation": "\n\t\t<p>The request was rejected because it referenced an entity that is temporarily unmodifiable,\n\t\t\tsuch as a user name that was deleted and then recreated. The error indicates that the request\n\t\t\tis likely to succeed if you try again after waiting several minutes. The error message\n\t\t\tdescribes the entity.</p>\n\t"
+      },
+      {
+        "shape_name": "NoSuchEntityException",
+        "type": "structure",
+        "members": {
+          "message": {
+            "shape_name": "noSuchEntityMessage",
+            "type": "string",
+            "documentation": " "
+          }
         },
-        {
-          "shape_name": "LimitExceededException",
-          "type": "structure",
-          "members": {
-            "message": {
-              "shape_name": "limitExceededMessage",
-              "type": "string",
-              "documentation": " "
-            }
-          },
-          "documentation": "\n\t\t<p>The request was rejected because it attempted to create resources beyond the current AWS\n\t\t\taccount limits. The error message describes the limit exceeded.</p>\n\t"
-        }
+        "documentation": "\n\t\t<p>The request was rejected because it referenced an entity that does not exist. The error\n\t\t\tmessage describes the entity.</p>\n\t"
+      },
+      {
+        "shape_name": "LimitExceededException",
+        "type": "structure",
+        "members": {
+          "message": {
+            "shape_name": "limitExceededMessage",
+            "type": "string",
+            "documentation": " "
+          }
+        },
+        "documentation": "\n\t\t<p>The request was rejected because it attempted to create resources beyond the current AWS\n\t\t\taccount limits. The error message describes the limit exceeded.</p>\n\t"
+      }
       ],
-      "documentation": "\n\t\t<p>Deletes the password for the specified user, which terminates the user's ability to access\n\t\t\tAWS services through the AWS Management Console.</p>\n\t\t<important>Deleting a user's password does not prevent a user from accessing IAM through the\n\t\t\tcommand line interface or the API. To prevent all user access you must also either make the\n\t\t\taccess key inactive or delete it. For more information about making keys inactive or deleting\n\t\t\tthem, see <a>UpdateAccessKey</a> and <a>DeleteAccessKey</a>. </important>\n\t\t<examples>\n\t\t\t<queryrequest>\nhttps://iam.amazonaws.com/\n?Action=DeleteLoginProfile\n&UserName=Bob\n&AUTHPARAMS\n      </queryrequest>\n\t\t\t<queryresponse>\n<DeleteLoginProfileResponse>\n   <ResponseMetadata>\n      <RequestId>7a62c49f-347e-4fc4-9331-6e8eEXAMPLE</RequestId>\n   </ResponseMetadata>\n</DeleteLoginProfileResponse>\n      </queryresponse>\n\t\t</examples>\n\t"
+        "documentation": "\n\t\t<p>Deletes the password for the specified user, which terminates the user's ability to access\n\t\t\tAWS services through the AWS Management Console.</p>\n\t\t<important>Deleting a user's password does not prevent a user from accessing IAM through the\n\t\t\tcommand line interface or the API. To prevent all user access you must also either make the\n\t\t\taccess key inactive or delete it. For more information about making keys inactive or deleting\n\t\t\tthem, see <a>UpdateAccessKey</a> and <a>DeleteAccessKey</a>. </important>\n\t\t<examples>\n\t\t\t<queryrequest>\nhttps://iam.amazonaws.com/\n?Action=DeleteLoginProfile\n&UserName=Bob\n&AUTHPARAMS\n      </queryrequest>\n\t\t\t<queryresponse>\n<DeleteLoginProfileResponse>\n   <ResponseMetadata>\n      <RequestId>7a62c49f-347e-4fc4-9331-6e8eEXAMPLE</RequestId>\n   </ResponseMetadata>\n</DeleteLoginProfileResponse>\n      </queryresponse>\n\t\t</examples>\n\t"
     },
     "DeleteRole": {
       "name": "DeleteRole",
@@ -1692,44 +1692,44 @@
       },
       "output": null,
       "errors": [
-        {
-          "shape_name": "NoSuchEntityException",
-          "type": "structure",
-          "members": {
-            "message": {
-              "shape_name": "noSuchEntityMessage",
-              "type": "string",
-              "documentation": " "
-            }
-          },
-          "documentation": "\n\t\t<p>The request was rejected because it referenced an entity that does not exist. The error\n\t\t\tmessage describes the entity.</p>\n\t"
+      {
+        "shape_name": "NoSuchEntityException",
+        "type": "structure",
+        "members": {
+          "message": {
+            "shape_name": "noSuchEntityMessage",
+            "type": "string",
+            "documentation": " "
+          }
         },
-        {
-          "shape_name": "DeleteConflictException",
-          "type": "structure",
-          "members": {
-            "message": {
-              "shape_name": "deleteConflictMessage",
-              "type": "string",
-              "documentation": " "
-            }
-          },
-          "documentation": "\n\t\t<p>The request was rejected because it attempted to delete a resource that has attached\n\t\t\tsubordinate entities. The error message describes these entities.</p>\n\t"
+        "documentation": "\n\t\t<p>The request was rejected because it referenced an entity that does not exist. The error\n\t\t\tmessage describes the entity.</p>\n\t"
+      },
+      {
+        "shape_name": "DeleteConflictException",
+        "type": "structure",
+        "members": {
+          "message": {
+            "shape_name": "deleteConflictMessage",
+            "type": "string",
+            "documentation": " "
+          }
         },
-        {
-          "shape_name": "LimitExceededException",
-          "type": "structure",
-          "members": {
-            "message": {
-              "shape_name": "limitExceededMessage",
-              "type": "string",
-              "documentation": " "
-            }
-          },
-          "documentation": "\n\t\t<p>The request was rejected because it attempted to create resources beyond the current AWS\n\t\t\taccount limits. The error message describes the limit exceeded.</p>\n\t"
-        }
+        "documentation": "\n\t\t<p>The request was rejected because it attempted to delete a resource that has attached\n\t\t\tsubordinate entities. The error message describes these entities.</p>\n\t"
+      },
+      {
+        "shape_name": "LimitExceededException",
+        "type": "structure",
+        "members": {
+          "message": {
+            "shape_name": "limitExceededMessage",
+            "type": "string",
+            "documentation": " "
+          }
+        },
+        "documentation": "\n\t\t<p>The request was rejected because it attempted to create resources beyond the current AWS\n\t\t\taccount limits. The error message describes the limit exceeded.</p>\n\t"
+      }
       ],
-      "documentation": "\n\t\t<p>Deletes the specified role. The role must not have any policies attached. For more\n\t\t\tinformation about roles, go to <a href=\"http://docs.aws.amazon.com/IAM/latest/UserGuide/WorkingWithRoles.html\">Working with\n\t\t\tRoles</a>.</p>\n\t\t<important>Make sure you do not have any Amazon EC2 instances running with the role you are\n\t\t\tabout to delete. Deleting a role or instance profile that is associated with a running\n\t\t\tinstance will break any applications running on the instance.</important>\n\t\t<examples>\n\t\t\t<queryrequest>\nhttps://iam.amazonaws.com/\n?Action=DeleteRole\n&RoleName=S3Access\n&Version=2010-05-08\n&AUTHPARAMS\n      </queryrequest>\n\t\t\t<queryresponse>\n<DeleteRoleResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n  <ResponseMetadata>\n    <RequestId>913e3f37-99ed-11e1-a4c3-270EXAMPLE04</RequestId>\n  </ResponseMetadata>\n</DeleteRoleResponse>\n      </queryresponse>\n\t\t</examples>\n\t"
+        "documentation": "\n\t\t<p>Deletes the specified role. The role must not have any policies attached. For more\n\t\t\tinformation about roles, go to <a href=\"http://docs.aws.amazon.com/IAM/latest/UserGuide/WorkingWithRoles.html\">Working with\n\t\t\tRoles</a>.</p>\n\t\t<important>Make sure you do not have any Amazon EC2 instances running with the role you are\n\t\t\tabout to delete. Deleting a role or instance profile that is associated with a running\n\t\t\tinstance will break any applications running on the instance.</important>\n\t\t<examples>\n\t\t\t<queryrequest>\nhttps://iam.amazonaws.com/\n?Action=DeleteRole\n&RoleName=S3Access\n&Version=2010-05-08\n&AUTHPARAMS\n      </queryrequest>\n\t\t\t<queryresponse>\n<DeleteRoleResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n  <ResponseMetadata>\n    <RequestId>913e3f37-99ed-11e1-a4c3-270EXAMPLE04</RequestId>\n  </ResponseMetadata>\n</DeleteRoleResponse>\n      </queryresponse>\n\t\t</examples>\n\t"
     },
     "DeleteRolePolicy": {
       "name": "DeleteRolePolicy",
@@ -1760,32 +1760,32 @@
       },
       "output": null,
       "errors": [
-        {
-          "shape_name": "NoSuchEntityException",
-          "type": "structure",
-          "members": {
-            "message": {
-              "shape_name": "noSuchEntityMessage",
-              "type": "string",
-              "documentation": " "
-            }
-          },
-          "documentation": "\n\t\t<p>The request was rejected because it referenced an entity that does not exist. The error\n\t\t\tmessage describes the entity.</p>\n\t"
+      {
+        "shape_name": "NoSuchEntityException",
+        "type": "structure",
+        "members": {
+          "message": {
+            "shape_name": "noSuchEntityMessage",
+            "type": "string",
+            "documentation": " "
+          }
         },
-        {
-          "shape_name": "LimitExceededException",
-          "type": "structure",
-          "members": {
-            "message": {
-              "shape_name": "limitExceededMessage",
-              "type": "string",
-              "documentation": " "
-            }
-          },
-          "documentation": "\n\t\t<p>The request was rejected because it attempted to create resources beyond the current AWS\n\t\t\taccount limits. The error message describes the limit exceeded.</p>\n\t"
-        }
+        "documentation": "\n\t\t<p>The request was rejected because it referenced an entity that does not exist. The error\n\t\t\tmessage describes the entity.</p>\n\t"
+      },
+      {
+        "shape_name": "LimitExceededException",
+        "type": "structure",
+        "members": {
+          "message": {
+            "shape_name": "limitExceededMessage",
+            "type": "string",
+            "documentation": " "
+          }
+        },
+        "documentation": "\n\t\t<p>The request was rejected because it attempted to create resources beyond the current AWS\n\t\t\taccount limits. The error message describes the limit exceeded.</p>\n\t"
+      }
       ],
-      "documentation": "\n\t\t<p>Deletes the specified policy associated with the specified role.</p>\n\t\t<examples>\n\t\t\t<queryrequest>\nhttps://iam.amazonaws.com/\n?Action=DeleteRolePolicy\n&PolicyName=S3AccessPolicy\n&RoleName=S3Access\n&Version=2010-05-08\n&AUTHPARAMS\n      </queryrequest>\n\t\t\t<queryresponse>\n<DeleteRolePolicyResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n  <ResponseMetadata>\n    <RequestId>c749ee7f-99ef-11e1-a4c3-27EXAMPLE804</RequestId>\n  </ResponseMetadata>\n</DeleteRolePolicyResponse>\n      </queryresponse>\n\t\t</examples>\n\t"
+        "documentation": "\n\t\t<p>Deletes the specified policy associated with the specified role.</p>\n\t\t<examples>\n\t\t\t<queryrequest>\nhttps://iam.amazonaws.com/\n?Action=DeleteRolePolicy\n&PolicyName=S3AccessPolicy\n&RoleName=S3Access\n&Version=2010-05-08\n&AUTHPARAMS\n      </queryrequest>\n\t\t\t<queryresponse>\n<DeleteRolePolicyResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n  <ResponseMetadata>\n    <RequestId>c749ee7f-99ef-11e1-a4c3-27EXAMPLE804</RequestId>\n  </ResponseMetadata>\n</DeleteRolePolicyResponse>\n      </queryresponse>\n\t\t</examples>\n\t"
     },
     "DeleteSAMLProvider": {
       "name": "DeleteSAMLProvider",
@@ -1806,20 +1806,20 @@
       },
       "output": null,
       "errors": [
-        {
-          "shape_name": "InvalidInputException",
-          "type": "structure",
-          "members": {
-            "message": {
-              "shape_name": "invalidInputMessage",
-              "type": "string",
-              "documentation": null
-            }
-          },
-          "documentation": null
-        }
+      {
+        "shape_name": "InvalidInputException",
+        "type": "structure",
+        "members": {
+          "message": {
+            "shape_name": "invalidInputMessage",
+            "type": "string",
+            "documentation": null
+          }
+        },
+        "documentation": null
+      }
       ],
-      "documentation": "\n\t\t<p>Deletes a SAML provider.</p>\n\t\t<p>Deleting the provider does not update any roles that reference the SAML provider as a\n\t\t\tprincipal in their trust policies. Any attempt to assume a role that references a SAML\n\t\t\tprovider that has been deleted will fail. </p>\n\t\t<note>This operation requires <a href=\"http://docs.aws.amazon.com/general/latest/gr/signature-version-4.html\">Signature Version\n\t\t\t4</a>.</note>\n\t\t<examples>\n\t\t\t<queryrequest>\nhttps://iam.amazonaws.com/\n?Action=DeleteSAMLProvider\n&Name=arn:aws:iam::123456789012:saml-metadata/MyUniversity\n&Version=2010-05-08\n&AUTHPARAMS\n      </queryrequest>\n\t\t</examples>\n\t"
+        "documentation": "\n\t\t<p>Deletes a SAML provider.</p>\n\t\t<p>Deleting the provider does not update any roles that reference the SAML provider as a\n\t\t\tprincipal in their trust policies. Any attempt to assume a role that references a SAML\n\t\t\tprovider that has been deleted will fail. </p>\n\t\t<note>This operation requires <a href=\"http://docs.aws.amazon.com/general/latest/gr/signature-version-4.html\">Signature Version\n\t\t\t4</a>.</note>\n\t\t<examples>\n\t\t\t<queryrequest>\nhttps://iam.amazonaws.com/\n?Action=DeleteSAMLProvider\n&Name=arn:aws:iam::123456789012:saml-metadata/MyUniversity\n&Version=2010-05-08\n&AUTHPARAMS\n      </queryrequest>\n\t\t</examples>\n\t"
     },
     "DeleteServerCertificate": {
       "name": "DeleteServerCertificate",
@@ -1841,44 +1841,44 @@
       },
       "output": null,
       "errors": [
-        {
-          "shape_name": "NoSuchEntityException",
-          "type": "structure",
-          "members": {
-            "message": {
-              "shape_name": "noSuchEntityMessage",
-              "type": "string",
-              "documentation": " "
-            }
-          },
-          "documentation": "\n\t\t<p>The request was rejected because it referenced an entity that does not exist. The error\n\t\t\tmessage describes the entity.</p>\n\t"
+      {
+        "shape_name": "NoSuchEntityException",
+        "type": "structure",
+        "members": {
+          "message": {
+            "shape_name": "noSuchEntityMessage",
+            "type": "string",
+            "documentation": " "
+          }
         },
-        {
-          "shape_name": "DeleteConflictException",
-          "type": "structure",
-          "members": {
-            "message": {
-              "shape_name": "deleteConflictMessage",
-              "type": "string",
-              "documentation": " "
-            }
-          },
-          "documentation": "\n\t\t<p>The request was rejected because it attempted to delete a resource that has attached\n\t\t\tsubordinate entities. The error message describes these entities.</p>\n\t"
+        "documentation": "\n\t\t<p>The request was rejected because it referenced an entity that does not exist. The error\n\t\t\tmessage describes the entity.</p>\n\t"
+      },
+      {
+        "shape_name": "DeleteConflictException",
+        "type": "structure",
+        "members": {
+          "message": {
+            "shape_name": "deleteConflictMessage",
+            "type": "string",
+            "documentation": " "
+          }
         },
-        {
-          "shape_name": "LimitExceededException",
-          "type": "structure",
-          "members": {
-            "message": {
-              "shape_name": "limitExceededMessage",
-              "type": "string",
-              "documentation": " "
-            }
-          },
-          "documentation": "\n\t\t<p>The request was rejected because it attempted to create resources beyond the current AWS\n\t\t\taccount limits. The error message describes the limit exceeded.</p>\n\t"
-        }
+        "documentation": "\n\t\t<p>The request was rejected because it attempted to delete a resource that has attached\n\t\t\tsubordinate entities. The error message describes these entities.</p>\n\t"
+      },
+      {
+        "shape_name": "LimitExceededException",
+        "type": "structure",
+        "members": {
+          "message": {
+            "shape_name": "limitExceededMessage",
+            "type": "string",
+            "documentation": " "
+          }
+        },
+        "documentation": "\n\t\t<p>The request was rejected because it attempted to create resources beyond the current AWS\n\t\t\taccount limits. The error message describes the limit exceeded.</p>\n\t"
+      }
       ],
-      "documentation": "\n\t\t<p>Deletes the specified server certificate.</p>\n\t\t<important>If you are using a server certificate with Elastic Load Balancing, deleting the\n\t\t\tcertificate could have implications for your application. If Elastic Load Balancing doesn't\n\t\t\tdetect the deletion of bound certificates, it may continue to use the certificates. This could\n\t\t\tcause Elastic Load Balancing to stop accepting traffic. We recommend that you remove the\n\t\t\treference to the certificate from Elastic Load Balancing before using this command to delete\n\t\t\tthe certificate. For more information, go to <a href=\"http://docs.aws.amazon.com/ElasticLoadBalancing/latest/APIReference/API_DeleteLoadBalancerListeners.html\" target=\"blank\">DeleteLoadBalancerListeners</a> in the <i>Elastic Load Balancing API\n\t\t\t\tReference</i>.</important>\n\t\t<examples>\n\t\t\t<queryrequest>\nhttps://iam.amazonaws.com/\n?Action=DeleteServerCertificate\n&ServerCertificateName=ProdServerCert\n&Version=2010-05-08\n&AUTHPARAMS\n      </queryrequest>\n\t\t\t<queryresponse>\n<DeleteServerCertificateResponse>\n  <ResponseMetadata>\n    <RequestId>7a62c49f-347e-4fc4-9331-6e8eEXAMPLE</RequestId>\n  </ResponseMetadata>\n</DeleteServerCertificateResponse>\n      </queryresponse>\n\t\t</examples>\n\t"
+        "documentation": "\n\t\t<p>Deletes the specified server certificate.</p>\n\t\t<important>If you are using a server certificate with Elastic Load Balancing, deleting the\n\t\t\tcertificate could have implications for your application. If Elastic Load Balancing doesn't\n\t\t\tdetect the deletion of bound certificates, it may continue to use the certificates. This could\n\t\t\tcause Elastic Load Balancing to stop accepting traffic. We recommend that you remove the\n\t\t\treference to the certificate from Elastic Load Balancing before using this command to delete\n\t\t\tthe certificate. For more information, go to <a href=\"http://docs.aws.amazon.com/ElasticLoadBalancing/latest/APIReference/API_DeleteLoadBalancerListeners.html\" target=\"blank\">DeleteLoadBalancerListeners</a> in the <i>Elastic Load Balancing API\n\t\t\t\tReference</i>.</important>\n\t\t<examples>\n\t\t\t<queryrequest>\nhttps://iam.amazonaws.com/\n?Action=DeleteServerCertificate\n&ServerCertificateName=ProdServerCert\n&Version=2010-05-08\n&AUTHPARAMS\n      </queryrequest>\n\t\t\t<queryresponse>\n<DeleteServerCertificateResponse>\n  <ResponseMetadata>\n    <RequestId>7a62c49f-347e-4fc4-9331-6e8eEXAMPLE</RequestId>\n  </ResponseMetadata>\n</DeleteServerCertificateResponse>\n      </queryresponse>\n\t\t</examples>\n\t"
     },
     "DeleteSigningCertificate": {
       "name": "DeleteSigningCertificate",
@@ -1908,32 +1908,32 @@
       },
       "output": null,
       "errors": [
-        {
-          "shape_name": "NoSuchEntityException",
-          "type": "structure",
-          "members": {
-            "message": {
-              "shape_name": "noSuchEntityMessage",
-              "type": "string",
-              "documentation": " "
-            }
-          },
-          "documentation": "\n\t\t<p>The request was rejected because it referenced an entity that does not exist. The error\n\t\t\tmessage describes the entity.</p>\n\t"
+      {
+        "shape_name": "NoSuchEntityException",
+        "type": "structure",
+        "members": {
+          "message": {
+            "shape_name": "noSuchEntityMessage",
+            "type": "string",
+            "documentation": " "
+          }
         },
-        {
-          "shape_name": "LimitExceededException",
-          "type": "structure",
-          "members": {
-            "message": {
-              "shape_name": "limitExceededMessage",
-              "type": "string",
-              "documentation": " "
-            }
-          },
-          "documentation": "\n\t\t<p>The request was rejected because it attempted to create resources beyond the current AWS\n\t\t\taccount limits. The error message describes the limit exceeded.</p>\n\t"
-        }
+        "documentation": "\n\t\t<p>The request was rejected because it referenced an entity that does not exist. The error\n\t\t\tmessage describes the entity.</p>\n\t"
+      },
+      {
+        "shape_name": "LimitExceededException",
+        "type": "structure",
+        "members": {
+          "message": {
+            "shape_name": "limitExceededMessage",
+            "type": "string",
+            "documentation": " "
+          }
+        },
+        "documentation": "\n\t\t<p>The request was rejected because it attempted to create resources beyond the current AWS\n\t\t\taccount limits. The error message describes the limit exceeded.</p>\n\t"
+      }
       ],
-      "documentation": "\n\t\t<p>Deletes the specified signing certificate associated with the specified user.</p>\n\t\t<p>If you do not specify a user name, IAM determines the user name implicitly based on the AWS\n\t\t\taccess key ID signing the request. Because this action works for access keys under the AWS\n\t\t\taccount, you can use this API to manage root credentials even if the AWS account has no\n\t\t\tassociated users.</p>\n\t\t<examples>\n\t\t\t<queryrequest>\nhttps://iam.amazonaws.com/\n?Action=DeleteSigningCertificate\n&UserName=Bob\n&CertificateId=TA7SMP42TDN5Z26OBPJE7EXAMPLE\n&Version=2010-05-08\n&AUTHPARAMS\n      </queryrequest>\n\t\t\t<queryresponse>\n<DeleteSigningCertificateResponse>\n   <ResponseMetadata>\n      <RequestId>7a62c49f-347e-4fc4-9331-6e8eEXAMPLE</RequestId>\n   </ResponseMetadata>\n</DeleteSigningCertificateResponse>\n      </queryresponse>\n\t\t</examples>\n\t"
+        "documentation": "\n\t\t<p>Deletes the specified signing certificate associated with the specified user.</p>\n\t\t<p>If you do not specify a user name, IAM determines the user name implicitly based on the AWS\n\t\t\taccess key ID signing the request. Because this action works for access keys under the AWS\n\t\t\taccount, you can use this API to manage root credentials even if the AWS account has no\n\t\t\tassociated users.</p>\n\t\t<examples>\n\t\t\t<queryrequest>\nhttps://iam.amazonaws.com/\n?Action=DeleteSigningCertificate\n&UserName=Bob\n&CertificateId=TA7SMP42TDN5Z26OBPJE7EXAMPLE\n&Version=2010-05-08\n&AUTHPARAMS\n      </queryrequest>\n\t\t\t<queryresponse>\n<DeleteSigningCertificateResponse>\n   <ResponseMetadata>\n      <RequestId>7a62c49f-347e-4fc4-9331-6e8eEXAMPLE</RequestId>\n   </ResponseMetadata>\n</DeleteSigningCertificateResponse>\n      </queryresponse>\n\t\t</examples>\n\t"
     },
     "DeleteUser": {
       "name": "DeleteUser",
@@ -1955,44 +1955,44 @@
       },
       "output": null,
       "errors": [
-        {
-          "shape_name": "LimitExceededException",
-          "type": "structure",
-          "members": {
-            "message": {
-              "shape_name": "limitExceededMessage",
-              "type": "string",
-              "documentation": " "
-            }
-          },
-          "documentation": "\n\t\t<p>The request was rejected because it attempted to create resources beyond the current AWS\n\t\t\taccount limits. The error message describes the limit exceeded.</p>\n\t"
+      {
+        "shape_name": "LimitExceededException",
+        "type": "structure",
+        "members": {
+          "message": {
+            "shape_name": "limitExceededMessage",
+            "type": "string",
+            "documentation": " "
+          }
         },
-        {
-          "shape_name": "NoSuchEntityException",
-          "type": "structure",
-          "members": {
-            "message": {
-              "shape_name": "noSuchEntityMessage",
-              "type": "string",
-              "documentation": " "
-            }
-          },
-          "documentation": "\n\t\t<p>The request was rejected because it referenced an entity that does not exist. The error\n\t\t\tmessage describes the entity.</p>\n\t"
+        "documentation": "\n\t\t<p>The request was rejected because it attempted to create resources beyond the current AWS\n\t\t\taccount limits. The error message describes the limit exceeded.</p>\n\t"
+      },
+      {
+        "shape_name": "NoSuchEntityException",
+        "type": "structure",
+        "members": {
+          "message": {
+            "shape_name": "noSuchEntityMessage",
+            "type": "string",
+            "documentation": " "
+          }
         },
-        {
-          "shape_name": "DeleteConflictException",
-          "type": "structure",
-          "members": {
-            "message": {
-              "shape_name": "deleteConflictMessage",
-              "type": "string",
-              "documentation": " "
-            }
-          },
-          "documentation": "\n\t\t<p>The request was rejected because it attempted to delete a resource that has attached\n\t\t\tsubordinate entities. The error message describes these entities.</p>\n\t"
-        }
+        "documentation": "\n\t\t<p>The request was rejected because it referenced an entity that does not exist. The error\n\t\t\tmessage describes the entity.</p>\n\t"
+      },
+      {
+        "shape_name": "DeleteConflictException",
+        "type": "structure",
+        "members": {
+          "message": {
+            "shape_name": "deleteConflictMessage",
+            "type": "string",
+            "documentation": " "
+          }
+        },
+        "documentation": "\n\t\t<p>The request was rejected because it attempted to delete a resource that has attached\n\t\t\tsubordinate entities. The error message describes these entities.</p>\n\t"
+      }
       ],
-      "documentation": "\n\t\t<p>Deletes the specified user. The user must not belong to any groups, have any keys or signing\n\t\t\tcertificates, or have any attached policies.</p>\n\t\t<examples>\n\t\t\t<queryrequest>\nhttps://iam.amazonaws.com/\n?Action=DeleteUser\n&UserName=Bob\n&Version=2010-05-08\n&AUTHPARAMS\n      </queryrequest>\n\t\t\t<queryresponse>\n<DeleteUserResponse>\n   <ResponseMetadata>\n      <RequestId>7a62c49f-347e-4fc4-9331-6e8eEXAMPLE</RequestId>\n   </ResponseMetadata>\n</DeleteUserResponse>\n      </queryresponse>\n\t\t</examples>\n\t"
+        "documentation": "\n\t\t<p>Deletes the specified user. The user must not belong to any groups, have any keys or signing\n\t\t\tcertificates, or have any attached policies.</p>\n\t\t<examples>\n\t\t\t<queryrequest>\nhttps://iam.amazonaws.com/\n?Action=DeleteUser\n&UserName=Bob\n&Version=2010-05-08\n&AUTHPARAMS\n      </queryrequest>\n\t\t\t<queryresponse>\n<DeleteUserResponse>\n   <ResponseMetadata>\n      <RequestId>7a62c49f-347e-4fc4-9331-6e8eEXAMPLE</RequestId>\n   </ResponseMetadata>\n</DeleteUserResponse>\n      </queryresponse>\n\t\t</examples>\n\t"
     },
     "DeleteUserPolicy": {
       "name": "DeleteUserPolicy",
@@ -2023,32 +2023,32 @@
       },
       "output": null,
       "errors": [
-        {
-          "shape_name": "NoSuchEntityException",
-          "type": "structure",
-          "members": {
-            "message": {
-              "shape_name": "noSuchEntityMessage",
-              "type": "string",
-              "documentation": " "
-            }
-          },
-          "documentation": "\n\t\t<p>The request was rejected because it referenced an entity that does not exist. The error\n\t\t\tmessage describes the entity.</p>\n\t"
+      {
+        "shape_name": "NoSuchEntityException",
+        "type": "structure",
+        "members": {
+          "message": {
+            "shape_name": "noSuchEntityMessage",
+            "type": "string",
+            "documentation": " "
+          }
         },
-        {
-          "shape_name": "LimitExceededException",
-          "type": "structure",
-          "members": {
-            "message": {
-              "shape_name": "limitExceededMessage",
-              "type": "string",
-              "documentation": " "
-            }
-          },
-          "documentation": "\n\t\t<p>The request was rejected because it attempted to create resources beyond the current AWS\n\t\t\taccount limits. The error message describes the limit exceeded.</p>\n\t"
-        }
+        "documentation": "\n\t\t<p>The request was rejected because it referenced an entity that does not exist. The error\n\t\t\tmessage describes the entity.</p>\n\t"
+      },
+      {
+        "shape_name": "LimitExceededException",
+        "type": "structure",
+        "members": {
+          "message": {
+            "shape_name": "limitExceededMessage",
+            "type": "string",
+            "documentation": " "
+          }
+        },
+        "documentation": "\n\t\t<p>The request was rejected because it attempted to create resources beyond the current AWS\n\t\t\taccount limits. The error message describes the limit exceeded.</p>\n\t"
+      }
       ],
-      "documentation": "\n\t\t<p>Deletes the specified policy associated with the specified user.</p>\n\t\t<examples>\n\t\t\t<queryrequest>\nhttps://iam.amazonaws.com/\n?Action=DeleteUserPolicy\n&UserName=Bob\n&PolicyName=AllAccessPolicy\n&AUTHPARAMS\n      </queryrequest>\n\t\t\t<queryresponse>\n<DeleteUserPolicyResponse>\n   <ResponseMetadata>\n      <RequestId>7a62c49f-347e-4fc4-9331-6e8eEXAMPLE</RequestId>\n   </ResponseMetadata>\n</DeleteUserPolicyResponse>\n      </queryresponse>\n\t\t</examples>\n\t"
+        "documentation": "\n\t\t<p>Deletes the specified policy associated with the specified user.</p>\n\t\t<examples>\n\t\t\t<queryrequest>\nhttps://iam.amazonaws.com/\n?Action=DeleteUserPolicy\n&UserName=Bob\n&PolicyName=AllAccessPolicy\n&AUTHPARAMS\n      </queryrequest>\n\t\t\t<queryresponse>\n<DeleteUserPolicyResponse>\n   <ResponseMetadata>\n      <RequestId>7a62c49f-347e-4fc4-9331-6e8eEXAMPLE</RequestId>\n   </ResponseMetadata>\n</DeleteUserPolicyResponse>\n      </queryresponse>\n\t\t</examples>\n\t"
     },
     "DeleteVirtualMFADevice": {
       "name": "DeleteVirtualMFADevice",
@@ -2070,44 +2070,44 @@
       },
       "output": null,
       "errors": [
-        {
-          "shape_name": "NoSuchEntityException",
-          "type": "structure",
-          "members": {
-            "message": {
-              "shape_name": "noSuchEntityMessage",
-              "type": "string",
-              "documentation": " "
-            }
-          },
-          "documentation": "\n\t\t<p>The request was rejected because it referenced an entity that does not exist. The error\n\t\t\tmessage describes the entity.</p>\n\t"
+      {
+        "shape_name": "NoSuchEntityException",
+        "type": "structure",
+        "members": {
+          "message": {
+            "shape_name": "noSuchEntityMessage",
+            "type": "string",
+            "documentation": " "
+          }
         },
-        {
-          "shape_name": "DeleteConflictException",
-          "type": "structure",
-          "members": {
-            "message": {
-              "shape_name": "deleteConflictMessage",
-              "type": "string",
-              "documentation": " "
-            }
-          },
-          "documentation": "\n\t\t<p>The request was rejected because it attempted to delete a resource that has attached\n\t\t\tsubordinate entities. The error message describes these entities.</p>\n\t"
+        "documentation": "\n\t\t<p>The request was rejected because it referenced an entity that does not exist. The error\n\t\t\tmessage describes the entity.</p>\n\t"
+      },
+      {
+        "shape_name": "DeleteConflictException",
+        "type": "structure",
+        "members": {
+          "message": {
+            "shape_name": "deleteConflictMessage",
+            "type": "string",
+            "documentation": " "
+          }
         },
-        {
-          "shape_name": "LimitExceededException",
-          "type": "structure",
-          "members": {
-            "message": {
-              "shape_name": "limitExceededMessage",
-              "type": "string",
-              "documentation": " "
-            }
-          },
-          "documentation": "\n\t\t<p>The request was rejected because it attempted to create resources beyond the current AWS\n\t\t\taccount limits. The error message describes the limit exceeded.</p>\n\t"
-        }
+        "documentation": "\n\t\t<p>The request was rejected because it attempted to delete a resource that has attached\n\t\t\tsubordinate entities. The error message describes these entities.</p>\n\t"
+      },
+      {
+        "shape_name": "LimitExceededException",
+        "type": "structure",
+        "members": {
+          "message": {
+            "shape_name": "limitExceededMessage",
+            "type": "string",
+            "documentation": " "
+          }
+        },
+        "documentation": "\n\t\t<p>The request was rejected because it attempted to create resources beyond the current AWS\n\t\t\taccount limits. The error message describes the limit exceeded.</p>\n\t"
+      }
       ],
-      "documentation": "\n\t\t<p>Deletes a virtual MFA device.</p>\n\t\t<note>You must deactivate a user's virtual MFA device before you can delete it. For information\n\t\t\tabout deactivating MFA devices, see <a href=\"http://docs.aws.amazon.com/IAM/latest/APIReference/API_DeactivateMFADevice.html\">DeactivateMFADevice</a>.</note>\n\t\t<examples>\n\t\t\t<queryrequest>\nhttps://iam.amazonaws.com/\n?Action=DeleteVirtualMFADevice\n&SerialNumber=arn:aws:iam::123456789012:mfa/ExampleName\n&Version=2010-05-08\n&AUTHPARAMS\n</queryrequest>\n\t\t\t<queryresponse>\n<DeleteVirtualMFADeviceResponse>\n  <DeleteVirtualMFADeviceResult>\n    <VirtualMFADevice>\n      <SerialNumber>arn:aws:iam::123456789012:mfa/ExampleName</SerialNumber>\n    </VirtualMFADevice>\n  </DeleteVirtualMFADeviceResult>\n  <ResponseMetadata>\n    <RequestId>7a62c49f-347e-4fc4-9331-6e8eEXAMPLE</RequestId>\n  </ResponseMetadata>\n</DeleteVirtualMFADeviceResponse>\n</queryresponse>\n\t\t</examples>\n\t"
+        "documentation": "\n\t\t<p>Deletes a virtual MFA device.</p>\n\t\t<note>You must deactivate a user's virtual MFA device before you can delete it. For information\n\t\t\tabout deactivating MFA devices, see <a href=\"http://docs.aws.amazon.com/IAM/latest/APIReference/API_DeactivateMFADevice.html\">DeactivateMFADevice</a>.</note>\n\t\t<examples>\n\t\t\t<queryrequest>\nhttps://iam.amazonaws.com/\n?Action=DeleteVirtualMFADevice\n&SerialNumber=arn:aws:iam::123456789012:mfa/ExampleName\n&Version=2010-05-08\n&AUTHPARAMS\n</queryrequest>\n\t\t\t<queryresponse>\n<DeleteVirtualMFADeviceResponse>\n  <DeleteVirtualMFADeviceResult>\n    <VirtualMFADevice>\n      <SerialNumber>arn:aws:iam::123456789012:mfa/ExampleName</SerialNumber>\n    </VirtualMFADevice>\n  </DeleteVirtualMFADeviceResult>\n  <ResponseMetadata>\n    <RequestId>7a62c49f-347e-4fc4-9331-6e8eEXAMPLE</RequestId>\n  </ResponseMetadata>\n</DeleteVirtualMFADeviceResponse>\n</queryresponse>\n\t\t</examples>\n\t"
     },
     "EnableMFADevice": {
       "name": "EnableMFADevice",
@@ -2156,68 +2156,68 @@
       },
       "output": null,
       "errors": [
-        {
-          "shape_name": "EntityAlreadyExistsException",
-          "type": "structure",
-          "members": {
-            "message": {
-              "shape_name": "entityAlreadyExistsMessage",
-              "type": "string",
-              "documentation": " "
-            }
-          },
-          "documentation": "\n\t\t<p>The request was rejected because it attempted to create a resource that already exists.</p>\n\t"
+      {
+        "shape_name": "EntityAlreadyExistsException",
+        "type": "structure",
+        "members": {
+          "message": {
+            "shape_name": "entityAlreadyExistsMessage",
+            "type": "string",
+            "documentation": " "
+          }
         },
-        {
-          "shape_name": "EntityTemporarilyUnmodifiableException",
-          "type": "structure",
-          "members": {
-            "message": {
-              "shape_name": "entityTemporarilyUnmodifiableMessage",
-              "type": "string",
-              "documentation": " "
-            }
-          },
-          "documentation": "\n\t\t<p>The request was rejected because it referenced an entity that is temporarily unmodifiable,\n\t\t\tsuch as a user name that was deleted and then recreated. The error indicates that the request\n\t\t\tis likely to succeed if you try again after waiting several minutes. The error message\n\t\t\tdescribes the entity.</p>\n\t"
+        "documentation": "\n\t\t<p>The request was rejected because it attempted to create a resource that already exists.</p>\n\t"
+      },
+      {
+        "shape_name": "EntityTemporarilyUnmodifiableException",
+        "type": "structure",
+        "members": {
+          "message": {
+            "shape_name": "entityTemporarilyUnmodifiableMessage",
+            "type": "string",
+            "documentation": " "
+          }
         },
-        {
-          "shape_name": "InvalidAuthenticationCodeException",
-          "type": "structure",
-          "members": {
-            "message": {
-              "shape_name": "invalidAuthenticationCodeMessage",
-              "type": "string",
-              "documentation": " "
-            }
-          },
-          "documentation": "\n\t\t<p>The request was rejected because the authentication code was not recognized. The error\n\t\t\tmessage describes the specific error.</p>\n\t"
+        "documentation": "\n\t\t<p>The request was rejected because it referenced an entity that is temporarily unmodifiable,\n\t\t\tsuch as a user name that was deleted and then recreated. The error indicates that the request\n\t\t\tis likely to succeed if you try again after waiting several minutes. The error message\n\t\t\tdescribes the entity.</p>\n\t"
+      },
+      {
+        "shape_name": "InvalidAuthenticationCodeException",
+        "type": "structure",
+        "members": {
+          "message": {
+            "shape_name": "invalidAuthenticationCodeMessage",
+            "type": "string",
+            "documentation": " "
+          }
         },
-        {
-          "shape_name": "LimitExceededException",
-          "type": "structure",
-          "members": {
-            "message": {
-              "shape_name": "limitExceededMessage",
-              "type": "string",
-              "documentation": " "
-            }
-          },
-          "documentation": "\n\t\t<p>The request was rejected because it attempted to create resources beyond the current AWS\n\t\t\taccount limits. The error message describes the limit exceeded.</p>\n\t"
+        "documentation": "\n\t\t<p>The request was rejected because the authentication code was not recognized. The error\n\t\t\tmessage describes the specific error.</p>\n\t"
+      },
+      {
+        "shape_name": "LimitExceededException",
+        "type": "structure",
+        "members": {
+          "message": {
+            "shape_name": "limitExceededMessage",
+            "type": "string",
+            "documentation": " "
+          }
         },
-        {
-          "shape_name": "NoSuchEntityException",
-          "type": "structure",
-          "members": {
-            "message": {
-              "shape_name": "noSuchEntityMessage",
-              "type": "string",
-              "documentation": " "
-            }
-          },
-          "documentation": "\n\t\t<p>The request was rejected because it referenced an entity that does not exist. The error\n\t\t\tmessage describes the entity.</p>\n\t"
-        }
+        "documentation": "\n\t\t<p>The request was rejected because it attempted to create resources beyond the current AWS\n\t\t\taccount limits. The error message describes the limit exceeded.</p>\n\t"
+      },
+      {
+        "shape_name": "NoSuchEntityException",
+        "type": "structure",
+        "members": {
+          "message": {
+            "shape_name": "noSuchEntityMessage",
+            "type": "string",
+            "documentation": " "
+          }
+        },
+        "documentation": "\n\t\t<p>The request was rejected because it referenced an entity that does not exist. The error\n\t\t\tmessage describes the entity.</p>\n\t"
+      }
       ],
-      "documentation": "\n\t\t<p>Enables the specified MFA device and associates it with the specified user name. When\n\t\t\tenabled, the MFA device is required for every subsequent login by the user name associated\n\t\t\twith the device.</p>\n\t\t<examples>\n\t\t\t<queryrequest>\nhttps://iam.amazonaws.com/\n?Action=EnableMFADevice\n&UserName=Bob\n&SerialNumber=R1234\n&AuthenticationCode1=234567\n&AuthenticationCode2=987654\n&AUTHPARAMS\n      </queryrequest>\n\t\t\t<queryresponse>\n<EnableMFADeviceResponse>\n   <ResponseMetadata>\n     <RequestId>7a62c49f-347e-4fc4-9331-6e8eEXAMPLE</RequestId>\n   </ResponseMetadata>\n</EnableMFADeviceResponse>\n      </queryresponse>\n\t\t</examples>\n\t"
+        "documentation": "\n\t\t<p>Enables the specified MFA device and associates it with the specified user name. When\n\t\t\tenabled, the MFA device is required for every subsequent login by the user name associated\n\t\t\twith the device.</p>\n\t\t<examples>\n\t\t\t<queryrequest>\nhttps://iam.amazonaws.com/\n?Action=EnableMFADevice\n&UserName=Bob\n&SerialNumber=R1234\n&AuthenticationCode1=234567\n&AuthenticationCode2=987654\n&AUTHPARAMS\n      </queryrequest>\n\t\t\t<queryresponse>\n<EnableMFADeviceResponse>\n   <ResponseMetadata>\n     <RequestId>7a62c49f-347e-4fc4-9331-6e8eEXAMPLE</RequestId>\n   </ResponseMetadata>\n</EnableMFADeviceResponse>\n      </queryresponse>\n\t\t</examples>\n\t"
     },
     "GetAccountPasswordPolicy": {
       "name": "GetAccountPasswordPolicy",
@@ -2280,20 +2280,20 @@
         "documentation": "\n\t\t<p>Contains the result of a successful invocation of the <a>GetAccountPasswordPolicy</a>\n\t\t\taction.</p>\n\t"
       },
       "errors": [
-        {
-          "shape_name": "NoSuchEntityException",
-          "type": "structure",
-          "members": {
-            "message": {
-              "shape_name": "noSuchEntityMessage",
-              "type": "string",
-              "documentation": " "
-            }
-          },
-          "documentation": "\n\t\t<p>The request was rejected because it referenced an entity that does not exist. The error\n\t\t\tmessage describes the entity.</p>\n\t"
-        }
+      {
+        "shape_name": "NoSuchEntityException",
+        "type": "structure",
+        "members": {
+          "message": {
+            "shape_name": "noSuchEntityMessage",
+            "type": "string",
+            "documentation": " "
+          }
+        },
+        "documentation": "\n\t\t<p>The request was rejected because it referenced an entity that does not exist. The error\n\t\t\tmessage describes the entity.</p>\n\t"
+      }
       ],
-      "documentation": "\n\t\t<p>Retrieves the password policy for the AWS account. For more information about using a\n\t\t\tpassword policy, go to <a href=\"http://docs.aws.amazon.com/IAM/latest/UserGuide/Using_ManagingPasswordPolicies.html\">Managing an\n\t\t\t\tIAM Password Policy</a>.</p>\n\t\t<examples>\n\t\t\t<queryrequest>\nhttps://iam.amazonaws.com/\n?Action=GetAccountPasswordPolicy\n&Version=2010-05-08\n&AUTHPARAMS\n      </queryrequest>\n\t\t\t<queryresponse>\n<GetAccountPasswordPolicyResponse>\n  <GetAccountPasswordPolicyResult>\n    <PasswordPolicy> \n        <MinimumPasswordLength>6</MinimumPasswordLength>, \n        <RequireUppercaseCharacters>false</RequireUppercaseCharacters>\n        <RequireLowercaseCharacters>false</RequireLowercaseCharacters> \n        <RequireNumbers>false</RequireNumbers> \n        <RequireSymbols>false</RequireSymbols>\n        <AllowUsersToChangePassword>true</AllowUsersToChangePassword>\n    </PasswordPolicy>\t\n  </GetAccountPasswordPolicyResult>\n  <ResponseMetadata> \n    <RequestId>7a62c49f-347e-4fc4-9331-6e8eEXAMPLE</RequestId>\n  </ResponseMetadata>\n</GetAccountPasswordPolicyResponse>\t\n</queryresponse>\n\t\t</examples>\n\t"
+        "documentation": "\n\t\t<p>Retrieves the password policy for the AWS account. For more information about using a\n\t\t\tpassword policy, go to <a href=\"http://docs.aws.amazon.com/IAM/latest/UserGuide/Using_ManagingPasswordPolicies.html\">Managing an\n\t\t\t\tIAM Password Policy</a>.</p>\n\t\t<examples>\n\t\t\t<queryrequest>\nhttps://iam.amazonaws.com/\n?Action=GetAccountPasswordPolicy\n&Version=2010-05-08\n&AUTHPARAMS\n      </queryrequest>\n\t\t\t<queryresponse>\n<GetAccountPasswordPolicyResponse>\n  <GetAccountPasswordPolicyResult>\n    <PasswordPolicy> \n        <MinimumPasswordLength>6</MinimumPasswordLength>, \n        <RequireUppercaseCharacters>false</RequireUppercaseCharacters>\n        <RequireLowercaseCharacters>false</RequireLowercaseCharacters> \n        <RequireNumbers>false</RequireNumbers> \n        <RequireSymbols>false</RequireSymbols>\n        <AllowUsersToChangePassword>true</AllowUsersToChangePassword>\n    </PasswordPolicy>\t\n  </GetAccountPasswordPolicyResult>\n  <ResponseMetadata> \n    <RequestId>7a62c49f-347e-4fc4-9331-6e8eEXAMPLE</RequestId>\n  </ResponseMetadata>\n</GetAccountPasswordPolicyResponse>\t\n</queryresponse>\n\t\t</examples>\n\t"
     },
     "GetAccountSummary": {
       "name": "GetAccountSummary",
@@ -2310,20 +2310,20 @@
               "type": "string",
               "enum": [
                 "Users",
-                "UsersQuota",
-                "Groups",
-                "GroupsQuota",
-                "ServerCertificates",
-                "ServerCertificatesQuota",
-                "UserPolicySizeQuota",
-                "GroupPolicySizeQuota",
-                "GroupsPerUserQuota",
-                "SigningCertificatesPerUserQuota",
-                "AccessKeysPerUserQuota",
-                "MFADevices",
-                "MFADevicesInUse",
-                "AccountMFAEnabled"
-              ],
+              "UsersQuota",
+              "Groups",
+              "GroupsQuota",
+              "ServerCertificates",
+              "ServerCertificatesQuota",
+              "UserPolicySizeQuota",
+              "GroupPolicySizeQuota",
+              "GroupsPerUserQuota",
+              "SigningCertificatesPerUserQuota",
+              "AccessKeysPerUserQuota",
+              "MFADevices",
+              "MFADevicesInUse",
+              "AccountMFAEnabled"
+                ],
               "documentation": null
             },
             "members": {
@@ -2338,7 +2338,7 @@
       },
       "errors": [
 
-      ],
+        ],
       "documentation": "\n\t\t<p>Retrieves account level information about account entity usage and IAM quotas.</p>\n\t\t<p>For information about limitations on IAM entities, see <a href=\"http://docs.aws.amazon.com/IAM/latest/UserGuide/index.html?LimitationsOnEntities.html\" target=\"_blank\">Limitations on IAM Entities</a> in <i>Using AWS Identity and Access\n\t\t\t\tManagement</i>.</p>\n\t\t<examples>\n\t\t\t<queryrequest>\nhttps://iam.amazonaws.com/\n?Action=GetAccountSummary\n&Version=2010-05-08\n&AUTHPARAMS\n      </queryrequest>\n\t\t\t<queryresponse>\n<GetAccountSummaryResponse>\n  <GetAccountSummaryResult>\n    <SummaryMap>\n      <entry>\n        <key>Groups</key>\n        <value>31</value>\n      </entry>\n      <entry>\n        <key>GroupsQuota</key>\n        <value>50</value>\n      </entry>\n      <entry>\n        <key>UsersQuota</key>\n        <value>150</value>\n      </entry>\n      <entry>\n        <key>Users</key>\n        <value>35</value>\n      </entry>\n      <entry>\n        <key>GroupPolicySizeQuota</key>\n        <value>10240</value>\n      </entry>\n      <entry>\n        <key>AccessKeysPerUserQuota</key>\n        <value>2</value>\n      </entry>\n      <entry>\n        <key>GroupsPerUserQuota</key>\n        <value>10</value>\n      </entry>\n      <entry>\n        <key>UserPolicySizeQuota</key>\n        <value>10240</value>\n      </entry>\n      <entry>\n        <key>SigningCertificatesPerUserQuota</key>\n        <value>2</value>\n      </entry>\n      <entry>\n        <key>ServerCertificates</key>\n        <value>0</value>\n      </entry>\n      <entry>\n        <key>ServerCertificatesQuota</key>\n        <value>10</value>\n      </entry>\n      <entry>\n        <key>AccountMFAEnabled</key>\n        <value>0</value>\n      </entry>\n      <entry>\n        <key>MFADevicesInUse</key>\n        <value>10</value>\n      </entry>\n      <entry>\n        <key>MFADevices</key>\n        <value>20</value>\n      </entry>\n    </SummaryMap>\n  </GetAccountSummaryResult>\n  <ResponseMetadata>\n    <RequestId>f1e38443-f1ad-11df-b1ef-a9265EXAMPLE</RequestId>\n  </ResponseMetadata>\n</GetAccountSummaryResponse>\n      </queryresponse>\n\t\t</examples>\n\t"
     },
     "GetGroup": {
@@ -2498,20 +2498,20 @@
         "documentation": "\n\t\t<p>Contains the result of a successful invocation of the <a>GetGroup</a> action.</p>\n\t"
       },
       "errors": [
-        {
-          "shape_name": "NoSuchEntityException",
-          "type": "structure",
-          "members": {
-            "message": {
-              "shape_name": "noSuchEntityMessage",
-              "type": "string",
-              "documentation": " "
-            }
-          },
-          "documentation": "\n\t\t<p>The request was rejected because it referenced an entity that does not exist. The error\n\t\t\tmessage describes the entity.</p>\n\t"
-        }
+      {
+        "shape_name": "NoSuchEntityException",
+        "type": "structure",
+        "members": {
+          "message": {
+            "shape_name": "noSuchEntityMessage",
+            "type": "string",
+            "documentation": " "
+          }
+        },
+        "documentation": "\n\t\t<p>The request was rejected because it referenced an entity that does not exist. The error\n\t\t\tmessage describes the entity.</p>\n\t"
+      }
       ],
-      "documentation": "\n\t\t<p>Returns a list of users that are in the specified group. You can paginate the results using\n\t\t\tthe <code>MaxItems</code> and <code>Marker</code> parameters.</p>\n\t\t<examples>\n\t\t\t<queryrequest>\nhttps://iam.amazonaws.com/\n?Action=GetGroup\n&GroupName=Admins\n&Version=2010-05-08\n&AUTHPARAMS\n      </queryrequest>\n\t\t\t<queryresponse>\n<GetGroupResponse>\n   <GetGroupResult>\n      <Group>\n         <Path>/</Path>\n         <GroupName>Admins</GroupName>\n         <GroupId>AGPACKCEVSQ6C2EXAMPLE</GroupId>\n         <Arn>arn:aws:iam::123456789012:group/Admins</Arn>\n      </Group>\n      <Users>      \n         <member>\n            <Path>/division_abc/subdivision_xyz/</Path>\n            <UserName>Bob</UserName>\n            <UserId>AIDACKCEVSQ6C2EXAMPLE</UserId>\n            <Arn>\n            arn:aws:iam::123456789012:user/division_abc/subdivision_xyz/Bob\n            </Arn>\n         </member>\n         <member>\n            <Path>/division_abc/subdivision_xyz/</Path>\n            <UserName>Susan</UserName>\n            <UserId>AIDACKCEVSQ6C2EXAMPLE</UserId>\n            <Arn>\n            arn:aws:iam::123456789012:user/division_abc/subdivision_xyz/Susan\n            </Arn>\n         </member>\n      </Users>\n      <IsTruncated>false</IsTruncated>\n   </GetGroupResult>\n   <ResponseMetadata>\n      <RequestId>7a62c49f-347e-4fc4-9331-6e8eEXAMPLE</RequestId>\n   </ResponseMetadata>\n</GetGroupResponse>\n      </queryresponse>\n\t\t</examples>\n\t"
+        "documentation": "\n\t\t<p>Returns a list of users that are in the specified group. You can paginate the results using\n\t\t\tthe <code>MaxItems</code> and <code>Marker</code> parameters.</p>\n\t\t<examples>\n\t\t\t<queryrequest>\nhttps://iam.amazonaws.com/\n?Action=GetGroup\n&GroupName=Admins\n&Version=2010-05-08\n&AUTHPARAMS\n      </queryrequest>\n\t\t\t<queryresponse>\n<GetGroupResponse>\n   <GetGroupResult>\n      <Group>\n         <Path>/</Path>\n         <GroupName>Admins</GroupName>\n         <GroupId>AGPACKCEVSQ6C2EXAMPLE</GroupId>\n         <Arn>arn:aws:iam::123456789012:group/Admins</Arn>\n      </Group>\n      <Users>      \n         <member>\n            <Path>/division_abc/subdivision_xyz/</Path>\n            <UserName>Bob</UserName>\n            <UserId>AIDACKCEVSQ6C2EXAMPLE</UserId>\n            <Arn>\n            arn:aws:iam::123456789012:user/division_abc/subdivision_xyz/Bob\n            </Arn>\n         </member>\n         <member>\n            <Path>/division_abc/subdivision_xyz/</Path>\n            <UserName>Susan</UserName>\n            <UserId>AIDACKCEVSQ6C2EXAMPLE</UserId>\n            <Arn>\n            arn:aws:iam::123456789012:user/division_abc/subdivision_xyz/Susan\n            </Arn>\n         </member>\n      </Users>\n      <IsTruncated>false</IsTruncated>\n   </GetGroupResult>\n   <ResponseMetadata>\n      <RequestId>7a62c49f-347e-4fc4-9331-6e8eEXAMPLE</RequestId>\n   </ResponseMetadata>\n</GetGroupResponse>\n      </queryresponse>\n\t\t</examples>\n\t"
     },
     "GetGroupPolicy": {
       "name": "GetGroupPolicy",
@@ -2575,20 +2575,20 @@
         "documentation": "\n\t\t<p>Contains the result of a successful invocation of the <a>GetGroupPolicy</a> action.</p>\n\t"
       },
       "errors": [
-        {
-          "shape_name": "NoSuchEntityException",
-          "type": "structure",
-          "members": {
-            "message": {
-              "shape_name": "noSuchEntityMessage",
-              "type": "string",
-              "documentation": " "
-            }
-          },
-          "documentation": "\n\t\t<p>The request was rejected because it referenced an entity that does not exist. The error\n\t\t\tmessage describes the entity.</p>\n\t"
-        }
+      {
+        "shape_name": "NoSuchEntityException",
+        "type": "structure",
+        "members": {
+          "message": {
+            "shape_name": "noSuchEntityMessage",
+            "type": "string",
+            "documentation": " "
+          }
+        },
+        "documentation": "\n\t\t<p>The request was rejected because it referenced an entity that does not exist. The error\n\t\t\tmessage describes the entity.</p>\n\t"
+      }
       ],
-      "documentation": "\n\t\t<p>Retrieves the specified policy document for the specified group. The returned policy is\n\t\t\tURL-encoded according to RFC 3986. For more information about RFC 3986, go to <a href=\"http://www.faqs.org/rfcs/rfc3986.html\">http://www.faqs.org/rfcs/rfc3986.html</a>.</p>\n\t\t<examples>\n\t\t\t<queryrequest>\nhttps://iam.amazonaws.com/\n?Action=GetGroupPolicy\n&GroupName=Admins\n&PolicyName=AdminRoot\n&AUTHPARAMS\n      </queryrequest>\n\t\t\t<queryresponse>\n<GetGroupPolicyResponse>\n   <GetGroupPolicyResult>\n      <GroupName>Admins</GroupName>\n      <PolicyName>AdminRoot</PolicyName>\n      <PolicyDocument>\n      {\"Version\":\"2012-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\"Action\":\"*\",\"Resource\":\"*\"}]}\n      </PolicyDocument>\n   </GetGroupPolicyResult>\n   <ResponseMetadata>\n      <RequestId>7a62c49f-347e-4fc4-9331-6e8eEXAMPLE</RequestId>\n   </ResponseMetadata>\n</GetGroupPolicyResponse>\n      </queryresponse>\n\t\t</examples>\n\t"
+        "documentation": "\n\t\t<p>Retrieves the specified policy document for the specified group. The returned policy is\n\t\t\tURL-encoded according to RFC 3986. For more information about RFC 3986, go to <a href=\"http://www.faqs.org/rfcs/rfc3986.html\">http://www.faqs.org/rfcs/rfc3986.html</a>.</p>\n\t\t<examples>\n\t\t\t<queryrequest>\nhttps://iam.amazonaws.com/\n?Action=GetGroupPolicy\n&GroupName=Admins\n&PolicyName=AdminRoot\n&AUTHPARAMS\n      </queryrequest>\n\t\t\t<queryresponse>\n<GetGroupPolicyResponse>\n   <GetGroupPolicyResult>\n      <GroupName>Admins</GroupName>\n      <PolicyName>AdminRoot</PolicyName>\n      <PolicyDocument>\n      {\"Version\":\"2012-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\"Action\":\"*\",\"Resource\":\"*\"}]}\n      </PolicyDocument>\n   </GetGroupPolicyResult>\n   <ResponseMetadata>\n      <RequestId>7a62c49f-347e-4fc4-9331-6e8eEXAMPLE</RequestId>\n   </ResponseMetadata>\n</GetGroupPolicyResponse>\n      </queryresponse>\n\t\t</examples>\n\t"
     },
     "GetInstanceProfile": {
       "name": "GetInstanceProfile",
@@ -2727,20 +2727,20 @@
         "documentation": "\n\t\t<p>Contains the result of a successful invocation of the <a>GetInstanceProfile</a> action.</p>\n\t"
       },
       "errors": [
-        {
-          "shape_name": "NoSuchEntityException",
-          "type": "structure",
-          "members": {
-            "message": {
-              "shape_name": "noSuchEntityMessage",
-              "type": "string",
-              "documentation": " "
-            }
-          },
-          "documentation": "\n\t\t<p>The request was rejected because it referenced an entity that does not exist. The error\n\t\t\tmessage describes the entity.</p>\n\t"
-        }
+      {
+        "shape_name": "NoSuchEntityException",
+        "type": "structure",
+        "members": {
+          "message": {
+            "shape_name": "noSuchEntityMessage",
+            "type": "string",
+            "documentation": " "
+          }
+        },
+        "documentation": "\n\t\t<p>The request was rejected because it referenced an entity that does not exist. The error\n\t\t\tmessage describes the entity.</p>\n\t"
+      }
       ],
-      "documentation": "\n\t\t<p>Retrieves information about the specified instance profile, including the instance profile's\n\t\t\tpath, GUID, ARN, and role. For more information about instance profiles, go to <a href=\"http://docs.aws.amazon.com/IAM/latest/UserGuide/AboutInstanceProfiles.html\">About Instance\n\t\t\t\tProfiles</a>. For more information about ARNs, go to <a href=\"http://docs.aws.amazon.com/IAM/latest/UserGuide/Using_Identifiers.html#Identifiers_ARNs\">ARNs</a>.</p>\n\t\t<examples>\n\t\t\t<queryrequest>\nhttps://iam.amazonaws.com/\n?Action=GetInstanceProfile\n&InstanceProfileName=Webserver\n&Version=2010-05-08\n&AUTHPARAMS\n      </queryrequest>\n\t\t\t<queryresponse>\n<GetInstanceProfileResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n  <GetInstanceProfileResult>\n    <InstanceProfile>\n      <InstanceProfileId>AIPAD5ARO2C5EXAMPLE3G</InstanceProfileId>\n      <Roles>\n        <member>\n          <Path>/application_abc/component_xyz/</Path>\n          <Arn>arn:aws:iam::123456789012:role/application_abc/component_xyz/S3Access</Arn>\n          <RoleName>S3Access</RoleName>\n          <AssumeRolePolicyDocument>{\"Version\":\"2012-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\"Principal\":{\"Service\":[\"ec2.amazonaws.com\"]},\"Action\":[\"sts:AssumeRole\"]}]}</AssumeRolePolicyDocument>\n          <CreateDate>2012-05-09T15:45:35Z</CreateDate>\n          <RoleId>AROACVYKSVTSZFEXAMPLE</RoleId>\n        </member>\n      </Roles>\n      <InstanceProfileName>Webserver</InstanceProfileName>\n      <Path>/application_abc/component_xyz/</Path>\n      <Arn>arn:aws:iam::123456789012:instance-profile/application_abc/component_xyz/Webserver</Arn>\n      <CreateDate>2012-05-09T16:11:10Z</CreateDate>\n    </InstanceProfile>\n  </GetInstanceProfileResult>\n  <ResponseMetadata>\n    <RequestId>37289fda-99f2-11e1-a4c3-27EXAMPLE804</RequestId>\n  </ResponseMetadata>\n</GetInstanceProfileResponse>\n      </queryresponse>\n\t\t</examples>\n\t"
+        "documentation": "\n\t\t<p>Retrieves information about the specified instance profile, including the instance profile's\n\t\t\tpath, GUID, ARN, and role. For more information about instance profiles, go to <a href=\"http://docs.aws.amazon.com/IAM/latest/UserGuide/AboutInstanceProfiles.html\">About Instance\n\t\t\t\tProfiles</a>. For more information about ARNs, go to <a href=\"http://docs.aws.amazon.com/IAM/latest/UserGuide/Using_Identifiers.html#Identifiers_ARNs\">ARNs</a>.</p>\n\t\t<examples>\n\t\t\t<queryrequest>\nhttps://iam.amazonaws.com/\n?Action=GetInstanceProfile\n&InstanceProfileName=Webserver\n&Version=2010-05-08\n&AUTHPARAMS\n      </queryrequest>\n\t\t\t<queryresponse>\n<GetInstanceProfileResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n  <GetInstanceProfileResult>\n    <InstanceProfile>\n      <InstanceProfileId>AIPAD5ARO2C5EXAMPLE3G</InstanceProfileId>\n      <Roles>\n        <member>\n          <Path>/application_abc/component_xyz/</Path>\n          <Arn>arn:aws:iam::123456789012:role/application_abc/component_xyz/S3Access</Arn>\n          <RoleName>S3Access</RoleName>\n          <AssumeRolePolicyDocument>{\"Version\":\"2012-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\"Principal\":{\"Service\":[\"ec2.amazonaws.com\"]},\"Action\":[\"sts:AssumeRole\"]}]}</AssumeRolePolicyDocument>\n          <CreateDate>2012-05-09T15:45:35Z</CreateDate>\n          <RoleId>AROACVYKSVTSZFEXAMPLE</RoleId>\n        </member>\n      </Roles>\n      <InstanceProfileName>Webserver</InstanceProfileName>\n      <Path>/application_abc/component_xyz/</Path>\n      <Arn>arn:aws:iam::123456789012:instance-profile/application_abc/component_xyz/Webserver</Arn>\n      <CreateDate>2012-05-09T16:11:10Z</CreateDate>\n    </InstanceProfile>\n  </GetInstanceProfileResult>\n  <ResponseMetadata>\n    <RequestId>37289fda-99f2-11e1-a4c3-27EXAMPLE804</RequestId>\n  </ResponseMetadata>\n</GetInstanceProfileResponse>\n      </queryresponse>\n\t\t</examples>\n\t"
     },
     "GetLoginProfile": {
       "name": "GetLoginProfile",
@@ -2791,20 +2791,20 @@
         "documentation": "\n\t\t<p>Contains the result of a successful invocation of the <a>GetLoginProfile</a> action.</p>\n\t"
       },
       "errors": [
-        {
-          "shape_name": "NoSuchEntityException",
-          "type": "structure",
-          "members": {
-            "message": {
-              "shape_name": "noSuchEntityMessage",
-              "type": "string",
-              "documentation": " "
-            }
-          },
-          "documentation": "\n\t\t<p>The request was rejected because it referenced an entity that does not exist. The error\n\t\t\tmessage describes the entity.</p>\n\t"
-        }
+      {
+        "shape_name": "NoSuchEntityException",
+        "type": "structure",
+        "members": {
+          "message": {
+            "shape_name": "noSuchEntityMessage",
+            "type": "string",
+            "documentation": " "
+          }
+        },
+        "documentation": "\n\t\t<p>The request was rejected because it referenced an entity that does not exist. The error\n\t\t\tmessage describes the entity.</p>\n\t"
+      }
       ],
-      "documentation": "\n\t\t<p>Retrieves the user name and password-creation date for the specified user. If the user has\n\t\t\tnot been assigned a password, the action returns a 404 (<code>NoSuchEntity</code>) error. </p>\n\t\t<examples>\n\t\t\t<queryrequest>\nhttps://iam.amazonaws.com/\n?Action=GetLoginProfile\n&UserName=Bob\n&AUTHPARAMS\n      </queryrequest>\n\t\t\t<queryresponse>\n<GetLoginProfileResponse>\n   <GetLoginProfileResult>\n      <LoginProfile>\n         <UserName>Bob</UserName>\n         <CreateDate>2011-09-19T23:00:56Z</CreateDate>\n      </LoginProfile>\n   </GetLoginProfileResult>\n   <ResponseMetadata>\n      <RequestId>7a62c49f-347e-4fc4-9331-6e8eEXAMPLE</RequestId>\n   </ResponseMetadata>\n</GetLoginProfileResponse>\n      </queryresponse>\n\t\t</examples>\n\t"
+        "documentation": "\n\t\t<p>Retrieves the user name and password-creation date for the specified user. If the user has\n\t\t\tnot been assigned a password, the action returns a 404 (<code>NoSuchEntity</code>) error. </p>\n\t\t<examples>\n\t\t\t<queryrequest>\nhttps://iam.amazonaws.com/\n?Action=GetLoginProfile\n&UserName=Bob\n&AUTHPARAMS\n      </queryrequest>\n\t\t\t<queryresponse>\n<GetLoginProfileResponse>\n   <GetLoginProfileResult>\n      <LoginProfile>\n         <UserName>Bob</UserName>\n         <CreateDate>2011-09-19T23:00:56Z</CreateDate>\n      </LoginProfile>\n   </GetLoginProfileResult>\n   <ResponseMetadata>\n      <RequestId>7a62c49f-347e-4fc4-9331-6e8eEXAMPLE</RequestId>\n   </ResponseMetadata>\n</GetLoginProfileResponse>\n      </queryresponse>\n\t\t</examples>\n\t"
     },
     "GetRole": {
       "name": "GetRole",
@@ -2889,20 +2889,20 @@
         "documentation": "\n\t\t<p>Contains the result of a successful invocation of the <a>GetRole</a> action.</p>\n\t"
       },
       "errors": [
-        {
-          "shape_name": "NoSuchEntityException",
-          "type": "structure",
-          "members": {
-            "message": {
-              "shape_name": "noSuchEntityMessage",
-              "type": "string",
-              "documentation": " "
-            }
-          },
-          "documentation": "\n\t\t<p>The request was rejected because it referenced an entity that does not exist. The error\n\t\t\tmessage describes the entity.</p>\n\t"
-        }
+      {
+        "shape_name": "NoSuchEntityException",
+        "type": "structure",
+        "members": {
+          "message": {
+            "shape_name": "noSuchEntityMessage",
+            "type": "string",
+            "documentation": " "
+          }
+        },
+        "documentation": "\n\t\t<p>The request was rejected because it referenced an entity that does not exist. The error\n\t\t\tmessage describes the entity.</p>\n\t"
+      }
       ],
-      "documentation": "\n\t\t<p>Retrieves information about the specified role, including the role's path, GUID, ARN, and the\n\t\t\tpolicy granting permission to EC2 to assume the role. For more information about ARNs, go to\n\t\t\t\t<a href=\"http://docs.aws.amazon.com/IAM/latest/UserGuide/Using_Identifiers.html#Identifiers_ARNs\">ARNs</a>. For more information about roles, go to <a href=\"http://docs.aws.amazon.com/IAM/latest/UserGuide/WorkingWithRoles.html\">Working with\n\t\t\tRoles</a>.</p>\n\t\t<p>The returned policy is URL-encoded according to RFC 3986. For more information about RFC\n\t\t\t3986, go to <a href=\"http://www.faqs.org/rfcs/rfc3986.html\">http://www.faqs.org/rfcs/rfc3986.html</a>.</p>\n\t\t<examples>\n\t\t\t<queryrequest>\nhttps://iam.amazonaws.com/\n?Action=GetRole\n&RoleName=S3Access\n&Version=2010-05-08\n&AUTHPARAMS\n      </queryrequest>\n\t\t\t<queryresponse>\n<GetRoleResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n  <GetRoleResult>\n    <Role>\n      <Path>/application_abc/component_xyz/</Path>\n      <Arn>arn:aws:iam::123456789012:role/application_abc/component_xyz/S3Access</Arn>\n      <RoleName>S3Access</RoleName>\n      <AssumeRolePolicyDocument>{\"Version\":\"2012-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\"Principal\":{\"Service\":[\"ec2.amazonaws.com\"]},\"Action\":[\"sts:AssumeRole\"]}]}</AssumeRolePolicyDocument>\n      <CreateDate>2012-05-08T23:34:01Z</CreateDate>\n      <RoleId>AROADBQP57FF2AEXAMPLE</RoleId>\n    </Role>\n  </GetRoleResult>\n  <ResponseMetadata>\n    <RequestId>df37e965-9967-11e1-a4c3-270EXAMPLE04</RequestId>\n  </ResponseMetadata>\n</GetRoleResponse>\n      </queryresponse>\n\t\t</examples>\n\t"
+        "documentation": "\n\t\t<p>Retrieves information about the specified role, including the role's path, GUID, ARN, and the\n\t\t\tpolicy granting permission to EC2 to assume the role. For more information about ARNs, go to\n\t\t\t\t<a href=\"http://docs.aws.amazon.com/IAM/latest/UserGuide/Using_Identifiers.html#Identifiers_ARNs\">ARNs</a>. For more information about roles, go to <a href=\"http://docs.aws.amazon.com/IAM/latest/UserGuide/WorkingWithRoles.html\">Working with\n\t\t\tRoles</a>.</p>\n\t\t<p>The returned policy is URL-encoded according to RFC 3986. For more information about RFC\n\t\t\t3986, go to <a href=\"http://www.faqs.org/rfcs/rfc3986.html\">http://www.faqs.org/rfcs/rfc3986.html</a>.</p>\n\t\t<examples>\n\t\t\t<queryrequest>\nhttps://iam.amazonaws.com/\n?Action=GetRole\n&RoleName=S3Access\n&Version=2010-05-08\n&AUTHPARAMS\n      </queryrequest>\n\t\t\t<queryresponse>\n<GetRoleResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n  <GetRoleResult>\n    <Role>\n      <Path>/application_abc/component_xyz/</Path>\n      <Arn>arn:aws:iam::123456789012:role/application_abc/component_xyz/S3Access</Arn>\n      <RoleName>S3Access</RoleName>\n      <AssumeRolePolicyDocument>{\"Version\":\"2012-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\"Principal\":{\"Service\":[\"ec2.amazonaws.com\"]},\"Action\":[\"sts:AssumeRole\"]}]}</AssumeRolePolicyDocument>\n      <CreateDate>2012-05-08T23:34:01Z</CreateDate>\n      <RoleId>AROADBQP57FF2AEXAMPLE</RoleId>\n    </Role>\n  </GetRoleResult>\n  <ResponseMetadata>\n    <RequestId>df37e965-9967-11e1-a4c3-270EXAMPLE04</RequestId>\n  </ResponseMetadata>\n</GetRoleResponse>\n      </queryresponse>\n\t\t</examples>\n\t"
     },
     "GetRolePolicy": {
       "name": "GetRolePolicy",
@@ -2966,20 +2966,20 @@
         "documentation": "\n\t\t<p>Contains the result of a successful invocation of the <a>GetRolePolicy</a> action.</p>\n\t"
       },
       "errors": [
-        {
-          "shape_name": "NoSuchEntityException",
-          "type": "structure",
-          "members": {
-            "message": {
-              "shape_name": "noSuchEntityMessage",
-              "type": "string",
-              "documentation": " "
-            }
-          },
-          "documentation": "\n\t\t<p>The request was rejected because it referenced an entity that does not exist. The error\n\t\t\tmessage describes the entity.</p>\n\t"
-        }
+      {
+        "shape_name": "NoSuchEntityException",
+        "type": "structure",
+        "members": {
+          "message": {
+            "shape_name": "noSuchEntityMessage",
+            "type": "string",
+            "documentation": " "
+          }
+        },
+        "documentation": "\n\t\t<p>The request was rejected because it referenced an entity that does not exist. The error\n\t\t\tmessage describes the entity.</p>\n\t"
+      }
       ],
-      "documentation": "\n\t\t<p>Retrieves the specified policy document for the specified role. For more information about\n\t\t\troles, go to <a href=\"http://docs.aws.amazon.com/IAM/latest/UserGuide/WorkingWithRoles.html\">Working with\n\t\t\t\tRoles</a>.</p>\n\t\t<p>The returned policy is URL-encoded according to RFC 3986. For more information about RFC\n\t\t\t3986, go to <a href=\"http://www.faqs.org/rfcs/rfc3986.html\">http://www.faqs.org/rfcs/rfc3986.html</a>.</p>\n\t\t<examples>\n\t\t\t<queryrequest>\nhttps://iam.amazonaws.com/\n?Action=GetRolePolicy\n&PolicyName=S3AccessPolicy\n&RoleName=S3Access\n&Version=2010-05-08\n&AUTHPARAMS\n      </queryrequest>\n\t\t\t<queryresponse>\n<GetRolePolicyResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n  <GetRolePolicyResult>\n    <PolicyName>S3AccessPolicy</PolicyName>\n    <RoleName>S3Access</RoleName>\n    <PolicyDocument>{\"Version\":\"2012-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\"Action\":[\"s3:*\"],\"Resource\":[\"*\"]}]}</PolicyDocument>\n  </GetRolePolicyResult>\n  <ResponseMetadata>\n    <RequestId>7e7cd8bc-99ef-11e1-a4c3-27EXAMPLE804</RequestId>\n  </ResponseMetadata>\n</GetRolePolicyResponse>\n      </queryresponse>\n\t\t</examples>\n\t"
+        "documentation": "\n\t\t<p>Retrieves the specified policy document for the specified role. For more information about\n\t\t\troles, go to <a href=\"http://docs.aws.amazon.com/IAM/latest/UserGuide/WorkingWithRoles.html\">Working with\n\t\t\t\tRoles</a>.</p>\n\t\t<p>The returned policy is URL-encoded according to RFC 3986. For more information about RFC\n\t\t\t3986, go to <a href=\"http://www.faqs.org/rfcs/rfc3986.html\">http://www.faqs.org/rfcs/rfc3986.html</a>.</p>\n\t\t<examples>\n\t\t\t<queryrequest>\nhttps://iam.amazonaws.com/\n?Action=GetRolePolicy\n&PolicyName=S3AccessPolicy\n&RoleName=S3Access\n&Version=2010-05-08\n&AUTHPARAMS\n      </queryrequest>\n\t\t\t<queryresponse>\n<GetRolePolicyResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n  <GetRolePolicyResult>\n    <PolicyName>S3AccessPolicy</PolicyName>\n    <RoleName>S3Access</RoleName>\n    <PolicyDocument>{\"Version\":\"2012-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\"Action\":[\"s3:*\"],\"Resource\":[\"*\"]}]}</PolicyDocument>\n  </GetRolePolicyResult>\n  <ResponseMetadata>\n    <RequestId>7e7cd8bc-99ef-11e1-a4c3-27EXAMPLE804</RequestId>\n  </ResponseMetadata>\n</GetRolePolicyResponse>\n      </queryresponse>\n\t\t</examples>\n\t"
     },
     "GetSAMLProvider": {
       "name": "GetSAMLProvider",
@@ -3023,32 +3023,32 @@
         "documentation": "\n\t\t<p>Contains the result of a successful invocation of the <a>GetSAMLProvider</a> action.</p>\n\t"
       },
       "errors": [
-        {
-          "shape_name": "NoSuchEntityException",
-          "type": "structure",
-          "members": {
-            "message": {
-              "shape_name": "noSuchEntityMessage",
-              "type": "string",
-              "documentation": " "
-            }
-          },
-          "documentation": "\n\t\t<p>The request was rejected because it referenced an entity that does not exist. The error\n\t\t\tmessage describes the entity.</p>\n\t"
+      {
+        "shape_name": "NoSuchEntityException",
+        "type": "structure",
+        "members": {
+          "message": {
+            "shape_name": "noSuchEntityMessage",
+            "type": "string",
+            "documentation": " "
+          }
         },
-        {
-          "shape_name": "InvalidInputException",
-          "type": "structure",
-          "members": {
-            "message": {
-              "shape_name": "invalidInputMessage",
-              "type": "string",
-              "documentation": null
-            }
-          },
-          "documentation": null
-        }
+        "documentation": "\n\t\t<p>The request was rejected because it referenced an entity that does not exist. The error\n\t\t\tmessage describes the entity.</p>\n\t"
+      },
+      {
+        "shape_name": "InvalidInputException",
+        "type": "structure",
+        "members": {
+          "message": {
+            "shape_name": "invalidInputMessage",
+            "type": "string",
+            "documentation": null
+          }
+        },
+        "documentation": null
+      }
       ],
-      "documentation": "\n\t\t<p>Returns the SAML provider metadocument that was uploaded when the provider was created or\n\t\t\tupdated.</p>\n\t\t<note>This operation requires <a href=\"http://docs.aws.amazon.com/general/latest/gr/signature-version-4.html\">Signature Version\n\t\t\t4</a>.\n\t\t</note>\n\t\t\n\t\t<examples>\n\t\t\t<queryrequest>\nhttps://iam.amazonaws.com/\n?Action=GetSAMLProvider\n&Name=arn:aws:iam::123456789012:saml-metadata/MyUniversity\n&Version=2010-05-08\n&AUTHPARAMS\n      </queryrequest>\n\t\t\t<queryresponse>\n<GetSAMLProviderResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n  <GetSAMLProviderResult>\n    <CreateDate>2012-05-09T16:27:11Z</CreateDate>\n    <ValidUntil>2015-12-31T211:59:59Z</ValidUntil>\n    <SAMLMetadataDocument>Pd9fexDssTkRgGNqs...DxptfEs==</SAMLMetadataDocument>\n  </GetSAMLProviderResult>\n  <ResponseMetadata>\n    <RequestId>29f47818-99f5-11e1-a4c3-27EXAMPLE804</RequestId>\n  </ResponseMetadata>\n</GetSAMLProviderResponse>\n      </queryresponse>\n\t\t</examples>\n\t"
+        "documentation": "\n\t\t<p>Returns the SAML provider metadocument that was uploaded when the provider was created or\n\t\t\tupdated.</p>\n\t\t<note>This operation requires <a href=\"http://docs.aws.amazon.com/general/latest/gr/signature-version-4.html\">Signature Version\n\t\t\t4</a>.\n\t\t</note>\n\t\t\n\t\t<examples>\n\t\t\t<queryrequest>\nhttps://iam.amazonaws.com/\n?Action=GetSAMLProvider\n&Name=arn:aws:iam::123456789012:saml-metadata/MyUniversity\n&Version=2010-05-08\n&AUTHPARAMS\n      </queryrequest>\n\t\t\t<queryresponse>\n<GetSAMLProviderResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n  <GetSAMLProviderResult>\n    <CreateDate>2012-05-09T16:27:11Z</CreateDate>\n    <ValidUntil>2015-12-31T211:59:59Z</ValidUntil>\n    <SAMLMetadataDocument>Pd9fexDssTkRgGNqs...DxptfEs==</SAMLMetadataDocument>\n  </GetSAMLProviderResult>\n  <ResponseMetadata>\n    <RequestId>29f47818-99f5-11e1-a4c3-27EXAMPLE804</RequestId>\n  </ResponseMetadata>\n</GetSAMLProviderResponse>\n      </queryresponse>\n\t\t</examples>\n\t"
     },
     "GetServerCertificate": {
       "name": "GetServerCertificate",
@@ -3149,20 +3149,20 @@
         "documentation": "\n\t\t<p>Contains the result of a successful invocation of the <a>GetServerCertificate</a> action.</p>\n\t"
       },
       "errors": [
-        {
-          "shape_name": "NoSuchEntityException",
-          "type": "structure",
-          "members": {
-            "message": {
-              "shape_name": "noSuchEntityMessage",
-              "type": "string",
-              "documentation": " "
-            }
-          },
-          "documentation": "\n\t\t<p>The request was rejected because it referenced an entity that does not exist. The error\n\t\t\tmessage describes the entity.</p>\n\t"
-        }
+      {
+        "shape_name": "NoSuchEntityException",
+        "type": "structure",
+        "members": {
+          "message": {
+            "shape_name": "noSuchEntityMessage",
+            "type": "string",
+            "documentation": " "
+          }
+        },
+        "documentation": "\n\t\t<p>The request was rejected because it referenced an entity that does not exist. The error\n\t\t\tmessage describes the entity.</p>\n\t"
+      }
       ],
-      "documentation": "\n\t\t<p>Retrieves information about the specified server certificate.</p>\n\t\t<examples>\n\t\t\t<queryrequest>\nhttps://iam.amazonaws.com/\n?Action=GetServerCertificate\n&ServerCertificateName=ProdServerCert\n&Version=2010-05-08\n&AUTHPARAMS\n      </queryrequest>\n\t\t\t<queryresponse>\n<GetServerCertificateResponse>\n  <GetServerCertificateResult>\n    <ServerCertificate>\n      <ServerCertificateMetadata>\n        <ServerCertificateName>ProdServerCert</ServerCertificateName>\n        <Path>/company/servercerts/</Path>\n        <Arn>arn:aws:iam::123456789012:server-certificate/company/servercerts/ProdServerCert</Arn>\n        <UploadDate>2010-05-08T01:02:03.004Z</UploadDate>\n        <ServerCertificateId>ASCACKCEVSQ6C2EXAMPLE</ServerCertificateId>\n      </ServerCertificateMetadata>\n      <CertificateBody>-----BEGIN CERTIFICATE-----\nMIICdzCCAeCgAwIBAgIGANc+Ha2wMA0GCSqGSIb3DQEBBQUAMFMxCzAJBgNVBAYT\nAlVTMRMwEQYDVQQKEwpBbWF6b24uY29tMQwwCgYDVQQLEwNBV1MxITAfBgNVBAMT\nGEFXUyBMaW1pdGVkLUFzc3VyYW5jZSBDQTAeFw0wOTAyMDQxNzE5MjdaFw0xMDAy\nMDQxNzE5MjdaMFIxCzAJBgNVBAYTAlVTMRMwEQYDVQQKEwpBbWF6b24uY29tMRcw\nFQYDVQQLEw5BV1MtRGV2ZWxvcGVyczEVMBMGA1UEAxMMNTdxNDl0c3ZwYjRtMIGf\nMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCpB/vsOwmT/O0td1RqzKjttSBaPjbr\ndqwNe9BrOyB08fw2+Ch5oonZYXfGUrT6mkYXH5fQot9HvASrzAKHO596FdJA6DmL\nywdWe1Oggk7zFSXO1Xv+3vPrJtaYxYo3eRIp7w80PMkiOv6M0XK8ubcTouODeJbf\nsuDqcLnLDxwsvwIDAQABo1cwVTAOBgNVHQ8BAf8EBAMCBaAwFgYDVR0lAQH/BAww\nCgYIKwYBBQUHAwIwDAYDVR0TAQH/BAIwADAdBgNVHQ4EFgQULGNaBphBumaKbDRK\nCAi0mH8B3mowDQYJKoZIhvcNAQEFBQADgYEAuKxhkXaCLGcqDuweKtO/AEw9ZePH\nwr0XqsaIK2HZboqruebXEGsojK4Ks0WzwgrEynuHJwTn760xe39rSqXWIOGrOBaX\nwFpWHVjTFMKk+tSDG1lssLHyYWWdFFU4AnejRGORJYNaRHgVTKjHphc5jEhHm0BX\nAEaHzTpmEXAMPLE=\n-----END CERTIFICATE-----\n      </CertificateBody>\n    </ServerCertificate>\n  </GetServerCertificateResult>\n  <ResponseMetadata>\n    <RequestId>7a62c49f-347e-4fc4-9331-6e8eEXAMPLE</RequestId>\n  </ResponseMetadata>\n</GetServerCertificateResponse>\n      </queryresponse>\n\t\t</examples>\n\t"
+        "documentation": "\n\t\t<p>Retrieves information about the specified server certificate.</p>\n\t\t<examples>\n\t\t\t<queryrequest>\nhttps://iam.amazonaws.com/\n?Action=GetServerCertificate\n&ServerCertificateName=ProdServerCert\n&Version=2010-05-08\n&AUTHPARAMS\n      </queryrequest>\n\t\t\t<queryresponse>\n<GetServerCertificateResponse>\n  <GetServerCertificateResult>\n    <ServerCertificate>\n      <ServerCertificateMetadata>\n        <ServerCertificateName>ProdServerCert</ServerCertificateName>\n        <Path>/company/servercerts/</Path>\n        <Arn>arn:aws:iam::123456789012:server-certificate/company/servercerts/ProdServerCert</Arn>\n        <UploadDate>2010-05-08T01:02:03.004Z</UploadDate>\n        <ServerCertificateId>ASCACKCEVSQ6C2EXAMPLE</ServerCertificateId>\n      </ServerCertificateMetadata>\n      <CertificateBody>-----BEGIN CERTIFICATE-----\nMIICdzCCAeCgAwIBAgIGANc+Ha2wMA0GCSqGSIb3DQEBBQUAMFMxCzAJBgNVBAYT\nAlVTMRMwEQYDVQQKEwpBbWF6b24uY29tMQwwCgYDVQQLEwNBV1MxITAfBgNVBAMT\nGEFXUyBMaW1pdGVkLUFzc3VyYW5jZSBDQTAeFw0wOTAyMDQxNzE5MjdaFw0xMDAy\nMDQxNzE5MjdaMFIxCzAJBgNVBAYTAlVTMRMwEQYDVQQKEwpBbWF6b24uY29tMRcw\nFQYDVQQLEw5BV1MtRGV2ZWxvcGVyczEVMBMGA1UEAxMMNTdxNDl0c3ZwYjRtMIGf\nMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCpB/vsOwmT/O0td1RqzKjttSBaPjbr\ndqwNe9BrOyB08fw2+Ch5oonZYXfGUrT6mkYXH5fQot9HvASrzAKHO596FdJA6DmL\nywdWe1Oggk7zFSXO1Xv+3vPrJtaYxYo3eRIp7w80PMkiOv6M0XK8ubcTouODeJbf\nsuDqcLnLDxwsvwIDAQABo1cwVTAOBgNVHQ8BAf8EBAMCBaAwFgYDVR0lAQH/BAww\nCgYIKwYBBQUHAwIwDAYDVR0TAQH/BAIwADAdBgNVHQ4EFgQULGNaBphBumaKbDRK\nCAi0mH8B3mowDQYJKoZIhvcNAQEFBQADgYEAuKxhkXaCLGcqDuweKtO/AEw9ZePH\nwr0XqsaIK2HZboqruebXEGsojK4Ks0WzwgrEynuHJwTn760xe39rSqXWIOGrOBaX\nwFpWHVjTFMKk+tSDG1lssLHyYWWdFFU4AnejRGORJYNaRHgVTKjHphc5jEhHm0BX\nAEaHzTpmEXAMPLE=\n-----END CERTIFICATE-----\n      </CertificateBody>\n    </ServerCertificate>\n  </GetServerCertificateResult>\n  <ResponseMetadata>\n    <RequestId>7a62c49f-347e-4fc4-9331-6e8eEXAMPLE</RequestId>\n  </ResponseMetadata>\n</GetServerCertificateResponse>\n      </queryresponse>\n\t\t</examples>\n\t"
     },
     "GetUser": {
       "name": "GetUser",
@@ -3238,20 +3238,20 @@
         "documentation": "\n\t\t<p>Contains the result of a successful invocation of the <a>GetUser</a> action.</p>\n\t"
       },
       "errors": [
-        {
-          "shape_name": "NoSuchEntityException",
-          "type": "structure",
-          "members": {
-            "message": {
-              "shape_name": "noSuchEntityMessage",
-              "type": "string",
-              "documentation": " "
-            }
-          },
-          "documentation": "\n\t\t<p>The request was rejected because it referenced an entity that does not exist. The error\n\t\t\tmessage describes the entity.</p>\n\t"
-        }
+      {
+        "shape_name": "NoSuchEntityException",
+        "type": "structure",
+        "members": {
+          "message": {
+            "shape_name": "noSuchEntityMessage",
+            "type": "string",
+            "documentation": " "
+          }
+        },
+        "documentation": "\n\t\t<p>The request was rejected because it referenced an entity that does not exist. The error\n\t\t\tmessage describes the entity.</p>\n\t"
+      }
       ],
-      "documentation": "\n\t\t<p>Retrieves information about the specified user, including the user's path, unique ID, and\n\t\t\tARN.</p>\n\t\t<p>If you do not specify a user name, IAM determines the user name implicitly based on the AWS\n\t\t\taccess key ID signing the request.</p>\n\t\t<examples>\n\t\t\t<queryrequest>\nhttps://iam.amazonaws.com/\n?Action=GetUser\n&UserName=Bob\n&Version=2010-05-08\n&AUTHPARAMS\n      </queryrequest>\n\t\t\t<queryresponse>\n<GetUserResponse>\n   <GetUserResult>\n      <User>\n         <Path>/division_abc/subdivision_xyz/</Path>\n         <UserName>Bob</UserName>\n         <UserId>AIDACKCEVSQ6C2EXAMPLE</UserId>\n         <Arn>\n         arn:aws:iam::123456789012:user/division_abc/subdivision_xyz/Bob\n         </Arn>\n      </User>\n   </GetUserResult>\n   <ResponseMetadata>\n      <RequestId>7a62c49f-347e-4fc4-9331-6e8eEXAMPLE</RequestId>\n   </ResponseMetadata>\n</GetUserResponse>\n      </queryresponse>\n\t\t</examples>\n\t"
+        "documentation": "\n\t\t<p>Retrieves information about the specified user, including the user's path, unique ID, and\n\t\t\tARN.</p>\n\t\t<p>If you do not specify a user name, IAM determines the user name implicitly based on the AWS\n\t\t\taccess key ID signing the request.</p>\n\t\t<examples>\n\t\t\t<queryrequest>\nhttps://iam.amazonaws.com/\n?Action=GetUser\n&UserName=Bob\n&Version=2010-05-08\n&AUTHPARAMS\n      </queryrequest>\n\t\t\t<queryresponse>\n<GetUserResponse>\n   <GetUserResult>\n      <User>\n         <Path>/division_abc/subdivision_xyz/</Path>\n         <UserName>Bob</UserName>\n         <UserId>AIDACKCEVSQ6C2EXAMPLE</UserId>\n         <Arn>\n         arn:aws:iam::123456789012:user/division_abc/subdivision_xyz/Bob\n         </Arn>\n      </User>\n   </GetUserResult>\n   <ResponseMetadata>\n      <RequestId>7a62c49f-347e-4fc4-9331-6e8eEXAMPLE</RequestId>\n   </ResponseMetadata>\n</GetUserResponse>\n      </queryresponse>\n\t\t</examples>\n\t"
     },
     "GetUserPolicy": {
       "name": "GetUserPolicy",
@@ -3315,20 +3315,20 @@
         "documentation": "\n\t\t<p>Contains the result of a successful invocation of the <a>GetUserPolicy</a> action.</p>\n\t"
       },
       "errors": [
-        {
-          "shape_name": "NoSuchEntityException",
-          "type": "structure",
-          "members": {
-            "message": {
-              "shape_name": "noSuchEntityMessage",
-              "type": "string",
-              "documentation": " "
-            }
-          },
-          "documentation": "\n\t\t<p>The request was rejected because it referenced an entity that does not exist. The error\n\t\t\tmessage describes the entity.</p>\n\t"
-        }
+      {
+        "shape_name": "NoSuchEntityException",
+        "type": "structure",
+        "members": {
+          "message": {
+            "shape_name": "noSuchEntityMessage",
+            "type": "string",
+            "documentation": " "
+          }
+        },
+        "documentation": "\n\t\t<p>The request was rejected because it referenced an entity that does not exist. The error\n\t\t\tmessage describes the entity.</p>\n\t"
+      }
       ],
-      "documentation": "\n\t\t<p>Retrieves the specified policy document for the specified user. The returned policy is\n\t\t\tURL-encoded according to RFC 3986. For more information about RFC 3986, go to <a href=\"http://www.faqs.org/rfcs/rfc3986.html\">http://www.faqs.org/rfcs/rfc3986.html</a>.</p>\n\t\t<examples>\n\t\t\t<queryrequest>\nhttps://iam.amazonaws.com/\n?Action=GetUserPolicy\n&UserName=Bob\n&PolicyName=AllAccessPolicy\n&AUTHPARAMS\n      </queryrequest>\n\t\t\t<queryresponse>\n<GetUserPolicyResponse>\n   <GetUserPolicyResult>\n      <UserName>Bob</UserName>\n      <PolicyName>AllAccessPolicy</PolicyName>\n      <PolicyDocument>\n      {\"Version\":\"2012-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\"Action\":\"*\",\"Resource\":\"*\"}]}\n      </PolicyDocument>\n   </GetUserPolicyResult>\n   <ResponseMetadata>\n      <RequestId>7a62c49f-347e-4fc4-9331-6e8eEXAMPLE</RequestId>\n   </ResponseMetadata>\n</GetUserPolicyResponse>\n      </queryresponse>\n\t\t</examples>\n\t"
+        "documentation": "\n\t\t<p>Retrieves the specified policy document for the specified user. The returned policy is\n\t\t\tURL-encoded according to RFC 3986. For more information about RFC 3986, go to <a href=\"http://www.faqs.org/rfcs/rfc3986.html\">http://www.faqs.org/rfcs/rfc3986.html</a>.</p>\n\t\t<examples>\n\t\t\t<queryrequest>\nhttps://iam.amazonaws.com/\n?Action=GetUserPolicy\n&UserName=Bob\n&PolicyName=AllAccessPolicy\n&AUTHPARAMS\n      </queryrequest>\n\t\t\t<queryresponse>\n<GetUserPolicyResponse>\n   <GetUserPolicyResult>\n      <UserName>Bob</UserName>\n      <PolicyName>AllAccessPolicy</PolicyName>\n      <PolicyDocument>\n      {\"Version\":\"2012-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\"Action\":\"*\",\"Resource\":\"*\"}]}\n      </PolicyDocument>\n   </GetUserPolicyResult>\n   <ResponseMetadata>\n      <RequestId>7a62c49f-347e-4fc4-9331-6e8eEXAMPLE</RequestId>\n   </ResponseMetadata>\n</GetUserPolicyResponse>\n      </queryresponse>\n\t\t</examples>\n\t"
     },
     "ListAccessKeys": {
       "name": "ListAccessKeys",
@@ -3394,8 +3394,8 @@
                   "type": "string",
                   "enum": [
                     "Active",
-                    "Inactive"
-                  ],
+                  "Inactive"
+                    ],
                   "documentation": "\n\t\t<p>The status of the access key. <code>Active</code> means the key is valid for API calls, while\n\t\t\t\t<code>Inactive</code> means it is not.</p>\n\t"
                 },
                 "CreateDate": {
@@ -3426,20 +3426,20 @@
         "documentation": "\n\t\t<p>Contains the result of a successful invocation of the <a>ListAccessKeys</a> action.</p>\n\t"
       },
       "errors": [
-        {
-          "shape_name": "NoSuchEntityException",
-          "type": "structure",
-          "members": {
-            "message": {
-              "shape_name": "noSuchEntityMessage",
-              "type": "string",
-              "documentation": " "
-            }
-          },
-          "documentation": "\n\t\t<p>The request was rejected because it referenced an entity that does not exist. The error\n\t\t\tmessage describes the entity.</p>\n\t"
-        }
+      {
+        "shape_name": "NoSuchEntityException",
+        "type": "structure",
+        "members": {
+          "message": {
+            "shape_name": "noSuchEntityMessage",
+            "type": "string",
+            "documentation": " "
+          }
+        },
+        "documentation": "\n\t\t<p>The request was rejected because it referenced an entity that does not exist. The error\n\t\t\tmessage describes the entity.</p>\n\t"
+      }
       ],
-      "documentation": "\n\t\t<p>Returns information about the access key IDs associated with the specified user. If there are\n\t\t\tnone, the action returns an empty list.</p>\n\t\t<p>Although each user is limited to a small number of keys, you can still paginate the results\n\t\t\tusing the <code>MaxItems</code> and <code>Marker</code> parameters.</p>\n\t\t<p>If the <code>UserName</code> field is not specified, the UserName is determined implicitly\n\t\t\tbased on the AWS access key ID used to sign the request. Because this action works for access\n\t\t\tkeys under the AWS account, this API can be used to manage root credentials even if the AWS\n\t\t\taccount has no associated users.</p>\n\t\t<note>To ensure the security of your AWS account, the secret access key is accessible only\n\t\t\tduring key and user creation.</note>\n\t\t<examples>\n\t\t\t<queryrequest>\nhttps://iam.amazonaws.com/\n?Action=ListAccessKeys\n&UserName=Bob\n&Version=2010-05-08\n&AUTHPARAMS\n      </queryrequest>\n\t\t\t<queryresponse>\n<ListAccessKeysResponse>\n   <ListAccessKeysResult>\n      <UserName>Bob</UserName>\n      <AccessKeyMetadata>\n         <member>\n            <UserName>Bob</UserName>\n            <AccessKeyId>AKIAIOSFODNN7EXAMPLE</AccessKeyId>\n            <Status>Active</Status>\n         </member>\n         <member>\n            <UserName>Bob</UserName>\n            <AccessKeyId>AKIAI44QH8DHBEXAMPLE</AccessKeyId>\n            <Status>Inactive</Status>\n         </member>\n      </AccessKeyMetadata>\n      <IsTruncated>false</IsTruncated>\n   </ListAccessKeysResult>\n   <ResponseMetadata>\n      <RequestId>7a62c49f-347e-4fc4-9331-6e8eEXAMPLE</RequestId>\n   </ResponseMetadata>\n</ListAccessKeysResponse>\n      </queryresponse>\n\t\t</examples>\n\t"
+        "documentation": "\n\t\t<p>Returns information about the access key IDs associated with the specified user. If there are\n\t\t\tnone, the action returns an empty list.</p>\n\t\t<p>Although each user is limited to a small number of keys, you can still paginate the results\n\t\t\tusing the <code>MaxItems</code> and <code>Marker</code> parameters.</p>\n\t\t<p>If the <code>UserName</code> field is not specified, the UserName is determined implicitly\n\t\t\tbased on the AWS access key ID used to sign the request. Because this action works for access\n\t\t\tkeys under the AWS account, this API can be used to manage root credentials even if the AWS\n\t\t\taccount has no associated users.</p>\n\t\t<note>To ensure the security of your AWS account, the secret access key is accessible only\n\t\t\tduring key and user creation.</note>\n\t\t<examples>\n\t\t\t<queryrequest>\nhttps://iam.amazonaws.com/\n?Action=ListAccessKeys\n&UserName=Bob\n&Version=2010-05-08\n&AUTHPARAMS\n      </queryrequest>\n\t\t\t<queryresponse>\n<ListAccessKeysResponse>\n   <ListAccessKeysResult>\n      <UserName>Bob</UserName>\n      <AccessKeyMetadata>\n         <member>\n            <UserName>Bob</UserName>\n            <AccessKeyId>AKIAIOSFODNN7EXAMPLE</AccessKeyId>\n            <Status>Active</Status>\n         </member>\n         <member>\n            <UserName>Bob</UserName>\n            <AccessKeyId>AKIAI44QH8DHBEXAMPLE</AccessKeyId>\n            <Status>Inactive</Status>\n         </member>\n      </AccessKeyMetadata>\n      <IsTruncated>false</IsTruncated>\n   </ListAccessKeysResult>\n   <ResponseMetadata>\n      <RequestId>7a62c49f-347e-4fc4-9331-6e8eEXAMPLE</RequestId>\n   </ResponseMetadata>\n</ListAccessKeysResponse>\n      </queryresponse>\n\t\t</examples>\n\t"
     },
     "ListAccountAliases": {
       "name": "ListAccountAliases",
@@ -3501,7 +3501,7 @@
       },
       "errors": [
 
-      ],
+        ],
       "documentation": "\n\t\t<p>Lists the account aliases associated with the account. For information about using an AWS\n\t\t\taccount alias, see <a href=\"http://docs.aws.amazon.com/IAM/latest/UserGuide/AccountAlias.html\" target=\"_blank\">Using an Alias for Your AWS Account ID</a> in <i>Using AWS Identity and\n\t\t\t\tAccess Management</i>.</p>\n\t\t<p>You can paginate the results using the <code>MaxItems</code> and <code>Marker</code>\n\t\t\tparameters.</p>\n\t\t<examples>\n\t\t\t<queryrequest>\nhttps://iam.amazonaws.com/\n?Action=ListAccountAliases\n&Version=2010-05-08\n&AUTHPARAMS      \n      </queryrequest>\n\t\t\t<queryresponse>\n<ListAccountAliasesResponse>\n  <ListAccountAliasesResult>\n    <IsTruncated>false</IsTruncated>\n    <AccountAliases>\n      <member>foocorporation</member>\n    </AccountAliases>\n  </ListAccountAliasesResult>\n  <ResponseMetadata>\n    <RequestId>c5a076e9-f1b0-11df-8fbe-45274EXAMPLE</RequestId>\n  </ResponseMetadata>\n</ListAccountAliasesResponse>\n      </queryresponse>\n\t\t</examples>\n\t"
     },
     "ListGroupPolicies": {
@@ -3572,20 +3572,20 @@
         "documentation": "\n\t\t<p>Contains the result of a successful invocation of the <a>ListGroupPolicies</a> action.</p>\n\t"
       },
       "errors": [
-        {
-          "shape_name": "NoSuchEntityException",
-          "type": "structure",
-          "members": {
-            "message": {
-              "shape_name": "noSuchEntityMessage",
-              "type": "string",
-              "documentation": " "
-            }
-          },
-          "documentation": "\n\t\t<p>The request was rejected because it referenced an entity that does not exist. The error\n\t\t\tmessage describes the entity.</p>\n\t"
-        }
+      {
+        "shape_name": "NoSuchEntityException",
+        "type": "structure",
+        "members": {
+          "message": {
+            "shape_name": "noSuchEntityMessage",
+            "type": "string",
+            "documentation": " "
+          }
+        },
+        "documentation": "\n\t\t<p>The request was rejected because it referenced an entity that does not exist. The error\n\t\t\tmessage describes the entity.</p>\n\t"
+      }
       ],
-      "documentation": "\n\t\t<p>Lists the names of the policies associated with the specified group. If there are none, the\n\t\t\taction returns an empty list.</p>\n\t\t<p>You can paginate the results using the <code>MaxItems</code> and <code>Marker</code>\n\t\t\tparameters.</p>\n\t\t<examples>\n\t\t\t<queryrequest>\nhttps://iam.amazonaws.com/\n?Action=ListGroupPolicies\n&GroupName=Admins\n&AUTHPARAMS\n      </queryrequest>\n\t\t\t<queryresponse>\n<ListGroupPoliciesResponse>\n   <ListGroupPoliciesResult>\n      <PolicyNames>\n         <member>AdminRoot</member>\n         <member>KeyPolicy</member>\n      </PolicyNames>\n      <IsTruncated>false</IsTruncated>\n   </ListGroupPoliciesResult>\n   <ResponseMetadata>\n      <RequestId>7a62c49f-347e-4fc4-9331-6e8eEXAMPLE</RequestId>\n   </ResponseMetadata>\n</ListGroupPoliciesResponse>\n      </queryresponse>\n\t\t</examples>\n\t"
+        "documentation": "\n\t\t<p>Lists the names of the policies associated with the specified group. If there are none, the\n\t\t\taction returns an empty list.</p>\n\t\t<p>You can paginate the results using the <code>MaxItems</code> and <code>Marker</code>\n\t\t\tparameters.</p>\n\t\t<examples>\n\t\t\t<queryrequest>\nhttps://iam.amazonaws.com/\n?Action=ListGroupPolicies\n&GroupName=Admins\n&AUTHPARAMS\n      </queryrequest>\n\t\t\t<queryresponse>\n<ListGroupPoliciesResponse>\n   <ListGroupPoliciesResult>\n      <PolicyNames>\n         <member>AdminRoot</member>\n         <member>KeyPolicy</member>\n      </PolicyNames>\n      <IsTruncated>false</IsTruncated>\n   </ListGroupPoliciesResult>\n   <ResponseMetadata>\n      <RequestId>7a62c49f-347e-4fc4-9331-6e8eEXAMPLE</RequestId>\n   </ResponseMetadata>\n</ListGroupPoliciesResponse>\n      </queryresponse>\n\t\t</examples>\n\t"
     },
     "ListGroups": {
       "name": "ListGroups",
@@ -3695,7 +3695,7 @@
       },
       "errors": [
 
-      ],
+        ],
       "documentation": "\n\t\t<p>Lists the groups that have the specified path prefix.</p>\n\t\t<p>You can paginate the results using the <code>MaxItems</code> and <code>Marker</code>\n\t\t\tparameters.</p>\n\t\t<examples>\n\t\t\t<queryrequest>\nhttps://iam.amazonaws.com/\n?Action=ListGroups\n&PathPrefix=/division_abc/subdivision_xyz/\n&Version=2010-05-08\n&AUTHPARAMS\n      </queryrequest>\n\t\t\t<queryresponse>\n<ListGroupsResponse>\n   <ListGroupsResult>\n      <Groups>\n         <member>\n            <Path>/division_abc/subdivision_xyz/</Path>\n            <GroupName>Admins</GroupName>\n            <GroupId>AGPACKCEVSQ6C2EXAMPLE</GroupId>\n            <Arn>arn:aws:iam::123456789012:group/Admins</Arn>\n         </member>\n         <member>\n            <Path>/division_abc/subdivision_xyz/product_1234/engineering/\n            </Path>\n            <GroupName>Test</GroupName>\n            <GroupId>AGP2MAB8DPLSRHEXAMPLE</GroupId>\n            <Arn>arn:aws:iam::123456789012:group\n            /division_abc/subdivision_xyz/product_1234/engineering/Test</Arn>\n         </member>\n         <member>\n            <Path>/division_abc/subdivision_xyz/product_1234/</Path>\n            <GroupName>Managers</GroupName>\n            <GroupId>AGPIODR4TAW7CSEXAMPLE</GroupId>\n            <Arn>arn:aws:iam::123456789012\n            :group/division_abc/subdivision_xyz/product_1234/Managers</Arn>\n         </member>\n      </Groups>\n      <IsTruncated>false</IsTruncated>\n   </ListGroupsResult>\n   <ResponseMetadata>\n      <RequestId>7a62c49f-347e-4fc4-9331-6e8eEXAMPLE</RequestId>\n   </ResponseMetadata>\n</ListGroupsResponse>\n      </queryresponse>\n\t\t</examples>\n\t"
     },
     "ListGroupsForUser": {
@@ -3806,20 +3806,20 @@
         "documentation": "\n\t\t<p>Contains the result of a successful invocation of the <a>ListGroupsForUser</a> action.</p>\n\t"
       },
       "errors": [
-        {
-          "shape_name": "NoSuchEntityException",
-          "type": "structure",
-          "members": {
-            "message": {
-              "shape_name": "noSuchEntityMessage",
-              "type": "string",
-              "documentation": " "
-            }
-          },
-          "documentation": "\n\t\t<p>The request was rejected because it referenced an entity that does not exist. The error\n\t\t\tmessage describes the entity.</p>\n\t"
-        }
+      {
+        "shape_name": "NoSuchEntityException",
+        "type": "structure",
+        "members": {
+          "message": {
+            "shape_name": "noSuchEntityMessage",
+            "type": "string",
+            "documentation": " "
+          }
+        },
+        "documentation": "\n\t\t<p>The request was rejected because it referenced an entity that does not exist. The error\n\t\t\tmessage describes the entity.</p>\n\t"
+      }
       ],
-      "documentation": "\n\t\t<p>Lists the groups the specified user belongs to.</p>\n\t\t<p>You can paginate the results using the <code>MaxItems</code> and <code>Marker</code>\n\t\t\tparameters.</p>\n\t\t<examples>\n\t\t\t<queryrequest>\n\t\t\t\t\nhttps://iam.amazonaws.com/\n?Action=ListGroupsForUser\n&UserName=Bob\n&AUTHPARAMS\n      \n\t\t\t</queryrequest>\n\t\t\t<queryresponse>\n\t\t\t\t\n<ListGroupsForUserResponse> \n   <ListGroupsForUserResult>\n      <Groups>\n         <member>\n            <Path>/</Path>\n            <GroupName>Admins</GroupName>\n            <GroupId>AGPACKCEVSQ6C2EXAMPLE</GroupId>\n            <Arn>arn:aws:iam::123456789012:group/Admins</Arn>\n         </member>\n      </Groups>\n      <IsTruncated>false</IsTruncated>\n   </ListGroupsForUserResult>\n   <ResponseMetadata>\n      <RequestId>7a62c49f-347e-4fc4-9331-6e8eEXAMPLE</RequestId>\n   </ResponseMetadata>\n</ListGroupsForUserResponse>\n</queryresponse>\n\t\t</examples>\n\t"
+        "documentation": "\n\t\t<p>Lists the groups the specified user belongs to.</p>\n\t\t<p>You can paginate the results using the <code>MaxItems</code> and <code>Marker</code>\n\t\t\tparameters.</p>\n\t\t<examples>\n\t\t\t<queryrequest>\n\t\t\t\t\nhttps://iam.amazonaws.com/\n?Action=ListGroupsForUser\n&UserName=Bob\n&AUTHPARAMS\n      \n\t\t\t</queryrequest>\n\t\t\t<queryresponse>\n\t\t\t\t\n<ListGroupsForUserResponse> \n   <ListGroupsForUserResult>\n      <Groups>\n         <member>\n            <Path>/</Path>\n            <GroupName>Admins</GroupName>\n            <GroupId>AGPACKCEVSQ6C2EXAMPLE</GroupId>\n            <Arn>arn:aws:iam::123456789012:group/Admins</Arn>\n         </member>\n      </Groups>\n      <IsTruncated>false</IsTruncated>\n   </ListGroupsForUserResult>\n   <ResponseMetadata>\n      <RequestId>7a62c49f-347e-4fc4-9331-6e8eEXAMPLE</RequestId>\n   </ResponseMetadata>\n</ListGroupsForUserResponse>\n</queryresponse>\n\t\t</examples>\n\t"
     },
     "ListInstanceProfiles": {
       "name": "ListInstanceProfiles",
@@ -3991,7 +3991,7 @@
       },
       "errors": [
 
-      ],
+        ],
       "documentation": "\n\t\t<p>Lists the instance profiles that have the specified path prefix. If there are none, the\n\t\t\taction returns an empty list. For more information about instance profiles, go to <a href=\"http://docs.aws.amazon.com/IAM/latest/UserGuide/AboutInstanceProfiles.html\">About Instance\n\t\t\t\tProfiles</a>.</p>\n\t\t<p>You can paginate the results using the <code>MaxItems</code> and <code>Marker</code>\n\t\t\tparameters.</p>\n\t\t<examples>\n\t\t\t<queryrequest>\nhttps://iam.amazonaws.com/\n?Action=ListInstanceProfiles\n&MaxItems=100\n&PathPrefix=/application_abc/\n&Version=2010-05-08\n&AUTHPARAMS\n      </queryrequest>\n\t\t\t<queryresponse>\n<ListInstanceProfilesResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n  <ListInstanceProfilesResult>\n    <IsTruncated>false</IsTruncated>\n    <InstanceProfiles>\n      <member>\n        <Id>AIPACIFN4OZXG7EXAMPLE</Id>\n        <Roles/>\n        <InstanceProfileName>Database</InstanceProfileName>\n        <Path>/application_abc/component_xyz/</Path>\n        <Arn>arn:aws:iam::123456789012:instance-profile/application_abc/component_xyz/Database</Arn>\n        <CreateDate>2012-05-09T16:27:03Z</CreateDate>\n      </member>\n      <member>\n        <Id>AIPACZLSXM2EYYEXAMPLE</Id>\n        <Roles/>\n        <InstanceProfileName>Webserver</InstanceProfileName>\n        <Path>/application_abc/component_xyz/</Path>\n        <Arn>arn:aws:iam::123456789012:instance-profile/application_abc/component_xyz/Webserver</Arn>\n        <CreateDate>2012-05-09T16:27:11Z</CreateDate>\n      </member>\n    </InstanceProfiles>\n  </ListInstanceProfilesResult>\n  <ResponseMetadata>\n    <RequestId>fd74fa8d-99f3-11e1-a4c3-27EXAMPLE804</RequestId>\n  </ResponseMetadata>\n</ListInstanceProfilesResponse>\n      </queryresponse>\n\t\t</examples>\n\t"
     },
     "ListInstanceProfilesForRole": {
@@ -4164,20 +4164,20 @@
         "documentation": "\n\t\t<p>Contains the result of a successful invocation of the <a>ListInstanceProfilesForRole</a>\n\t\t\taction.</p>\n\t"
       },
       "errors": [
-        {
-          "shape_name": "NoSuchEntityException",
-          "type": "structure",
-          "members": {
-            "message": {
-              "shape_name": "noSuchEntityMessage",
-              "type": "string",
-              "documentation": " "
-            }
-          },
-          "documentation": "\n\t\t<p>The request was rejected because it referenced an entity that does not exist. The error\n\t\t\tmessage describes the entity.</p>\n\t"
-        }
+      {
+        "shape_name": "NoSuchEntityException",
+        "type": "structure",
+        "members": {
+          "message": {
+            "shape_name": "noSuchEntityMessage",
+            "type": "string",
+            "documentation": " "
+          }
+        },
+        "documentation": "\n\t\t<p>The request was rejected because it referenced an entity that does not exist. The error\n\t\t\tmessage describes the entity.</p>\n\t"
+      }
       ],
-      "documentation": "\n\t\t<p>Lists the instance profiles that have the specified associated role. If there are none, the\n\t\t\taction returns an empty list. For more information about instance profiles, go to <a href=\"http://docs.aws.amazon.com/IAM/latest/UserGuide/AboutInstanceProfiles.html\">About Instance\n\t\t\t\tProfiles</a>.</p>\n\t\t<p>You can paginate the results using the <code>MaxItems</code> and <code>Marker</code>\n\t\t\tparameters.</p>\n\t\t<examples>\n\t\t\t<queryrequest>\nhttps://iam.amazonaws.com/\n?Action=ListInstanceProfilesForRole\n&MaxItems=100\n&RoleName=S3Access\n&Version=2010-05-08\n&AUTHPARAMS\n      </queryrequest>\n\t\t\t<queryresponse>\n<ListInstanceProfilesForRoleResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n  <ListInstanceProfilesForRoleResult>\n    <IsTruncated>false</IsTruncated>\n    <InstanceProfiles>\n      <member>\n        <Id>AIPACZLS2EYYXMEXAMPLE</Id>\n        <Roles>\n          <member>\n            <Path>/application_abc/component_xyz/</Path>\n            <Arn>arn:aws:iam::123456789012:role/application_abc/component_xyz/S3Access</Arn>\n            <RoleName>S3Access</RoleName>\n            <AssumeRolePolicyDocument>{\"Version\":\"2012-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\"Principal\":{\"Service\":[\"ec2.amazonaws.com\"]},\"Action\":[\"sts:AssumeRole\"]}]}</AssumeRolePolicyDocument>\n            <CreateDate>2012-05-09T15:45:35Z</CreateDate>\n            <RoleId>AROACVSVTSZYK3EXAMPLE</RoleId>\n          </member>\n        </Roles>\n        <InstanceProfileName>Webserver</InstanceProfileName>\n        <Path>/application_abc/component_xyz/</Path>\n        <Arn>arn:aws:iam::123456789012:instance-profile/application_abc/component_xyz/Webserver</Arn>\n        <CreateDate>2012-05-09T16:27:11Z</CreateDate>\n      </member>\n    </InstanceProfiles>\n  </ListInstanceProfilesForRoleResult>\n  <ResponseMetadata>\n    <RequestId>6a8c3992-99f4-11e1-a4c3-27EXAMPLE804</RequestId>\n  </ResponseMetadata>\n</ListInstanceProfilesForRoleResponse>\n\n      </queryresponse>\n\t\t</examples>\n\t"
+        "documentation": "\n\t\t<p>Lists the instance profiles that have the specified associated role. If there are none, the\n\t\t\taction returns an empty list. For more information about instance profiles, go to <a href=\"http://docs.aws.amazon.com/IAM/latest/UserGuide/AboutInstanceProfiles.html\">About Instance\n\t\t\t\tProfiles</a>.</p>\n\t\t<p>You can paginate the results using the <code>MaxItems</code> and <code>Marker</code>\n\t\t\tparameters.</p>\n\t\t<examples>\n\t\t\t<queryrequest>\nhttps://iam.amazonaws.com/\n?Action=ListInstanceProfilesForRole\n&MaxItems=100\n&RoleName=S3Access\n&Version=2010-05-08\n&AUTHPARAMS\n      </queryrequest>\n\t\t\t<queryresponse>\n<ListInstanceProfilesForRoleResponse xmlns=\"https://iam.amazonaws.com/doc/2010-05-08/\">\n  <ListInstanceProfilesForRoleResult>\n    <IsTruncated>false</IsTruncated>\n    <InstanceProfiles>\n      <member>\n        <Id>AIPACZLS2EYYXMEXAMPLE</Id>\n        <Roles>\n          <member>\n            <Path>/application_abc/component_xyz/</Path>\n            <Arn>arn:aws:iam::123456789012:role/application_abc/component_xyz/S3Access</Arn>\n            <RoleName>S3Access</RoleName>\n            <AssumeRolePolicyDocument>{\"Version\":\"2012-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\"Principal\":{\"Service\":[\"ec2.amazonaws.com\"]},\"Action\":[\"sts:AssumeRole\"]}]}</AssumeRolePolicyDocument>\n            <CreateDate>2012-05-09T15:45:35Z</CreateDate>\n            <RoleId>AROACVSVTSZYK3EXAMPLE</RoleId>\n          </member>\n        </Roles>\n        <InstanceProfileName>Webserver</InstanceProfileName>\n        <Path>/application_abc/component_xyz/</Path>\n        <Arn>arn:aws:iam::123456789012:instance-profile/application_abc/component_xyz/Webserver</Arn>\n        <CreateDate>2012-05-09T16:27:11Z</CreateDate>\n      </member>\n    </InstanceProfiles>\n  </ListInstanceProfilesForRoleResult>\n  <ResponseMetadata>\n    <RequestId>6a8c3992-99f4-11e1-a4c3-27EXAMPLE804</RequestId>\n  </ResponseMetadata>\n</ListInstanceProfilesForRoleResponse>\n\n      </queryresponse>\n\t\t</examples>\n\t"
     },
     "ListMFADevices": {
       "name": "ListMFADevices",

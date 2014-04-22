@@ -20,8 +20,7 @@
             { "target":"Name", "sourceType":"responsePath", "source":"Buckets[].Name" }
           ],
           "path":"Buckets[]"
-        },
-        "singularName": "Bucket"
+        }
       }
     }
   },
@@ -84,8 +83,7 @@
               { "target":"BucketName", "sourceType":"identifier", "source":"Name" },
               { "target":"Key", "sourceType":"responsePath", "source":"Contents[].Key" }
             ]
-          },
-          "singularName": "Object"
+          }
         },
         "ObjectVersions": {
           "request": {
@@ -102,8 +100,7 @@
               { "target":"VersionId", "sourceType":"responsePath", "source":"[Versions[].VersionId,DeleteMarkers[].VersionId][]" }
             ],
             "path": "[Versions,DeleteMarkers][]"
-          },
-          "singularName": "Object"
+          }
         },
         "MultipartUploads": {
           "request": {
@@ -117,94 +114,27 @@
             "identifiers": [
               { "target":"BucketName", "sourceType":"identifier", "source":"Name" },
               { "target":"ObjectKey", "sourceType":"responsePath", "source":"Uploads[].Key" },
-              { "target":"UploadId", "sourceType":"responsePath", "source":"Uploads[].UploadId" }
+              { "target":"Id", "sourceType":"responsePath", "source":"Uploads[].UploadId" }
             ],
             "path": "Uploads[]"
-          },
-          "singularName": "MultipartUpload"
+          }
         }
       },
-      "hasOne": {
-        "Acl": {
-          "resource": {
-            "type": "BucketAcl",
-            "identifiers": [
-              { "target":"BucketName", "sourceType":"identifier", "source":"Name" }
-            ]
-          }
-        },
-        "Cors": {
-          "resource": {
-            "type": "BucketCors",
-            "identifiers": [
-              { "target":"BucketName", "sourceType":"identifier", "source":"Name" }
-            ]
-          }
-        },
-        "Lifecycle": {
-          "resource": {
-            "type": "BucketLifecycle",
-            "identifiers": [
-              { "target":"BucketName", "sourceType":"identifier", "source":"Name" }
-            ]
-          }
-        },
-        "Logging": {
-          "resource": {
-            "type": "BucketLogging",
-            "identifiers": [
-              { "target":"BucketName", "sourceType":"identifier", "source":"Name" }
-            ]
-          }
-        },
-        "Policy": {
-          "resource": {
-            "type": "BucketPolicy",
-            "identifiers": [
-              { "target":"BucketName", "sourceType":"identifier", "source":"Name" }
-            ]
-          }
-        },
-        "Notifications": {
-          "resource": {
-            "type": "BucketNotification",
-            "identifiers": [
-              { "target":"BucketName", "sourceType":"identifier", "source":"Name" }
-            ]
-          }
-        },
-        "RequestPayment": {
-          "resource": {
-            "type": "BucketRequestPayment",
-            "identifiers": [
-              { "target":"BucketName", "sourceType":"identifier", "source":"Name" }
-            ]
-          }
-        },
-        "Tagging": {
-          "resource": {
-            "type": "BucketTagging",
-            "identifiers": [
-              { "target":"BucketName", "sourceType":"identifier", "source":"Name" }
-            ]
-          }
-        },
-        "Versioning": {
-          "resource": {
-            "type": "BucketVersioning",
-            "identifiers": [
-              { "target":"BucketName", "sourceType":"identifier", "source":"Name" }
-            ]
-          }
-        },
-        "Website": {
-          "resource": {
-            "type": "BucketWebsite",
-            "identifiers": [
-              { "target":"BucketName", "sourceType":"identifier", "source":"Name" }
-            ]
-          }
-        }
+      "subResources": {
+        "resources": [
+          "BucketAcl",
+          "BucketCors",
+          "BucketLifecycle",
+          "BucketLogging",
+          "BucketPolicy",
+          "BucketNotification",
+          "BucketRequestPayment",
+          "BucketTagging",
+          "BucketVersioning",
+          "BucketWebsite",
+          "Object"
+        ],
+        "identifiers": { "Name": "BucketName" }
       }
     },
     "BucketAcl": {
@@ -225,16 +155,6 @@
             "operation": "PutBucketAcl",
             "params": [
               { "target":"Bucket", "sourceType":"identifier", "source":"BucketName" }
-            ]
-          }
-        }
-      },
-      "hasOne": {
-        "Bucket": {
-          "resource": {
-            "type":"Bucket",
-            "identifiers": [
-              { "target":"Name", "sourceType":"identifier", "source":"BucketName" }
             ]
           }
         }
@@ -269,16 +189,6 @@
             ]
           }
         }
-      },
-      "hasOne": {
-        "Bucket": {
-          "resource": {
-            "type":"Bucket",
-            "identifiers": [
-              { "target":"Name", "sourceType":"identifier", "source":"BucketName" }
-            ]
-          }
-        }
       }
     },
     "BucketLifecycle": {
@@ -310,16 +220,6 @@
             ]
           }
         }
-      },
-      "hasOne": {
-        "Bucket": {
-          "resource": {
-            "type":"Bucket",
-            "identifiers": [
-              { "target":"Name", "sourceType":"identifier", "source":"BucketName" }
-            ]
-          }
-        }
       }
     },
     "BucketLogging": {
@@ -340,16 +240,6 @@
             "operation": "PutBucketLogging",
             "params": [
               { "target":"Bucket", "sourceType":"identifier", "source":"BucketName" }
-            ]
-          }
-        }
-      },
-      "hasOne": {
-        "Bucket": {
-          "resource": {
-            "type":"Bucket",
-            "identifiers": [
-              { "target":"Name", "sourceType":"identifier", "source":"BucketName" }
             ]
           }
         }
@@ -384,16 +274,6 @@
             ]
           }
         }
-      },
-      "hasOne": {
-        "Bucket": {
-          "resource": {
-            "type":"Bucket",
-            "identifiers": [
-              { "target":"Name", "sourceType":"identifier", "source":"BucketName" }
-            ]
-          }
-        }
       }
     },
     "BucketNotification": {
@@ -417,16 +297,6 @@
             ]
           }
         }
-      },
-      "hasOne": {
-        "Bucket": {
-          "resource": {
-            "type":"Bucket",
-            "identifiers": [
-              { "target":"Name", "sourceType":"identifier", "source":"BucketName" }
-            ]
-          }
-        }
       }
     },
     "BucketRequestPayment": {
@@ -447,16 +317,6 @@
             "operation": "PutBucketRequestPayment",
             "params": [
               { "target":"Bucket", "sourceType":"identifier", "source":"BucketName" }
-            ]
-          }
-        }
-      },
-      "hasOne": {
-        "Bucket": {
-          "resource": {
-            "type":"Bucket",
-            "identifiers": [
-              { "target":"Name", "sourceType":"identifier", "source":"BucketName" }
             ]
           }
         }
@@ -488,16 +348,6 @@
             "operation": "PutBucketTagging",
             "params": [
               { "target":"Bucket", "sourceType":"identifier", "source":"BucketName" }
-            ]
-          }
-        }
-      },
-      "hasOne": {
-        "Bucket": {
-          "resource": {
-            "type":"Bucket",
-            "identifiers": [
-              { "target":"Name", "sourceType":"identifier", "source":"BucketName" }
             ]
           }
         }
@@ -544,16 +394,6 @@
             ]
           }
         }
-      },
-      "hasOne": {
-        "Bucket": {
-          "resource": {
-            "type":"Bucket",
-            "identifiers": [
-              { "target":"Name", "sourceType":"identifier", "source":"BucketName" }
-            ]
-          }
-        }
       }
     },
     "BucketWebsite": {
@@ -585,20 +425,10 @@
             ]
           }
         }
-      },
-      "hasOne": {
-        "Bucket": {
-          "resource": {
-            "type":"Bucket",
-            "identifiers": [
-              { "target":"Name", "sourceType":"identifier", "source":"BucketName" }
-            ]
-          }
-        }
       }
     },
     "MultipartUpload": {
-      "identifiers": ["BucketName", "ObjectKey", "UploadId"],
+      "identifiers": ["BucketName", "ObjectKey", "Id"],
       "shape": "Upload",
       "actions": {
         "Abort": {
@@ -607,7 +437,7 @@
             "params": [
               { "target":"Bucket", "sourceType":"identifier", "source":"BucketName" },
               { "target":"Key", "sourceType":"identifier", "source":"ObjectKey" },
-              { "target":"UploadId", "sourceType":"identifier", "source":"UploadId" }
+              { "target":"UploadId", "sourceType":"identifier", "source":"Id" }
             ]
           }
         },
@@ -617,7 +447,7 @@
             "params": [
               { "target":"Bucket", "sourceType":"identifier", "source":"BucketName" },
               { "target":"Key", "sourceType":"identifier", "source":"ObjectKey" },
-              { "target":"UploadId", "sourceType":"identifier", "source":"UploadId" }
+              { "target":"UploadId", "sourceType":"identifier", "source":"Id" }
             ]
           }
         },
@@ -627,7 +457,7 @@
             "params": [
               { "target":"Bucket", "sourceType":"identifier", "source":"BucketName" },
               { "target":"Key", "sourceType":"identifier", "source":"ObjectKey" },
-              { "target":"UploadId", "sourceType":"identifier", "source":"UploadId" }
+              { "target":"UploadId", "sourceType":"identifier", "source":"Id" }
             ]
           },
           "path": "Parts[]"
@@ -638,7 +468,7 @@
             "params": [
               { "target":"Bucket", "sourceType":"identifier", "source":"BucketName" },
               { "target":"Key", "sourceType":"identifier", "source":"ObjectKey" },
-              { "target":"UploadId", "sourceType":"identifier", "source":"UploadId" }
+              { "target":"UploadId", "sourceType":"identifier", "source":"Id" }
             ]
           }
         },
@@ -648,26 +478,7 @@
             "params": [
               { "target":"Bucket", "sourceType":"identifier", "source":"BucketName" },
               { "target":"Key", "sourceType":"identifier", "source":"ObjectKey" },
-              { "target":"UploadId", "sourceType":"identifier", "source":"UploadId" }
-            ]
-          }
-        }
-      },
-      "hasOne": {
-        "Bucket": {
-          "resource": {
-            "type": "Bucket",
-            "identifiers": [
-              { "target":"Name", "sourceType":"identifier", "source":"BucketName" }
-            ]
-          }
-        },
-        "Object": {
-          "resource": {
-            "type": "Object",
-            "identifiers": [
-              { "target":"BucketName", "sourceType":"identifier", "source":"BucketName" },
-              { "target":"Key", "sourceType":"identifier", "source":"ObjectKey" }
+              { "target":"UploadId", "sourceType":"identifier", "source":"Id" }
             ]
           }
         }
@@ -709,7 +520,7 @@
             "identifiers": [
               { "target":"BucketName", "sourceType":"identifier", "source":"BucketName" },
               { "target":"ObjectKey", "sourceType":"identifier", "source":"Key" },
-              { "target":"UploadId", "sourceType":"responsePath", "source":"UploadId" }
+              { "target":"Id", "sourceType":"responsePath", "source":"UploadId" }
             ]
           }
         },
@@ -741,23 +552,15 @@
           }
         }
       },
-      "hasOne": {
-        "Bucket": {
-          "resource": {
-            "type": "Bucket",
-            "identifiers": [
-              { "target":"Name", "sourceType":"identifier", "source":"BucketName" }
-            ]
-          }
-        },
-        "Acl": {
-          "resource": {
-            "type": "ObjectAcl",
-            "identifiers": [
-              { "target":"BucketName", "sourceType":"identifier", "source":"BucketName" },
-              { "target":"ObjectKey", "sourceType":"identifier", "source":"Key" }
-            ]
-          }
+      "subResources": {
+        "resources": [
+          "ObjectAcl",
+          "ObjectVersion",
+          "MultipartUpload"
+        ],
+        "identifiers": {
+          "BucketName": "BucketName",
+          "Key": "ObjectKey"
         }
       }
     },
@@ -784,29 +587,10 @@
             ]
           }
         }
-      },
-      "hasOne": {
-        "Bucket": {
-          "resource": {
-            "type": "Bucket",
-            "identifiers": [
-              { "target":"Name", "sourceType":"identifier", "source":"BucketName" }
-            ]
-          }
-        },
-        "Object": {
-          "resource": {
-            "type": "Bucket",
-            "identifiers": [
-              { "target":"BucketName", "sourceType":"identifier", "source":"BucketName" },
-              { "target":"Key", "sourceType":"identifier", "source":"ObjectKey" }
-            ]
-          }
-        }
       }
     },
     "ObjectVersion": {
-      "identifiers": ["BucketName","ObjectKey","VersionId"],
+      "identifiers": ["BucketName","ObjectKey","Id"],
       "shape": ["ObjectVersion", "DeleteMarkerEntry"],
       "actions": {
         "Delete": {
@@ -815,26 +599,7 @@
             "params": [
               { "target":"Bucket", "sourceType":"identifier", "source":"BucketName" },
               { "target":"Key", "sourceType":"identifier", "source":"ObjectKey" },
-              { "target":"VersionId", "sourceType":"identifier", "source":"VersionId" }
-            ]
-          }
-        }
-      },
-      "hasOne": {
-        "Bucket": {
-          "resource": {
-            "type": "Bucket",
-            "identifiers": [
-              { "target":"Name", "sourceType":"identifier", "source":"BucketName" }
-            ]
-          }
-        },
-        "Object": {
-          "resource": {
-            "type": "Bucket",
-            "identifiers": [
-              { "target":"BucketName", "sourceType":"identifier", "source":"BucketName" },
-              { "target":"Key", "sourceType":"identifier", "source":"ObjectKey" }
+              { "target":"Id", "sourceType":"identifier", "source":"VersionId" }
             ]
           }
         }

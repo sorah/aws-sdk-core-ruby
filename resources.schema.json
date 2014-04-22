@@ -4,10 +4,13 @@
   "additionalProperties": false,
   "properties": {
     "service": {
-      "actions": { "$ref": "#/definitions/ActionMap" },
-      "hasMany": { "$ref": "#/definitions/HasManyMap" },
-      "hasSome": { "$ref": "#/definitions/HasSomeMap" },
-      "hasOne":  { "$ref": "#/definitions/HasOneMap" }
+      "type": "object",
+      "required": [],
+      "additionalProperties": false,
+      "properties": {
+        "actions": { "$ref": "#/definitions/ActionMap" },
+        "hasMany": { "$ref": "#/definitions/HasManyMap" }
+      }
     },
     "resources": {
       "type": "object",
@@ -16,13 +19,14 @@
         "required": [],
         "additionalProperties": false,
         "properties": {
-          "shape":       { "$ref": "#/definitions/ShapeName" },
-          "identifiers": { "$ref": "#/definitions/IdentifierList" },
-          "load":        { "$ref": "#/definitions/DataOperation" },
-          "actions":     { "$ref": "#/definitions/ActionMap" },
-          "hasMany":     { "$ref": "#/definitions/HasManyMap" },
-          "hasSome":     { "$ref": "#/definitions/HasSomeMap" },
-          "hasOne":      { "$ref": "#/definitions/HasOneMap" }
+          "shape":        { "$ref": "#/definitions/ShapeName" },
+          "identifiers":  { "$ref": "#/definitions/IdentifierList" },
+          "load":         { "$ref": "#/definitions/DataOperation" },
+          "actions":      { "$ref": "#/definitions/ActionMap" },
+          "hasMany":      { "$ref": "#/definitions/HasManyMap" },
+          "hasSome":      { "$ref": "#/definitions/HasSomeMap" },
+          "hasOne":       { "$ref": "#/definitions/HasOneMap" },
+          "subResources": { "$ref": "#/definitions/SubResources" }
         }
       }
     }
@@ -55,14 +59,12 @@
       "type": "object",
       "required": [
         "request",
-        "resource",
-        "singularName"
+        "resource"
       ],
       "additionalProperties": false,
       "properties": {
         "request": { "$ref": "#/definitions/Request" },
-        "resource": { "$ref": "#/definitions/ResourceReference" },
-        "singularName": { "$ref": "#/definitions/UpperCamelCaseString" }
+        "resource": { "$ref": "#/definitions/ResourceReference" }
       }
     },
     "HasManyMap": {
@@ -83,14 +85,10 @@
     },
     "HasSomeDefinition": {
       "type": "object",
-      "required": [
-        "resource",
-        "singularName"
-      ],
+      "required": ["resource"],
       "additionalProperties": false,
       "properties": {
-        "resource": { "$ref": "#/definitions/ResourceReference" },
-        "singularName": { "$ref": "#/definitions/UpperCamelCaseString" }
+        "resource": { "$ref": "#/definitions/ResourceReference" }
       }
     },
     "HasSomeMap": {
@@ -201,6 +199,28 @@
       }
     },
     "ShapeName": { "$ref": "#/definitions/UpperCamelCaseString" },
+    "SubResourceIdentifierMap": {
+      "type": "object",
+      "additionalProperties": { "$ref": "#/definitions/UpperCamelCaseString" }
+    },
+    "SubResourceList": {
+      "type": "array",
+      "minItems": 1,
+      "additionalItems": false,
+      "items": { "$ref": "#/definitions/ResourceName" }
+    },
+    "SubResources": {
+      "type": "object",
+      "required": [
+        "resources",
+        "identifiers"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "resources": { "$ref": "#/definitions/SubResourceList" },
+        "identifiers": { "$ref": "#/definitions/SubResourceIdentifierMap" }
+      }
+    },
     "UpperCamelCaseString": {
       "type": "string",
       "minLength": 1,

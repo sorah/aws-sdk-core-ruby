@@ -1,0 +1,247 @@
+{
+  "service": {
+    "actions": {
+      "CreateInstances": {
+        "request": { "operation": "RunInstances" },
+        "resource": {
+          "type": "Instance",
+          "identifiers": [
+            { "target":"Id", "sourceType":"responsePath", "source":"Instances[].InstanceId" }
+          ],
+          "path": "Instances[]"
+        }
+      },
+      "CreateVpc": {
+        "request": { "operation": "CreateVpc" },
+        "resource": {
+          "type": "Vpc",
+          "identifiers": [
+            { "target":"Id", "sourceType":"responsePath", "source":"Vpc.VpcId" }
+          ],
+          "path": "Vpc"
+        }
+      }
+    },
+    "hasMany": {
+      "Instances": {
+        "request": { "operation": "DescribeInstances" },
+        "resource": {
+          "type": "Instance",
+          "identifiers": [
+            { "target":"Id", "sourceType":"responsePath", "source":"Reservations[].Instances[].InstanceId" }
+          ],
+          "path": "Reservations[].Instances[]"
+        }
+      },
+      "Vpcs": {
+        "request": { "operation": "DescribeVpcs" },
+        "resource": {
+          "type": "Vpc",
+          "identifiers": [
+            { "target":"Id", "sourceType":"responsePath", "source":"Vpcs[].VpcId" }
+          ],
+          "path": "Vpcs[]"
+        }
+      }
+    }
+  },
+  "resources": {
+    "Instance": {
+      "identifiers": ["Id"],
+      "shape": "Instance",
+      "load": {
+        "request": {
+          "operation": "DescribeInstances",
+          "params": [
+            { "target":"InstanceIds[]", "sourceType":"identifier", "source":"Id" }
+          ]
+        },
+        "path": "Reservations[0].Instances[0]"
+      },
+      "actions": {
+        "ConsoleOutput": {
+          "request": {
+            "operation": "GetConsoleOutput",
+            "params": [
+              { "target":"InstanceId", "sourceType":"identifier", "source":"Id" }
+            ]
+          }
+        },
+        "ModifyAttribute": {
+          "request": {
+            "operation": "ModifyInstanceAttribute",
+            "params": [
+              { "target":"InstanceId", "sourceType":"identifier", "source":"Id" }
+            ]
+          }
+        },
+        "Monitor": {
+          "request": {
+            "operation": "MonitorInstances",
+            "params": [
+              { "target":"InstanceIds[]", "sourceType":"identifier", "source":"Id" }
+            ]
+          }
+        },
+        "PasswordData": {
+          "request": {
+            "operation": "GetPasswordData",
+            "params": [
+              { "target":"InstanceId", "sourceType":"identifier", "source":"Id" }
+            ]
+          }
+        },
+        "ReportStatus": {
+          "request": {
+            "operation": "ReportInstanceStatus",
+            "params": [
+              { "target":"InstanceIds[]", "sourceType":"identifier", "source":"Id" }
+            ]
+          }
+        },
+        "ResetAttribute": {
+          "request": {
+            "operation": "ResetInstanceAttribute",
+            "params": [
+              { "target":"InstanceId", "sourceType":"identifier", "source":"Id" }
+            ]
+          }
+        },
+        "ResetKernel": {
+          "request": {
+            "operation": "ResetInstanceAttribute",
+            "params": [
+              { "target":"InstanceId", "sourceType":"identifier", "source":"Id" },
+              { "target":"Attribute", "sourceType":"string", "source":"kernel" }
+            ]
+          }
+        },
+        "ResetRamdisk": {
+          "request": {
+            "operation": "ResetInstanceAttribute",
+            "params": [
+              { "target":"InstanceId", "sourceType":"identifier", "source":"Id" },
+              { "target":"Attribute", "sourceType":"string", "source":"ramdisk" }
+            ]
+          }
+        },
+        "ResetSourceDestCheck": {
+          "request": {
+            "operation": "ResetInstanceAttribute",
+            "params": [
+              { "target":"InstanceId", "sourceType":"identifier", "source":"Id" },
+              { "target":"Attribute", "sourceType":"string", "source":"sourceDestCheck" }
+            ]
+          }
+        },
+        "Start": {
+          "request": {
+            "operation": "StartInstances",
+            "params": [
+              { "target":"InstanceIds[]", "sourceType":"identifier", "source":"Id" }
+            ]
+          }
+        },
+        "Stop": {
+          "request": {
+            "operation": "StopInstances",
+            "params": [
+              { "target":"InstanceIds[]", "sourceType":"identifier", "source":"Id" }
+            ]
+          }
+        },
+        "Reboot": {
+          "request": {
+            "operation": "RebootInstances",
+            "params": [
+              { "target":"InstanceIds[]", "sourceType":"identifier", "source":"Id" }
+            ]
+          }
+        },
+        "Terminate": {
+          "request": {
+            "operation": "TerminateInstances",
+            "params": [
+              { "target":"InstanceIds[]", "sourceType":"identifier", "source":"Id" }
+            ]
+          }
+        },
+        "Unmonitor": {
+          "request": {
+            "operation": "UnmonitorInstances",
+            "params": [
+              { "target":"InstanceIds[]", "sourceType":"identifier", "source":"Id" }
+            ]
+          }
+        }
+      },
+      "hasOne": {
+        "Vpc": {
+          "resource": {
+            "type": "Vpc",
+            "identifiers": [
+              { "target":"Id", "sourceType":"dataMember", "source":"VpcId" }
+            ]
+          }
+        }
+      }
+    },
+    "Vpc": {
+      "identifiers": ["id"],
+      "shape": "Vpc",
+      "load": {
+        "request": {
+          "operation": "DescribeVpcs",
+          "params": [
+            { "target":"VpcIds[]", "sourceType":"identifier", "source":"Id" }
+          ]
+        },
+        "path": "Vpcs[0]"
+      },
+      "actions": {
+        "Delete": {
+          "request": {
+            "operation": "DeleteVpc",
+            "params": [
+              { "target":"VpcId", "sourceType":"identifier", "source":"Id" }
+            ]
+          }
+        },
+        "DescribeAttribute": {
+          "request": {
+            "operation": "DescribeVpcAttribute",
+            "params": [
+              { "target":"VpcId", "sourceType":"identifier", "source":"Id" }
+            ]
+          }
+        },
+        "ModifyAttribute": {
+          "request": {
+            "operation": "ModifyVpcAttribute",
+            "params": [
+              { "target":"VpcId", "sourceType":"identifier", "source":"Id" }
+            ]
+          }
+        }
+      },
+      "hasMany": {
+        "Instances": {
+          "request": {
+            "operation": "DescribeInstances",
+            "params": [
+              { "target":"Filters[0].Name", "sourceType":"string", "source":"vpc-id" },
+              { "target":"Filters[0].Values[]", "sourceType":"identifier", "source":"Id" }
+            ]
+          },
+          "resource": {
+            "type": "Instance",
+            "identifiers": [
+              { "target":"Id", "sourceType":"responsePath", "source":"Reservations[].Instances[].InstanceId" }
+            ],
+            "path": "Reservations[].Instances[]"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,6 +1,6 @@
 module Aws
   class Resource
-    class CreateOperation
+    class ResourceOperation
 
       include Options
 
