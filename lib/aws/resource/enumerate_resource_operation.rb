@@ -1,6 +1,6 @@
 module Aws
   class Resource
-    class EnumerateOperation
+    class EnumerateResourceOperation
 
       include Options
 

@@ -14,542 +14,371 @@ module Aws
 
       end
 
-      describe '#apply' do
+      describe '#define_service' do
 
         let(:client) { double('client') }
 
         let(:client_class) { double('client-class') }
 
-        let(:namespace) { Resource.define(client_class) }
+        let(:definition) {{
+          'service' => {},
+          'resources' => {},
+        }}
 
-        let(:svc) { namespace.new }
+        let(:service_class) {
+          Definition.new(definition).define_service('Svc', client_class)
+        }
+
+        let(:service) { service_class.new }
 
         before(:each) do
           allow(client_class).to receive(:new).and_return(client)
         end
 
-        describe 'resource classes' do
+        describe 'service' do
 
-          it 'defines one resource class for each resource entry' do
-            Definition.new(
-              'resources' => {
-                'User' => { 'identifiers' => %w(Name) },
-                'Group' => { 'identifiers' => %w(Id) }
-              }
-            ).apply(namespace)
-            user = namespace::User.new(name:'user-name')
-            group = namespace::Group.new(id:'group-id')
+          it 'constructs default clients' do
+            expect(client_class).to receive(:new).and_return(client)
+            svc = Definition.new(definition).define_service('Name', client_class)
+            expect(svc.client_class).to be(client_class)
+            expect(svc.new.client).to be(client)
+          end
+
+          it 'defines a resource class for each named resource' do
+            definition['resources'] = {
+              'Group' => { 'identifiers' => %w(Id) },
+              'User' => { 'identifiers' => %w(Name) }
+            }
+
+            user = service_class::User.new(name:'user-name')
             expect(user).to be_kind_of(Resource)
             expect(user.identifiers).to eq(name:'user-name')
+
+            group = service_class::Group.new(id:'group-id')
             expect(group).to be_kind_of(Resource)
             expect(group.identifiers).to eq(id:'group-id')
           end
 
-        end
+          describe 'actions' do
 
-        describe 'getter methods' do
-
-          it 'adds a getter method to construct resource objects' do
-            Definition.new(
-              'resources' => {
-                'User' => { 'identifiers' => %w(Name) },
-              }
-            ).apply(namespace)
-            user = namespace.new.user('user-name')
-            expect(user).to be_kind_of(namespace::User)
-            expect(user.identifiers).to eq(name:'user-name')
-          end
-
-          it 'injects the client into the new resource' do
-            Definition.new(
-              'resources' => {
-                'User' => { 'identifiers' => %w(Name) },
-              }
-            ).apply(namespace)
-            client = double('client')
-            svc = namespace.new(client:client)
-            expect(svc.user('user-name').client).to be(client)
-          end
-
-          it 'define getters for resources with less than 2 identifier' do
-            Definition.new(
-              'resources' => {
-                'Group' => { 'identifiers' => %w(Id1) },
-                'User' => { 'identifiers' => %w(Id1 Id2) },
-                'Other' => { 'identifiers' => [] }
-              }
-            ).apply(namespace)
-            expect(namespace.new).to respond_to(:group)
-            expect(namespace.new).not_to respond_to(:user)
-            expect(namespace.new).to respond_to(:other)
-            expect(namespace.new.other.identifiers).to eq({})
-          end
-
-        end
-
-        describe 'load operation' do
-
-          it 'adds the ability to load resource data from a client request' do
-            Definition.new(
-              'resources' => {
-                'User' => {
-                  'identifiers' => ['Name'],
-                  'load' => {
+            it 'supports basic operations' do
+              definition['service'] = {
+                'actions' => {
+                  'DoSomething' => {
                     'request' => {
-                      'operation' => 'OperationName',
-                      'params' => [
-                        {
-                          'target' => 'User.Name',
-                          'sourceType' => 'identifier',
-                          'source' => 'Name'
-                        }
-                      ]
-                    },
-                    'shapePath' => 'User.Details'
+                      'operation' => 'ClientMethod'
+                    }
                   }
                 }
               }
-            ).apply(namespace)
 
-            data = { 'user' => { 'details' => { arn:'user-arn' }}}
-            expect(client).to receive(:operation_name).
-              with(user:{name:'johndoe'}).
-              and_return(double('response', data:data))
+              expect(service).to respond_to(:do_something)
 
-            user = namespace::User.new(name:'johndoe')
-            expect(user.load.data).to eq(arn:'user-arn')
-          end
+              client_response = double('client-response')
+              expect(client).to receive(:client_method).
+                with(foo:'bar').
+                and_return(client_response)
 
-          it 'raises an error if load is called but not defined' do
-            Definition.new(
-              'resources' => { 'User' => { 'identifiers' => ['Name'] } }
-            ).apply(namespace)
-            user = namespace::User.new(name:'johndoe')
-            expect {
-              user.load
-            }.to raise_error(NotImplementedError, /load not defined for/)
-          end
-
-        end
-
-        describe 'create operation' do
-
-          let(:params) {{ user_name:'johndoe' }}
-
-          let(:definition) {{
-            'resources' => {
-              'User' => {
-                'identifiers' => ['Name'],
-                'create' => {
-                  'request' => { 'operation' => 'CreateUser' },
-                  'resource' => {
-                    'identifiers' => [
-                      {
-                        'target' => 'Name',
-                        'sourceType' => 'requestParameter',
-                        'source' => 'UserName'
-                      }
-                    ]
-                  }
-                }
-              }
-            }
-          }}
-
-          let(:data) { double('data') }
-
-          let(:response) {
-            double('client-response',
-              context: double('request-context', params:params),
-              data: { 'user' => data})
-          }
-
-          before(:each) do
-            expect(client).to receive(:create_user).
-              with(params).
-              and_return(response)
-          end
-
-          it 'adds a helper method that creates and returns resource' do
-            Definition.new(definition).apply(namespace)
-            user = namespace.new.create_user(user_name:'johndoe')
-            expect(user).to be_kind_of(namespace::User)
-            expect(user.name).to eq('johndoe')
-            expect(user.client).to be(namespace.new.client)
-          end
-
-          it 'populates the resource data if shapePath is provided' do
-            definition['resources']['User']['create']['resource']['shapePath'] = 'User'
-            Definition.new(definition).apply(namespace)
-            user = namespace.new.create_user(user_name:'johndoe')
-            expect(user.data).to be(data)
-          end
-
-        end
-
-        describe 'enumerate operation' do
-
-          let(:definition) {{
-            'resources' => {
-              'User' => {
-                'identifiers' => ['Name'],
-                'enumerate' => {
-                  'request' => { 'operation' => 'ListUsers' },
-                  'resource' => {
-                    'identifiers' => [
-                      {
-                        'target' => 'Name',
-                        'sourceType' => 'responsePath',
-                        'source' => 'Users[].Name'
-                      }
-                    ]
-                  }
-                }
-              }
-            }
-          }}
-
-          let(:resp1) {
-            double('client-response-1', data: { 'users' => [
-              { 'name' => 'user-1' },
-              { 'name' => 'user-2' }
-            ]})
-          }
-
-          let(:resp2) {
-            double('client-response-2', data: { 'users' => [
-              { 'name' => 'user-3' },
-              { 'name' => 'user-4' }
-            ]})
-          }
-
-          before(:each) do
-            allow(client).to receive(:list_users).and_return([resp1, resp2])
-          end
-
-          it 'adds a helper method that returns a resource enumerator' do
-            Definition.new(definition).apply(namespace)
-            users = namespace.new.users
-            expect(users).to be_kind_of(Enumerable)
-            expect(users.map(&:name)).to eq(%w(user-1 user-2 user-3 user-4))
-            users.each do |user|
-              expect(user).to be_kind_of(namespace::User)
-              expect(user.client).to be(namespace.new.client)
+              resp = service.do_something(foo:'bar')
+              expect(resp).to be(client_response)
             end
-          end
 
-        end
+            it 'supports operations that extract data' do
+              definition['service'] = {
+                'actions' => {
+                  'DoSomething' => {
+                    'request' => {
+                      'operation' => 'ClientMethod'
+                    },
+                    'path' => 'Nested.Value'
+                  }
+                }
+              }
 
-        describe 'actions' do
+              expect(client).to receive(:client_method).
+                and_return(double('client-response',
+                  data: { 'nested' => { 'value' => 'nested-value' }}
+                ))
 
-          it 'describes resource instance operation methods' do
-            Definition.new(
-              'resources' => {
-                'User' => {
-                  'identifiers' => ['Name'],
+              resp = service.do_something(foo:'bar')
+              expect(resp).to eq('nested-value')
+            end
+
+            it 'supports operations that return singular resources' do
+              definition.update(
+                'service' => {
                   'actions' => {
-                    'Delete' => {
+                    'CreateThing' => {
                       'request' => {
-                        'operation' => 'DeleteUser',
-                        'params' => [
+                        'operation' => 'MakeThing'
+                      },
+                      'resource' => {
+                        'type' => 'Thing',
+                        'identifiers' => [
                           {
-                            'target' => 'UserName',
-                            'sourceType' => 'identifier',
-                            'source' => 'Name'
+                            'target' => 'Name',
+                            'sourceType' => 'requestParameter',
+                            'source' => 'ThingName'
                           }
                         ]
                       }
                     }
                   }
+                },
+                'resources' => {
+                  'Thing' => {
+                    'identifiers' => ['Name']
+                  }
                 }
-              }
-            ).apply(namespace)
+              )
 
-            client_response = double('client-response')
+              expect(client).to receive(:make_thing).
+                with(thing_name:'thing-name') do |params|
+                  double('client-response',
+                    context: double('request-context', params:params))
+                end
 
-            expect(client).to receive(:delete_user).
-              with(user_name:'johndoe').
-              and_return(client_response)
+              thing = service.create_thing(thing_name:'thing-name')
+              expect(thing).to be_kind_of(service_class::Thing)
+              expect(thing.client).to be(service.client)
+              expect(thing.name).to eq('thing-name')
+            end
 
-            user = namespace.new.user('johndoe')
-            resp = user.delete
-            expect(resp).to be(client_response)
-          end
-
-          it 'deep merges incoming params' do
-            Definition.new(
-              'resources' => {
-                'BucketVersioning' => {
-                  'identifiers' => ['BucketName'],
+            it 'accepts identifier names in place of request params' do
+              pending('not implemented yet')
+              definition.update(
+                'service' => {
                   'actions' => {
-                    'Enable' => {
+                    'CreateThing' => {
                       'request' => {
-                        'operation' => 'PutBucketVersioning',
-                        'params' => [
-                          { 'target' => 'Bucket', 'sourceType' => 'identifier', 'source' => 'BucketName' },
-                          { 'target' => 'VersioningConfiguration.Status', 'sourceType' => 'string', 'source' => 'Enabled' }
+                        'operation' => 'MakeThing'
+                      },
+                      'resource' => {
+                        'type' => 'Thing',
+                        'identifiers' => [
+                          {
+                            # very similar to the previous test except
+                            # expect the create method to accept the option
+                            # `:name => 'thing-name' instead of the default
+                            # `:thing_name => 'thing-name'`
+                            'target' => 'Name',
+                            'sourceType' => 'requestParameter',
+                            'source' => 'ThingName'
+                          }
                         ]
                       }
                     }
                   }
+                },
+                'resources' => {
+                  'Thing' => {
+                    'identifiers' => ['Name']
+                  }
                 }
-              }
-            ).apply(namespace)
+              )
 
-            expect(client).to receive(:put_bucket_versioning).with(
-              bucket:'aws-sdk',
-              versioning_configuration: {
-                status: 'Enabled',
-                mfa_delete: 'Enabled',
+              expect(client).to receive(:make_thing).
+                with(thing_name:'thing-name') do |params|
+                  double('client-response',
+                    context: double('request-context', params:params))
+                end
+
+              thing = service.create_thing(name:'thing-name')
+              expect(thing.name).to eq('thing-name')
+            end
+
+            it 'can return an array of resources' do
+              definition.update(
+                'service' => {
+                  'actions' => {
+                    'CreateThings' => {
+                      'request' => {
+                        'operation' => 'MakeThings'
+                      },
+                      'resource' => {
+                        'type' => 'Thing',
+                        'identifiers' => [
+                          {
+                            # using JMESPath to extract thing names
+                            'target' => 'Name',
+                            'sourceType' => 'responsePath',
+                            'source' => 'Things[].Name'
+                          }
+                        ]
+                      }
+                    }
+                  }
+                },
+                'resources' => {
+                  'Thing' => {
+                    'identifiers' => ['Name']
+                  }
+                }
+              )
+
+              client_response = double('client-response', data: {
+                'things' => [
+                  { 'name' => 'thing1' },
+                  { 'name' => 'thing2' },
+                ]
               })
+              expect(client).to receive(:make_things).
+                and_return(client_response)
 
-            versioning = namespace::BucketVersioning.new(bucket_name:'aws-sdk')
-            versioning.enable(versioning_configuration:{mfa_delete:'Enabled'})
+              things = service.create_things
+              expect(things).to be_an(Array)
+              expect(things[0]).to be_kind_of(service_class::Thing)
+              expect(things[1].client).to be(service.client)
+              expect(things.map(&:name)).to eq(['thing1', 'thing2'])
+            end
+
+            it 'can return hydrated resources' do
+              definition.update(
+                'service' => {
+                  'actions' => {
+                    'CreateThings' => {
+                      'request' => {
+                        'operation' => 'MakeThings'
+                      },
+                      'resource' => {
+                        'type' => 'Thing',
+                        'identifiers' => [
+                          {
+                            # using JMESPath to extract thing names
+                            'target' => 'Name',
+                            'sourceType' => 'responsePath',
+                            'source' => 'Things[].Name'
+                          }
+                        ],
+                        'path' => 'Things[]'
+                      }
+                    }
+                  }
+                },
+                'resources' => {
+                  'Thing' => {
+                    'identifiers' => ['Name']
+                  }
+                }
+              )
+
+              client_response = double('client-response', data: {
+                'things' => [
+                  { 'name' => 'thing1', 'arn' => 'thing1-arn' },
+                  { 'name' => 'thing2', 'arn' => 'thing2-arn' },
+                ]
+              })
+              expect(client).to receive(:make_things).
+                and_return(client_response)
+
+              things = service.create_things
+              expect(things.map(&:data)).to eq([
+                { 'name' => 'thing1', 'arn' => 'thing1-arn' },
+                { 'name' => 'thing2', 'arn' => 'thing2-arn' },
+              ])
+            end
+
           end
 
-          # TODO : determine how to specify the resource class to construct
-          it 'supports create actions that return a resource object'
+          describe 'has many associations' do
+
+            let(:definition) {{
+              'service' => {
+                'hasMany' => {
+                  'Things' => {
+                    'request' => { 'operation' => 'ListThings' },
+                    'resource' => {
+                      'type' => 'Thing',
+                      'identifiers' => [
+                        {
+                          'target' => 'Name',
+                          'sourceType' => 'responsePath',
+                          'source' => 'Things[].Name'
+                        }
+                      ],
+                      'path' => 'Things[]'
+                    },
+                    'singularName' => 'Thing'
+                  }
+                }
+              },
+              'resources' => {
+                'Thing' => {
+                  'identifiers' => ['Name']
+                }
+              }
+            }}
+
+            it 'returns an resource enumerator' do
+              expect(client).to receive(:list_things).
+                with(batch_size:2).
+                and_return([
+                  double('client-response-1', data: {
+                    'things' => [
+                      { 'name' => 'thing1', 'arn' => 'thing1-arn' },
+                      { 'name' => 'thing2', 'arn' => 'thing2-arn' },
+                    ]
+                  }),
+                  double('client-response-2', data: {
+                    'things' => [
+                      { 'name' => 'thing3', 'arn' => 'thing3-arn' },
+                      { 'name' => 'thing4', 'arn' => 'thing4-arn' },
+                    ]
+                  }),
+                ]
+              )
+              things = service.things(batch_size:2)
+              expect(things).to be_an(Enumerator)
+              expect(things.map(&:name)).to eq(%w(thing1 thing2 thing3 thing4))
+            end
+
+            it 'defines getter helpers for sub-resources' do
+              thing = service.thing('thing-name')
+              expect(thing).to be_kind_of(service_class::Thing)
+              expect(thing.name).to eq('thing-name')
+              expect(thing.client).to be(service.client)
+            end
+
+          end
 
         end
 
-        describe 'associations' do
+        describe 'resources' do
 
-          describe 'has many' do
+          describe '#load' do
 
-            describe 'create' do
+            it 'raises a NotImplementedError when not specified'
 
-              it 'defines a helper that creates and returns the associated resource' do
-                Definition.new(
-                  'resources' => {
-                    'User' => {
-                      'identifiers' => ['Name'],
-                      'associations' => {
-                        'Permissions' => {
-                          'hasMany' => 'Permission',
-                          'create' => {
-                            'request' => {
-                              'operation' => 'AddPermissionToUser',
-                              'params' => [
-                                {
-                                  'target' => 'UserName',
-                                  'sourceType' => 'identifier',
-                                  'source' => 'Name'
-                                }
-                              ]
-                            },
-                            'resource' => {
-                              'identifiers' => [
-                                {
-                                  'target' => 'Id',
-                                  'sourceType' => 'responsePath',
-                                  'source' => 'Permission.Id'
-                                }
-                              ]
-                            }
-                          }
-                        }
-                      }
-                    },
-                    'Permission' => { 'identifiers' => ['Id'] }
-                  }
-                ).apply(namespace)
+            it 'loads and returns resource data'
 
+            it 'caches resource data'
 
-                client_response = double('client-response', data: { 'permission' => { 'id' => 'pid' }})
-                expect(client).to receive(:add_permission_to_user).
-                  with(user_name:'johndoe', foo:'bar').
-                  and_return(client_response)
-
-                user = namespace.new.user('johndoe')
-                permission = user.create_permission(foo:'bar')
-                expect(permission).to be_kind_of(namespace::Permission)
-                expect(permission.id).to eq('pid')
-                expect(permission.client).to be(user.client)
-              end
-
-            end
-
-            describe 'enumerate' do
-
-              it 'defines a helper that enumerates the associated resource' do
-                Definition.new(
-                  'resources' => {
-                    'User' => {
-                      'identifiers' => ['Name'],
-                      'associations' => {
-                        'Permissions' => {
-                          'hasMany' => 'Permission',
-                          'enumerate' => {
-                            'request' => {
-                              'operation' => 'GetUserPermissions',
-                              'params' => [
-                                {
-                                  'target' => 'UserName',
-                                  'sourceType' => 'identifier',
-                                  'source' => 'Name'
-                                }
-                              ]
-                            },
-                            'resource' => {
-                              'identifiers' => [
-                                {
-                                  'target' => 'Id',
-                                  'sourceType' => 'responsePath',
-                                  'source' => 'Permissions[].Id'
-                                }
-                              ]
-                            }
-                          }
-                        }
-                      }
-                    },
-                    'Permission' => { 'identifiers' => ['Id'] }
-                  }
-                ).apply(namespace)
-
-                resp1 = double('resp-1', data: { 'permissions' => [{ 'id' => 'pid-1' }]})
-                resp2 = double('resp-2', data: { 'permissions' => [{ 'id' => 'pid-2' }]})
-
-                allow(client).to receive(:get_user_permissions).
-                  with(user_name:'johndoe', batch_size:1).
-                  and_return([resp1, resp2])
-
-                user = namespace.new.user('johndoe')
-                permissions = user.permissions(batch_size:1)
-                expect(permissions).to be_kind_of(Enumerable)
-                expect(permissions.map(&:id)).to eq(%w(pid-1 pid-2))
-                permissions.each do |permission|
-                  expect(permission).to be_kind_of(namespace::Permission)
-                  expect(permission.client).to be(user.client)
-                end
-              end
-
-            end
-
-            describe 'reference' do
-
-              it 'defines a helper that constructs the resource' do
-                Definition.new(
-                  'resources' => {
-                    'Bucket' => {
-                      'identifiers' => ['Name'],
-                      'associations' => {
-                        'Objects' => {
-                          'hasMany' => 'Object',
-                          'resource' => {
-                            'identifiers' => [
-                              {
-                                'target' => 'BucketName',
-                                'sourceType' => 'identifier',
-                                'source' => 'Name'
-                              }
-                            ]
-                          }
-                        }
-                      }
-                    },
-                    'Object' => { 'identifiers' => ['BucketName', 'Key'] }
-                  }
-                ).apply(namespace)
-                bucket = namespace.new.bucket('aws-sdk')
-                object = bucket.object('key')
-                expect(object).to be_kind_of(namespace::Object)
-                expect(object.client).to be(bucket.client)
-                expect(object.key).to eq('key')
-              end
-
-            end
+            it 'reloads data on request'
 
           end
 
-          describe 'has' do
+          describe 'actions' do
+          end
 
-            it 'defines a getter method' do
-              Definition.new(
-                'resources' => {
-                  'Bucket' => { 'identifiers' => ['Name'] },
-                  'Object' => {
-                    'identifiers' => ['BucketName', 'Key'],
-                    'associations' => {
-                      'Bucket' => {
-                        'has' => 'Bucket',
-                        'resource' => {
-                          'identifiers' => [
-                            {
-                              'target' => 'Name',
-                              'sourceType' => 'identifier',
-                              'source' => 'BucketName'
-                            }
-                          ]
-                        }
-                      }
-                    }
-                  }
-                }
-              ).apply(namespace)
-              object = namespace::Object.new(bucket_name:'aws-sdk', key:'key')
-              bucket = object.bucket
-              expect(bucket).to be_kind_of(namespace::Bucket)
-              expect(bucket.name).to eq('aws-sdk')
-              expect(bucket.client).to be(object.client)
-            end
+          describe 'has many associations' do
 
-            it 'strips parent resource names from the getter name' do
-              Definition.new(
-                'resources' => {
-                  'Bucket' => {
-                    'identifiers' => ['Name'],
-                    'associations' => {
-                      'Acl' => {
-                        'has' => 'BucketAcl',
-                        'resource' => {
-                          'identifiers' => [
-                            {
-                              'target' => 'BucketName',
-                              'sourceType' => 'identifier',
-                              'source' => 'Name'
-                            }
-                          ]
-                        }
-                      }
-                    }
-                  },
-                  'BucketAcl' => { 'identifiers' => ['BucketName'] }
-                }
-              ).apply(namespace)
-              bucket = namespace.new.bucket('aws-sdk')
-              expect(bucket).to respond_to(:acl)
-              expect(bucket).not_to respond_to(:bucket_acl)
-              expect(bucket.acl).to be_kind_of(namespace::BucketAcl)
-              expect(bucket.acl.client).to be(bucket.client)
-            end
+            it 'returns an Enumerator'
 
-            it 'caches the referenced resource object' do
-              Definition.new(
-                'resources' => {
-                  'Bucket' => {
-                    'identifiers' => ['Name'],
-                    'associations' => {
-                      'Acl' => {
-                        'has' => 'BucketAcl',
-                        'resource' => {
-                          'identifiers' => [
-                            {
-                              'target' => 'BucketName',
-                              'sourceType' => 'identifier',
-                              'source' => 'Name'
-                            }
-                          ]
-                        }
-                      }
-                    }
-                  },
-                  'BucketAcl' => { 'identifiers' => ['BucketName'] }
-                }
-              ).apply(namespace)
-              bucket = namespace.new.bucket('aws-sdk')
-              expect(bucket.acl).to be(bucket.acl)
-            end
+            it 'defines a getter for sub-resources'
+
+            it 'does not define a getter for sibling resources'
+
+          end
+
+          describe 'has some associations' do
+
+            it 'returns an array of resource objects'
+
+          end
+
+          describe 'has one associations' do
+
+            it 'returns a single resource object'
 
           end
         end

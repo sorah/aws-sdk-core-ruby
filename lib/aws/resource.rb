@@ -3,16 +3,18 @@ module Aws
 
     autoload :Builder, "#{SRC}/resource/builder"
     autoload :BuilderSources, "#{SRC}/resource/builder_sources"
-    autoload :CreateOperation, "#{SRC}/resource/create_operation"
     autoload :Definition, "#{SRC}/resource/definition"
     autoload :Errors, "#{SRC}/resource/errors"
-    autoload :EnumerateOperation, "#{SRC}/resource/enumerate_operation"
-    autoload :LoadOperation, "#{SRC}/resource/load_operation"
-    autoload :Operation, "#{SRC}/resource/operation"
     autoload :Options, "#{SRC}/resource/options"
-    autoload :ReferenceOperation, "#{SRC}/resource/reference_operation"
     autoload :Request, "#{SRC}/resource/request"
     autoload :RequestParams, "#{SRC}/resource/request_params"
+
+    autoload :DataOperation, "#{SRC}/resource/data_operation"
+    autoload :EnumerateDataOperation, "#{SRC}/resource/enumerate_data_operation"
+    autoload :EnumerateResourceOperation, "#{SRC}/resource/enumerate_resource_operation"
+    autoload :Operation, "#{SRC}/resource/operation"
+    autoload :ResourceOperation, "#{SRC}/resource/resource_operation"
+    autoload :ReferenceOperation, "#{SRC}/resource/reference_operation"
 
     # @option options [Seahorse::Client::Base] :client
     def initialize(options = {})
@@ -46,7 +48,7 @@ module Aws
     # @return [self]
     def load
       if load_operation = self.class.load_operation
-        load_operation.invoke(resource:self)
+        @data = load_operation.invoke(resource:self)
         self
       else
         raise NotImplementedError, "load not defined for #{self.class.name}"
@@ -96,7 +98,7 @@ module Aws
       #   this class.
       attr_accessor :client_class
 
-      # @return [LoadOperation, nil]
+      # @return [DataOperation, nil]
       attr_accessor :load_operation
 
       # @param [Class<Seahorse::Client::Base>] client_class

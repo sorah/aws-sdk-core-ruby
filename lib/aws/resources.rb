@@ -8,9 +8,11 @@ module Aws
 
     # @api private
     DEFINITION_PATHS = {
-      S3: 'apis/source/s3-2006-03-01.resources.json',
+      EC2: 'apis/source/ec2-2014-02-01.resources.json',
+      S3:  'apis/source/s3-2006-03-01.resources.json',
       IAM: 'apis/source/iam-2010-05-08.resources.json',
       SNS: 'apis/source/sns-2010-03-31.resources.json',
+      SQS: 'apis/source/sqs-2012-11-05.resources.json',
     }
     private_constant :DEFINITION_PATHS
 
@@ -60,9 +62,7 @@ module Aws
       # @return [Class<Resource>]
       def build_service_resource(svc_name, definition)
         client_class = Aws.const_get(svc_name).default_client_class
-        resource = Resource.define(client_class)
-        definition.apply(resource)
-        resource
+        definition.define_service(svc_name, client_class)
       end
 
     end
