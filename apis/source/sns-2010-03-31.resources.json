@@ -20,6 +20,16 @@
             { "target":"Arn", "sourceType":"responsePath", "source":"Topics[].TopicArn" }
           ]
         }
+      },
+      "Subscriptions": {
+        "request": { "operation": "ListSubscriptions" },
+        "resource": {
+          "type": "Subscription",
+          "identifiers": [
+            { "target":"TopicArn", "sourceType":"responsePath", "source":"Subscriptions[].TopicArn" },
+            { "target":"Arn", "sourceType":"responsePath", "source":"Subscriptions[].SubscriptionArn"}
+          ]
+        }
       }
     }
   },
@@ -27,6 +37,15 @@
     "Topic" : {
       "shape": "Topic",
       "identifiers": ["Arn"],
+      "load": {
+        "request": {
+          "operation": "GetTopicAttributes",
+          "params": [
+            { "target":"TopicArn", "sourceType":"identifier", "source":"Arn" }
+          ]
+        },
+        "path":"$"
+      },
       "actions": {
         "Subscribe": {
           "request": {
@@ -46,6 +65,53 @@
         "Delete": {
           "request": {
             "operation": "DeleteTopic",
+            "params": [
+              { "target":"TopicArn", "sourceType":"identifier", "source":"Arn" }
+            ]
+          }
+        },
+        "Publish": {
+          "request": {
+            "operation": "Publish",
+            "params": [
+              { "target":"TopicArn", "sourceType":"identifier", "source":"Arn" }
+            ]
+          }
+        },
+        "ConfirmSubscription": {
+          "request": {
+            "operation":"ConfirmSubscription",
+            "params": [
+              { "target":"TopicArn", "sourceType":"identifier", "source":"Arn" }
+            ]
+          },
+          "resource": {
+            "type": "Subscription",
+            "identifiers": [
+              { "target":"TopicArn", "sourceType":"identifier", "source":"Arn" },
+              { "target":"Arn", "sourceType":"responsePath", "source":"SubscriptionArn" }
+            ]
+          }
+        },
+        "AddPermission": {
+          "request": {
+            "operation":"AddPermission",
+            "params": [
+              { "target":"TopicArn", "sourceType":"identifier", "source":"Arn" }
+            ]
+          }
+        },
+        "RemovePermission": {
+          "request": {
+            "operation":"RemovePermission",
+            "params": [
+              { "target":"TopicArn", "sourceType":"identifier", "source":"Arn" }
+            ]
+          }
+        },
+        "SetAttributes": {
+          "request": {
+            "operation":"SetTopicAttributes",
             "params": [
               { "target":"TopicArn", "sourceType":"identifier", "source":"Arn" }
             ]
@@ -70,17 +136,36 @@
         }
       },
       "subResources": {
-        "resources":["Subscription"],
+        "resources":[
+          "Subscription"
+        ],
         "identifiers": { "Arn": "TopicArn" }
       }
     },
     "Subscription": {
       "shape": "Subscription",
       "identifiers": ["TopicArn", "Arn"],
+      "load": {
+        "request": {
+          "operation": "GetSubscriptionAttributes",
+          "params": [
+            { "target":"SubscriptionArn", "sourceType":"identifier", "source":"Arn" }
+          ]
+        },
+        "path":"$"
+      },
       "actions": {
         "Delete": {
           "request": {
             "operation": "Unsubscribe",
+            "params": [
+              { "target":"SubscriptionArn", "sourceType":"identifier", "source":"Arn" }
+            ]
+          }
+        },
+        "SetAttributes": {
+          "request": {
+            "operation":"SetSubscriptionAttributes",
             "params": [
               { "target":"SubscriptionArn", "sourceType":"identifier", "source":"Arn" }
             ]
