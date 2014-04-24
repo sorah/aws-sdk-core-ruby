@@ -3,33 +3,8 @@
   "required": ["service","resources"],
   "additionalProperties": false,
   "properties": {
-    "service": {
-      "type": "object",
-      "required": [],
-      "additionalProperties": false,
-      "properties": {
-        "actions": { "$ref": "#/definitions/ActionMap" },
-        "hasMany": { "$ref": "#/definitions/HasManyMap" }
-      }
-    },
-    "resources": {
-      "type": "object",
-      "additionalProperties": {
-        "type": "object",
-        "required": [],
-        "additionalProperties": false,
-        "properties": {
-          "shape":        { "$ref": "#/definitions/ShapeName" },
-          "identifiers":  { "$ref": "#/definitions/IdentifierList" },
-          "load":         { "$ref": "#/definitions/DataOperation" },
-          "actions":      { "$ref": "#/definitions/ActionMap" },
-          "hasMany":      { "$ref": "#/definitions/HasManyMap" },
-          "hasSome":      { "$ref": "#/definitions/HasSomeMap" },
-          "hasOne":       { "$ref": "#/definitions/HasOneMap" },
-          "subResources": { "$ref": "#/definitions/SubResources" }
-        }
-      }
-    }
+    "service": { "$ref": "#/definitions/Service" },
+    "resources": { "$ref": "#/definitions/ResourceMap" }
   },
   "definitions": {
     "Action": {
@@ -104,6 +79,18 @@
       "additionalItems": false,
       "items": { "$ref": "#/definitions/IdentifierName" }
     },
+    "IdentifierTrait": {
+      "type": "object",
+      "required": ["nullable"],
+      "additionalProperties": false,
+      "properties": {
+        "nullable": { "type": "boolean", "default": false }
+      }
+    },
+    "IdentifierTraitMap": {
+      "type": "object",
+      "additionalProperties": { "$ref": "#/definitions/IdentifierTrait" }
+    },
     "IdentifierName": { "$ref": "#/definitions/UpperCamelCaseString" },
     "Operation": {
       "type": "object",
@@ -113,7 +100,7 @@
         "request": { "$ref": "#/definitions/Request" }
       }
     },
-    "OperationName": { "$ref": "#/definitions/UpperCamelCaseString" },
+    "OperationName": { "type": "string" },
     "Request": {
       "type": "object",
       "required": ["operation"],
@@ -173,6 +160,26 @@
       "additionalItems": false,
       "items": { "$ref": "#/definitions/ResourceIdentifier" }
     },
+    "Resource": {
+      "type": "object",
+      "required": [],
+      "additionalProperties": false,
+      "properties": {
+        "shape":            { "$ref": "#/definitions/ShapeName" },
+        "identifiers":      { "$ref": "#/definitions/IdentifierList" },
+        "identifierTraits": { "$ref": "#/definitions/IdentifierTraitMap" },
+        "load":             { "$ref": "#/definitions/DataOperation" },
+        "actions":          { "$ref": "#/definitions/ActionMap" },
+        "hasMany":          { "$ref": "#/definitions/HasManyMap" },
+        "hasSome":          { "$ref": "#/definitions/HasSomeMap" },
+        "hasOne":           { "$ref": "#/definitions/HasOneMap" },
+        "subResources":     { "$ref": "#/definitions/SubResources" }
+      }
+    },
+    "ResourceMap": {
+      "type": "object",
+      "additionalProperties": { "$ref": "#/definitions/Resource" }
+    },
     "ResourceName": { "$ref": "#/definitions/UpperCamelCaseString" },
     "ResourceOperation": {
       "type": "object",
@@ -196,7 +203,16 @@
         "path": { "$ref": "#/definitions/JMESPathExpression" }
       }
     },
-    "ShapeName": { "$ref": "#/definitions/UpperCamelCaseString" },
+    "Service": {
+      "type": "object",
+      "required": [],
+      "additionalProperties": false,
+      "properties": {
+        "actions": { "$ref": "#/definitions/ActionMap" },
+        "hasMany": { "$ref": "#/definitions/HasManyMap" }
+      }
+    },
+    "ShapeName": { "type": "string" },
     "SubResourceIdentifierMap": {
       "type": "object",
       "additionalProperties": { "$ref": "#/definitions/UpperCamelCaseString" }
@@ -222,7 +238,7 @@
     "UpperCamelCaseString": {
       "type": "string",
       "minLength": 1,
-      "pattern": "^([A-Z]+[a-z]*)+$"
+      "pattern": "^([A-Z][a-z]+)+$"
     }
   }
 }

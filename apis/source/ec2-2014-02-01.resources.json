@@ -11,6 +11,16 @@
           "path": "Instances[]"
         }
       },
+      "CreateSubnet": {
+        "request": { "operation": "CreateSubnet" },
+        "resource": {
+          "type": "Subnet",
+          "identifiers": [
+            { "target":"Id", "sourceType":"responsePath", "source":"Subnet.SubnetId" }
+          ],
+          "path": "Subnet"
+        }
+      },
       "CreateVpc": {
         "request": { "operation": "CreateVpc" },
         "resource": {
@@ -31,6 +41,16 @@
             { "target":"Id", "sourceType":"responsePath", "source":"Reservations[].Instances[].InstanceId" }
           ],
           "path": "Reservations[].Instances[]"
+        }
+      },
+      "Subnets": {
+        "request": { "operation": "DescribeSubnets" },
+        "resource": {
+          "type": "Subnet",
+          "identifiers": [
+            { "target":"Id", "sourceType":"responsePath", "source":"Subnets[].SubnetId" }
+          ],
+          "path": "Subnets[]"
         }
       },
       "Vpcs": {
@@ -176,6 +196,80 @@
         }
       },
       "hasOne": {
+        "Subnet": {
+          "resource": {
+            "type": "Subnet",
+            "identifiers": [
+              { "target":"Id", "sourceType":"dataMember", "source":"SubnetId" }
+            ]
+          }
+        },
+        "Vpc": {
+          "resource": {
+            "type": "Vpc",
+            "identifiers": [
+              { "target":"Id", "sourceType":"dataMember", "source":"VpcId" }
+            ]
+          }
+        }
+      }
+    },
+    "Subnet": {
+      "identifiers": ["Id"],
+      "shape": "Vpc",
+      "load": {
+        "request": {
+          "operation": "DescribeSubnets",
+          "params": [
+            { "target":"SubnetIds[]", "sourceType":"identifier", "source":"Id" }
+          ]
+        },
+        "path": "Subnets[0]"
+      },
+      "actions": {
+        "CreateInstances": {
+          "request": {
+            "operation": "RunInstances",
+            "params": [
+              { "target":"SubnetId", "sourceType":"identifier", "source":"Id" }
+            ]
+          },
+          "resource": {
+            "type": "Instance",
+            "identifiers": [
+              { "target":"Id", "sourceType":"responsePath", "source":"Instances[].InstanceId" }
+            ],
+            "path": "Instances[]"
+          }
+        },
+        "Delete": {
+          "request": {
+            "operation": "DeleteSubnet",
+            "params": [
+              { "target":"SubnetId", "sourceType":"identifier", "source":"Id" }
+            ]
+          }
+        }
+      },
+      "hasMany": {
+        "Instances": {
+          "request": {
+            "operation": "DescribeInstances",
+            "params": [
+              { "target":"Filters[0].Name", "sourceType":"string", "source":"subnet-id" },
+              { "target":"Filters[0].Values[]", "sourceType":"identifier", "source":"Id" }
+            ]
+          },
+          "resource": {
+            "type": "Instance",
+            "identifiers": [
+              { "target":"Id", "sourceType":"responsePath", "source":"Reservations[].Instances[].InstanceId" }
+            ],
+            "path": "Reservations[].Instances[]"
+          }
+        }
+      },
+      "hasOne": {
         "Vpc": {
           "resource": {
             "type": "Vpc",
@@ -187,7 +281,7 @@
       }
     },
     "Vpc": {
-      "identifiers": ["id"],
+      "identifiers": ["Id"],
       "shape": "Vpc",
       "load": {
         "request": {
@@ -199,6 +293,21 @@
         "path": "Vpcs[0]"
       },
       "actions": {
+        "CreateSubnet": {
+          "request": {
+            "operation": "CreateSubnet",
+            "params": [
+              { "target":"VpcId", "sourceType":"identifier", "source":"Id" }
+            ]
+          },
+          "resource": {
+            "type": "Subnet",
+            "identifiers": [
+              { "target":"Id", "sourceType":"responsePath", "source":"Subnet.SubnetId" }
+            ],
+            "path": "Subnet"
+          }
+        },
         "Delete": {
           "request": {
             "operation": "DeleteVpc",
@@ -239,6 +348,22 @@
               { "target":"Id", "sourceType":"responsePath", "source":"Reservations[].Instances[].InstanceId" }
             ],
             "path": "Reservations[].Instances[]"
+          }
+        },
+        "Subnets": {
+          "request": {
+            "operation": "DescribeSubnets",
+            "params": [
+              { "target":"Filters[0].Name", "sourceType":"string", "source":"vpc-id" },
+              { "target":"Filters[0].Values[]", "sourceType":"identifier", "source":"Id" }
+            ]
+          },
+          "resource": {
+            "type": "Subnet",
+            "identifiers": [
+              { "target":"Id", "sourceType":"responsePath", "source":"Subnets[].SubnetId" }
+            ],
+            "path": "Subnets[]"
           }
         }
       }
