@@ -9,6 +9,15 @@
             { "target":"Arn", "sourceType":"responsePath", "source":"TopicArn" }
           ]
         }
+      },
+      "CreatePlatformApplication": {
+        "request": { "operation":"CreatePlatformApplication" },
+        "resource": {
+          "type": "PlatformApplication",
+          "identifiers": [
+            { "target":"Arn", "sourceType":"responsePath", "source":"PlatformApplicationArn" }
+          ]
+        }
       }
     },
     "hasMany": {
@@ -28,6 +37,19 @@
           "identifiers": [
             { "target":"TopicArn", "sourceType":"responsePath", "source":"Subscriptions[].TopicArn" },
             { "target":"Arn", "sourceType":"responsePath", "source":"Subscriptions[].SubscriptionArn"}
+          ]
+        }
+      },
+      "PlatformApplications": {
+        "request": { "operation": "ListPlatformApplications" },
+        "resource": {
+          "type": "PlatformApplication",
+          "identifiers": [
+            {
+              "target":"Arn",
+              "sourceType":"responsePath",
+              "source":"PlatformApplications[].PlatformApplicationArn"
+            }
           ]
         }
       }
@@ -168,6 +190,114 @@
             "operation":"SetSubscriptionAttributes",
             "params": [
               { "target":"SubscriptionArn", "sourceType":"identifier", "source":"Arn" }
+            ]
+          }
+        }
+      }
+    },
+    "PlatformApplication": {
+      "shape": "PlatformApplication",
+      "identifiers": ["Arn"],
+      "load": {
+        "request": {
+          "operation": "GetPlatformApplicationAttributes",
+          "params": [
+            { "target":"PlatformApplicationArn", "sourceType":"identifier", "source":"Arn" }
+          ]
+        },
+        "path":"$"
+      },
+      "actions": {
+        "Delete": {
+          "request": {
+            "operation": "DeletePlatformApplication",
+            "params": [
+              { "target":"PlatformApplicationArn", "sourceType":"identifier", "source":"Arn" }
+            ]
+          }
+        },
+        "SetAttributes": {
+          "request": {
+            "operation":"SetPlatformApplicationAttributes",
+            "params": [
+              { "target":"PlatformApplicationArn", "sourceType":"identifier", "source":"Arn" }
+            ]
+          }
+        },
+        "CreatePlatformEndpoint": {
+          "request": {
+            "operation": "CreatePlatformEndpoint",
+            "params": [
+              { "target":"PlatformApplicationArn", "sourceType":"identifier", "source":"Arn" }
+            ]
+          },
+          "resource": {
+            "type": "PlatformEndpoint",
+            "identifiers": [
+              { "target":"PlatformApplicationArn", "sourceType":"identifier", "source":"Arn" },
+              { "target":"Arn", "sourceType":"responsePath", "source":"EndpointArn"}
+            ]
+          }
+        }
+      },      
+      "hasMany": {
+        "PlatformEndpoints": {
+          "request": {
+            "operation": "ListEndpointsByPlatformApplication",
+            "params": [
+              { "target":"PlatformApplicationArn", "sourceType":"identifier", "source":"Arn" }
+            ]
+          },
+          "resource": {
+            "type": "PlatformEndpoint",
+            "identifiers": [
+              { "target":"PlatformApplicationArn", "sourceType":"identifier", "source":"Arn" },
+              { "target":"Arn", "sourceType":"responsePath", "source":"Endpoints[].EndpointArn"}
+            ]
+          }
+        }
+      },
+      "subResources": {
+        "resources":[
+          "PlatformEndpoint"
+        ],
+        "identifiers": { "Arn": "PlatformApplicationArn" }
+      }
+    },
+    "PlatformEndpoint": {
+      "shape": "PlatformEndpoint",
+      "identifiers": ["PlatformApplicationArn", "Arn"],
+      "load": {
+        "request": {
+          "operation": "GetEndpointAttributes",
+          "params": [
+            { "target":"EndpointArn", "sourceType":"identifier", "source":"Arn" }
+          ]
+        },
+        "path":"$"
+      },
+      "actions": {
+        "Delete": {
+          "request": {
+            "operation": "DeleteEndpoint",
+            "params": [
+              { "target":"EndpointArn", "sourceType":"identifier", "source":"Arn" }
+            ]
+          }
+        },
+        "SetAttributes": {
+          "request": {
+            "operation":"SetEndpointAttributes",
+            "params": [
+              { "target":"EndpointArn", "sourceType":"identifier", "source":"Arn" }
+            ]
+          }
+        },
+        "Publish": {
+          "request": {
+            "operation": "Publish",
+            "params": [
+              { "target":"TargetArn", "sourceType":"identifier", "source":"Arn" }
             ]
           }
         }
