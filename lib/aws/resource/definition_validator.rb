@@ -130,37 +130,42 @@ module Aws
 
       def validate_resource_load(name, resource)
         if resource['load']
-          request = resource['load']['request']
-          validate_resource_load_request(name, resource)
-          validate_resource_load_path(name, resource)
+          require_shape(resource, LOAD_REQUIRES_SHAPE % [name]) do
+            request = resource['load']['request']
+            validate_resource_load_request(name, resource, request)
+          end
         end
       end
 
       def validate_resource_load_request(name, resource, request)
         if operation = @api['operations'][request['operation']]
-          validate_resource_load_request_params(name, resource, operation)
+          validate_resource_load_request_params
           validate_resource_load_path(name, resource, operation)
         else
           @errors << LOAD_OPERATION_NOT_FOUND % [name, request['operation']]
         end
       end
 
+      def validate_resource_load_request_params; end
+
       def validate_resource_load_path(name, resource, operation)
-        require_shape(resource, LOAD_REQUIRES_SHAPE % [name]) do
-          path = resource['load']['path']
-          unless resource['shape'] == resolve_output_path(operation, path)
-            @errors << LOAD_PATH_BAD % [name, resource['shape']]
-          end
+        path = resource['load']['path']
+        unless resource['shape'] == resolve_output_path(operation, path)
+          @errors << LOAD_PATH_BAD % [name, resource['shape']]
         end
       end
 
       def resolve_output_path(operation, path)
         output_shape = operation['output']['shape']
-        ref = path.scan(/\w+|\[.*?\]/).inject(operation['output']) do |ref, part|
-          shape = @api['shapes'][ref['shape']]
-          shape['members'][part]
+        if path == '$'
+          operation['output']['shape']
+        else
+          ref = path.scan(/\w+|\[.*?\]/).inject(operation['output']) do |ref, part|
+            shape = @api['shapes'][ref['shape']]
+            shape['members'][part]
+          end
+          ref['shape']
         end
-        ref['shape']
       end
 
       def require_shape(resource, error_msg, &block)

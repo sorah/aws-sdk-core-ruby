@@ -30,8 +30,7 @@ module ValidatorHelpers
   module ClassMethods
 
     def test_name(dir)
-      File.basename(dir).gsub('_', ' ')
-      File.basename(dir)
+      File.basename(dir).sub(/^\d+_/, '').gsub('_', ' ')
     end
 
     def example_directory?(path)
