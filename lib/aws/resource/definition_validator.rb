@@ -139,14 +139,15 @@ module Aws
 
       def validate_resource_load_request(name, resource, request)
         if operation = @api['operations'][request['operation']]
-          validate_resource_load_request_params
+          validate_resource_load_request_params(name, resource, operation)
           validate_resource_load_path(name, resource, operation)
         else
           @errors << LOAD_OPERATION_NOT_FOUND % [name, request['operation']]
         end
       end
 
-      def validate_resource_load_request_params; end
+      def validate_resource_load_request_params(name, resource, operation)
+      end
 
       def validate_resource_load_path(name, resource, operation)
         path = resource['load']['path']
@@ -162,7 +163,13 @@ module Aws
         else
           ref = path.scan(/\w+|\[.*?\]/).inject(operation['output']) do |ref, part|
             shape = @api['shapes'][ref['shape']]
-            shape['members'][part]
+            if part[0] == '['
+              return nil unless shape['type'] == 'list'
+              shape['member']
+            else
+              return nil unless shape['type'] == 'structure'
+              shape['members'][part]
+            end
           end
           ref['shape']
         end
