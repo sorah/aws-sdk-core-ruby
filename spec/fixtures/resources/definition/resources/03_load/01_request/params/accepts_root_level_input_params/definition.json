@@ -1,0 +1,22 @@
+{
+  "resources": {
+    "ResourceName": {
+      "identifiers": [
+        { "name": "Id" }
+      ],
+      "shape": "ResourceShape",
+      "load": {
+        "request": {
+          "operation": "OperationName",
+          "params": [
+            { "target":"ResourceId", "sourceType":"identifier", "source":"Id" },
+            { "target":"StringMember", "sourceType":"string", "source":"Abc" },
+            { "target":"IntegerMember", "sourceType":"integer", "source":"123" },
+            { "target":"BooleanMember", "sourceType":"boolean", "source":"true" }
+          ]
+        },
+        "path": "$"
+      }
+    }
+  }
+}

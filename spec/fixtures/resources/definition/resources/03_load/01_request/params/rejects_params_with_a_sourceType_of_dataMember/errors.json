@@ -1,0 +1,3 @@
+[
+  "Resource 'ResourceName' load request defines a param with sourceType 'dataMember'; load operations may not source dataMembers."
+]

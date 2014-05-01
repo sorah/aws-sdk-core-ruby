@@ -1,3 +1,5 @@
+require 'multi_json'
+
 module ValidatorHelpers
 
   def self.included(base)
@@ -7,7 +9,11 @@ module ValidatorHelpers
   def read(dir, filename)
     path = File.join(dir, "#{filename}.json")
     if File.exists?(path)
-      JSON.load(File.read(path))
+      begin
+        MultiJson.load(File.read(path))
+      rescue MultiJson::ParseError => e
+        fail("JSON parse error when loading #{path}")
+      end
     else
       pending("missing #{filename}.json fixture")
     end

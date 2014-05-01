@@ -23,6 +23,14 @@ module Aws
 
       LOAD_PATH_BAD = "Resource '%s' defines a 'load' path that does not resolve to a '%s'."
 
+      OPERATION_DOES_NOT_ACCEPT_INPUT = '%s request defines params when the operation does not accept input.'
+
+      INVALID_PARAM_TARGET = '%s request defines a param target of "%s" which is invalid.'
+
+      PARAM_SOURCE_BAD = "%s request defines a param with sourceType '%s'; %s may not source dataMembers."
+
+      PARAM_TYPE_BAD = "%s request defines a param with target '%s' and sourceType '%s' which resolves to a '%s' shape."
+
       SCHEMA_PATH = File.expand_path(File.join([
         File.dirname(__FILE__), '..', '..', '..', 'resources.schema.json'
       ]))
@@ -59,13 +67,11 @@ module Aws
 
       def validate_service_actions
         each_service_action do |action|
-          # TODO : validate service action
         end
       end
 
       def validate_service_has_many
         each_service_has_many do |name, has_many|
-          # TODO : validate service has many association
         end
       end
 
@@ -111,7 +117,7 @@ module Aws
       def validate_resource_identifier_member_name(name, resource, identifier)
         msg = ID_REQUIRES_SHAPE % [name, identifier['name']]
         require_shape(resource, msg) do |shape|
-          if shape['members'][identifier['memberName']].nil?
+          if shape['members'] && shape['members'][identifier['memberName']].nil?
             @errors << ID_NOT_FOUND % [name, identifier['name'], identifier['memberName'], resource['shape']]
           end
         end
@@ -130,7 +136,7 @@ module Aws
 
       def validate_resource_load(name, resource)
         if resource['load']
-          require_shape(resource, LOAD_REQUIRES_SHAPE % [name]) do
+          require_shape(resource) do
             request = resource['load']['request']
             validate_resource_load_request(name, resource, request)
           end
@@ -139,29 +145,58 @@ module Aws
 
       def validate_resource_load_request(name, resource, request)
         if operation = @api['operations'][request['operation']]
-          validate_resource_load_request_params(name, resource, operation)
+          validate_resource_load_request_params(name, resource, request, operation)
           validate_resource_load_path(name, resource, operation)
         else
           @errors << LOAD_OPERATION_NOT_FOUND % [name, request['operation']]
         end
       end
 
-      def validate_resource_load_request_params(name, resource, operation)
+      def validate_resource_load_request_params(name, resource, request, operation)
+        if params = request['params']
+          prefix = "Resource '%s' load" % [name]
+          if operation['input']
+            input_shape = @api['shapes'][operation['input']['shape']]
+            params.each do |param|
+              if param['sourceType'] == 'dataMember'
+                @errors << PARAM_SOURCE_BAD % [prefix, 'dataMember', 'load operations']
+              elsif shape_name = resolve_param_path(operation['input'], param['target'])
+                validate_static_param_types(prefix, shape_name, param)
+              else
+                @errors << INVALID_PARAM_TARGET % [prefix, param['target']]
+              end
+            end
+          else
+            @errors << OPERATION_DOES_NOT_ACCEPT_INPUT % [prefix]
+          end
+        end
       end
 
       def validate_resource_load_path(name, resource, operation)
         path = resource['load']['path']
-        unless resource['shape'] == resolve_output_path(operation, path)
+        unless resource['shape'] == resolve_param_path(operation['output'], path)
           @errors << LOAD_PATH_BAD % [name, resource['shape']]
         end
       end
 
-      def resolve_output_path(operation, path)
-        output_shape = operation['output']['shape']
+      def validate_static_param_types(prefix, shape_name, param)
+        if scalar_param?(param)
+          shape = @api['shapes'][shape_name]
+          unless shape['type'] == param['sourceType']
+            @errors << PARAM_TYPE_BAD % [prefix, param['target'], param['sourceType'], shape['type']]
+          end
+        end
+      end
+
+      def scalar_param?(param)
+        !['identifier', 'dataMember', 'resource'].include?(param['sourceType'])
+      end
+
+      def resolve_param_path(start, path)
         if path == '$'
-          operation['output']['shape']
+          start['shape']
         else
-          ref = path.scan(/\w+|\[.*?\]/).inject(operation['output']) do |ref, part|
+          ref = path.scan(/\w+|\[.*?\]/).inject(start) do |ref, part|
             shape = @api['shapes'][ref['shape']]
             if part[0] == '['
               return nil unless shape['type'] == 'list'
@@ -171,16 +206,16 @@ module Aws
               shape['members'][part]
             end
           end
-          ref['shape']
+          ref && ref['shape']
         end
       end
 
-      def require_shape(resource, error_msg, &block)
+      def require_shape(resource, error_msg = nil, &block)
         shape = @api['shapes'][resource['shape']]
-        if shape && shape['type'] == 'structure'
+        if shape
           yield(shape)
         else
-          @errors << error_msg
+          @errors << error_msg if error_msg
         end
       end
 
@@ -213,14 +248,6 @@ module Aws
           yield(shape) if block_given?
           shape
         end
-      end
-
-      class << self
-
-        def validate(definition, api, options = {})
-          new(definition, api).validate(options)
-        end
-
       end
 
     end

@@ -1,0 +1,5 @@
+[
+  "Resource 'ResourceName' load request defines a param with target 'IntValue' and sourceType 'string' which resolves to a 'integer' shape.",
+  "Resource 'ResourceName' load request defines a param with target 'StrValue' and sourceType 'boolean' which resolves to a 'string' shape.",
+  "Resource 'ResourceName' load request defines a param with target 'BoolValue' and sourceType 'integer' which resolves to a 'boolean' shape."
+]

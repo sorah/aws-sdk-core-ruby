@@ -1,10 +1,16 @@
 #!/usr/bin/env ruby
 
-require 'json'
-require 'json-schema'
+$LOAD_PATH << './lib'
 
-json = JSON.load(File.read(ARGV[0]))
-errors = JSON::Validator.fully_validate('resources.schema.json', json)
+require 'multi_json'
+require 'json-schema'
+require 'aws/resource/definition_validator'
+
+
+definition = MultiJson.load(File.read(ARGV[0]))
+api = MultiJson.load(File.read(ARGV[1]))
+
+errors = Aws::Resource::DefinitionValidator.new(definition, api).errors
 
 if errors.empty?
   puts "OK"
