@@ -111,7 +111,11 @@ module Aws
 
         # @option [required, Seahorse::Client::Response] :response
         def extract(options)
-          Jamespath.search(source, response(options).data)
+          if source == '$'
+            response(options).data
+          else
+            Jamespath.search(source, response(options).data)
+          end
         end
 
         private

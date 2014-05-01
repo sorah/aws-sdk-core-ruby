@@ -1,0 +1,16 @@
+#!/usr/bin/env ruby
+
+require 'json'
+require 'json-schema'
+
+json = JSON.load(File.read(ARGV[0]))
+errors = JSON::Validator.fully_validate('resources.schema.json', json)
+
+if errors.empty?
+  puts "OK"
+  exit 0
+else
+  puts "ERRORS"
+  puts " -  " + errors.join("\n -  ")
+  exit 1
+end

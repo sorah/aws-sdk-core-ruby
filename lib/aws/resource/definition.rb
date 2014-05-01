@@ -180,6 +180,7 @@ module Aws
             when 'dataMember' then RequestParams::DataMember
             when 'string'     then RequestParams::String
             when 'integer'    then RequestParams::Integer
+            when 'boolean'    then RequestParams::Boolean
             else
               msg = "unhandled param source type `#{definition['sourceType']}'"
               raise ArgumentError, msg

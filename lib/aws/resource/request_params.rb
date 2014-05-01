@@ -193,6 +193,30 @@ module Aws
         end
 
       end
+
+      class Boolean < Base
+
+        # @param [String<'true'>,String<'false'>] value
+        # @param (see Base#initialize)
+        def initialize(value, target)
+          @value = (value == 'true')
+          super(target)
+        end
+
+        # @return [Integer]
+        attr_reader :value
+
+        # @param [Hash] params_hash
+        def apply(params_hash, options = {})
+          super(params_hash, value)
+        end
+
+        # @api private
+        def self.literal?
+          true
+        end
+
+      end
     end
   end
 end

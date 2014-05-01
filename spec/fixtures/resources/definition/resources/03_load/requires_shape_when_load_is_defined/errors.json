@@ -1,0 +1,3 @@
+[
+  "Resource 'ResourceName' has defined 'load' but has not defined 'shape'."
+]

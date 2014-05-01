@@ -4,6 +4,7 @@ module Aws
     autoload :Builder, "#{SRC}/resource/builder"
     autoload :BuilderSources, "#{SRC}/resource/builder_sources"
     autoload :Definition, "#{SRC}/resource/definition"
+    autoload :DefinitionValidator, "#{SRC}/resource/definition_validator"
     autoload :Errors, "#{SRC}/resource/errors"
     autoload :Options, "#{SRC}/resource/options"
     autoload :Request, "#{SRC}/resource/request"

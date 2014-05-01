@@ -1,0 +1,26 @@
+{
+  "operations": {
+    "OperationName": {
+      "output": { "shape": "OutputShape" }
+    }
+  },
+  "shapes": {
+    "OutputShape": {
+      "type": "structure",
+      "members": {
+        "Result": { "shape": "DataShape" }
+      }
+    },
+    "DataShape": {
+      "type": "structure",
+      "members": {
+        "Data": { "shape": "ResourceShape" }
+      }
+    },
+    "ResourceShape": {
+      "type": "structure",
+      "members": {
+      }
+    }
+  }
+}

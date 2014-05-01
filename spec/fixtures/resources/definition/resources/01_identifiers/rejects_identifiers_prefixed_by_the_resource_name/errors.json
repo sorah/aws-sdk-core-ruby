@@ -1,0 +1,4 @@
+[
+  "Resource 'ResourceName' identifier 'ResourceNameId' should not be prefixed by the resource name.",
+  "Resource 'ResourceName' identifier 'ResourceNameArn' should not be prefixed by the resource name."
+]

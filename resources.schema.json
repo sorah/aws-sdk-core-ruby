@@ -1,6 +1,6 @@
 {
   "type": "object",
-  "required": ["service","resources"],
+  "required": ["resources"],
   "additionalProperties": false,
   "properties": {
     "service": { "$ref": "#/definitions/Service" },
@@ -16,7 +16,10 @@
     },
     "ActionMap": {
       "type": "object",
-      "additionalProperties": { "$ref": "#/definitions/Action" }
+      "additionalProperties": false,
+      "patternProperties": {
+        "^([A-Z][a-z]+)+$": { "$ref": "#/definitions/Action" }
+      }
     },
     "DataOperation": {
       "type": "object",
@@ -44,7 +47,10 @@
     },
     "HasManyMap": {
       "type": "object",
-      "additionalProperties": { "$ref": "#/definitions/HasManyDefinition" }
+      "additionalProperties": false,
+      "patternProperties": {
+        "^([A-Z][a-z]+)+$": { "$ref": "#/definitions/HasManyDefinition" }
+      }
     },
     "HasOneDefinition": {
       "type": "object",
@@ -56,7 +62,10 @@
     },
     "HasOneMap": {
       "type": "object",
-      "additionalProperties": { "$ref": "#/definitions/HasOneDefinition" }
+      "additionalProperties": false,
+      "patternProperties": {
+        "^([A-Z][a-z]+)+$": { "$ref": "#/definitions/HasOneDefinition" }
+      }
     },
     "HasSomeDefinition": {
       "type": "object",
@@ -68,28 +77,29 @@
     },
     "HasSomeMap": {
       "type": "object",
-      "additionalProperties": { "$ref": "#/definitions/HasSomeDefinition" }
+      "additionalProperties": false,
+      "patternProperties": {
+        "^([A-Z][a-z]+)+$": { "$ref": "#/definitions/HasSomeDefinition" }
+      }
     },
     "JMESPathExpression": {
       "type": "string",
       "minLength": 1
     },
-    "IdentifierList": {
-      "type": "array",
-      "additionalItems": false,
-      "items": { "$ref": "#/definitions/IdentifierName" }
-    },
-    "IdentifierTrait": {
+    "Identifier": {
       "type": "object",
-      "required": ["nullable"],
+      "required": ["name"],
       "additionalProperties": false,
       "properties": {
+        "name": { "$ref": "#/definitions/IdentifierName" },
+        "memberName": { "type": "string" },
         "nullable": { "type": "boolean", "default": false }
       }
     },
-    "IdentifierTraitMap": {
-      "type": "object",
-      "additionalProperties": { "$ref": "#/definitions/IdentifierTrait" }
+    "IdentifierList": {
+      "type": "array",
+      "additionalItems": false,
+      "items": { "$ref": "#/definitions/Identifier" }
     },
     "IdentifierName": { "$ref": "#/definitions/UpperCamelCaseString" },
     "Operation": {
@@ -122,7 +132,7 @@
         "target": { "type": "string" },
         "sourceType": {
           "type": "string",
-          "enum": ["identifier", "dataMember", "string", "integer"]
+          "enum": ["identifier", "dataMember", "string", "integer", "boolean"]
         },
         "source": { "type": "string" }
       }
@@ -167,7 +177,6 @@
       "properties": {
         "shape":            { "$ref": "#/definitions/ShapeName" },
         "identifiers":      { "$ref": "#/definitions/IdentifierList" },
-        "identifierTraits": { "$ref": "#/definitions/IdentifierTraitMap" },
         "load":             { "$ref": "#/definitions/DataOperation" },
         "actions":          { "$ref": "#/definitions/ActionMap" },
         "hasMany":          { "$ref": "#/definitions/HasManyMap" },
@@ -178,7 +187,10 @@
     },
     "ResourceMap": {
       "type": "object",
-      "additionalProperties": { "$ref": "#/definitions/Resource" }
+      "additionalProperties": false,
+      "patternProperties": {
+        "^([A-Z][a-z]+)+$": { "$ref": "#/definitions/Resource" }
+      }
     },
     "ResourceName": { "$ref": "#/definitions/UpperCamelCaseString" },
     "ResourceOperation": {
@@ -215,7 +227,10 @@
     "ShapeName": { "type": "string" },
     "SubResourceIdentifierMap": {
       "type": "object",
-      "additionalProperties": { "$ref": "#/definitions/UpperCamelCaseString" }
+      "additionalProperties": false,
+      "patternProperties": {
+        "^([A-Z][a-z]+)+$": { "$ref": "#/definitions/UpperCamelCaseString" }
+      }
     },
     "SubResourceList": {
       "type": "array",
