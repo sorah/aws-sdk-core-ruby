@@ -26,20 +26,24 @@ module Aws
           expect(params).to eq(params:['p1','p2'])
         end
 
-        it 'supports list members' do
+        it 'supports numbered list members' do
           params = {}
           RequestParams::Base.new('people[0].name').apply(params, 'name1')
+          RequestParams::Base.new('people[0].age').apply(params, 30)
           RequestParams::Base.new('people[1].name').apply(params, 'name2')
-          expect(params).to eq(people:[{name:'name1'},{name:'name2'}])
+          RequestParams::Base.new('people[1].age').apply(params, 40)
+          expect(params).to eq(people:[{name:'name1',age:30},{name:'name2',age:40}])
         end
 
         it 'supports nested lists' do
           params = {}
+          RequestParams::Base.new('params[0].name').apply(params, 'n1')
           RequestParams::Base.new('params[0].values[]').apply(params, 'v1')
           RequestParams::Base.new('params[0].values[]').apply(params, 'v2')
+          RequestParams::Base.new('params[1].name').apply(params, 'n2')
           RequestParams::Base.new('params[1].values[]').apply(params, 'v3')
           RequestParams::Base.new('params[1].values[]').apply(params, 'v4')
-          expect(params).to eq(params:[{values:['v1','v2']},{values:['v3','v4']}])
+          expect(params).to eq(params:[{name:'n1', values:['v1','v2']},{name:'n2', values:['v3','v4']}])
         end
 
       end
