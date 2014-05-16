@@ -20,7 +20,6 @@
     "Aws::Plugins::RetryErrors",
     "Aws::Plugins::GlobalConfiguration",
     "Aws::Plugins::RegionalEndpoint",
-    "Aws::Plugins::InstanceProfileCredentials",
     "Aws::Plugins::ResponsePaging",
     "Aws::Plugins::Credentials",
     "Aws::Plugins::QueryProtocol",
@@ -188,6 +187,7 @@
                   "fr",
                   "ga",
                   "gl",
+                  "he",
                   "hi",
                   "hu",
                   "hy",
@@ -278,6 +278,7 @@
                       "fr",
                       "ga",
                       "gl",
+                      "he",
                       "hi",
                       "hu",
                       "hy",
@@ -1383,6 +1384,7 @@
                       "fr",
                       "ga",
                       "gl",
+                      "he",
                       "hi",
                       "hu",
                       "hy",
@@ -2206,6 +2208,7 @@
                         "fr",
                         "ga",
                         "gl",
+                        "he",
                         "hi",
                         "hu",
                         "hy",
@@ -3000,6 +3003,10 @@
                   "desired_replication_count": {
                     "type": "integer",
                     "serialized_name": "DesiredReplicationCount"
+                  },
+                  "desired_partition_count": {
+                    "type": "integer",
+                    "serialized_name": "DesiredPartitionCount"
                   }
                 }
               },
@@ -3370,6 +3377,10 @@
               "desired_replication_count": {
                 "type": "integer",
                 "serialized_name": "DesiredReplicationCount"
+              },
+              "desired_partition_count": {
+                "type": "integer",
+                "serialized_name": "DesiredPartitionCount"
               }
             }
           }
@@ -3402,6 +3413,10 @@
                   "desired_replication_count": {
                     "type": "integer",
                     "serialized_name": "DesiredReplicationCount"
+                  },
+                  "desired_partition_count": {
+                    "type": "integer",
+                    "serialized_name": "DesiredPartitionCount"
                   }
                 }
               },

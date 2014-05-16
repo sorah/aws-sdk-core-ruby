@@ -9,6 +9,7 @@ module Aws
   @config = {}
 
   autoload :Credentials, "#{SRC}/credentials"
+  autoload :CredentialProviderChain, "#{SRC}/credential_provider_chain"
   autoload :Errors, "#{SRC}/errors"
   autoload :ErrorHandler, "#{SRC}/error_handler"
   autoload :InstanceProfileCredentials, "#{SRC}/instance_profile_credentials"
@@ -18,6 +19,7 @@ module Aws
   autoload :Resource, "#{SRC}/resource"
   autoload :Resources, "#{SRC}/resources"
   autoload :Service, "#{SRC}/service"
+  autoload :SharedCredentials, "#{SRC}/shared_credentials"
   autoload :Structure, "#{SRC}/structure"
   autoload :TimestampFormatter, "#{SRC}/timestamp_formatter"
   autoload :TreeHash, "#{SRC}/tree_hash"
@@ -66,7 +68,6 @@ module Aws
     autoload :GlacierApiVersion, "#{SRC}/plugins/glacier_api_version"
     autoload :GlacierChecksums, "#{SRC}/plugins/glacier_checksums"
     autoload :GlobalConfiguration, "#{SRC}/plugins/global_configuration"
-    autoload :InstanceProfileCredentials, "#{SRC}/plugins/instance_profile_credentials"
     autoload :JsonProtocol, "#{SRC}/plugins/json_protocol"
     autoload :JsonRpcHeaders, "#{SRC}/plugins/json_rpc_headers"
     autoload :QueryProtocol, "#{SRC}/plugins/query_protocol"
