@@ -8,7 +8,7 @@ module Aws
     class Definition
 
       # @param [Hash] source
-      def initialize(source)
+      def initialize(source, options = {})
         @source = source
       end
 
@@ -81,6 +81,7 @@ module Aws
       # @param [Hash] definition
       # @return [void]
       def define_resource_operations(service, resource, definition)
+        define_data_attributes(resource, definition['shape'])
         define_load(resource, definition['load'])
         define_actions(service, resource, definition['actions'] || {})
         define_has_many(service, resource, definition['hasMany'] || {})
@@ -97,17 +98,8 @@ module Aws
             top_level_resources.delete(child_name)
             child = service.const_get(child_name)
             method_name = underscore(child_name.sub(/^#{parent_name}/, ''))
-            parent.add_operation(method_name, ReferenceOperation.new(
-              builder: Builder.new(
-                resource_class: child,
-                sources: sub_resources['identifiers'].map { |source, target|
-                  BuilderSources::Identifier.new(
-                    underscore(source),
-                    underscore(target)
-                  )
-                }
-              )
-            ))
+            add_reference(parent, child, method_name, sub_resources['identifiers'])
+            add_reference(child, parent, underscore(parent_name), sub_resources['identifiers'].invert)
           end
         end
         top_level_resources.each do |name|
@@ -115,16 +107,34 @@ module Aws
           if resource_class.identifiers.count > 1
             raise "top level resource with plural identifiers: #{name}"
           else
-            service.add_operation(underscore(name), ReferenceOperation.new(
-              builder: Builder.new(resource_class: resource_class)
-            ))
+            add_reference(service, resource_class, underscore(name), {})
           end
+        end
+      end
+
+      def add_reference(from, to, method_name, identifiers)
+        from.add_operation(method_name, Operations::Reference.new(
+          builder: Builder.new(
+            resource_class: to,
+            sources: identifiers.map { |source, target|
+              BuilderSources::Identifier.new(
+                underscore(source),
+                underscore(target)
+              )
+            }
+          )
+        ))
+      end
+
+      def define_data_attributes(resoruce, shape_name)
+        if shape_name
+          # TODO : call resource.data_attr for each member of the resource shape
         end
       end
 
       def define_load(resource, definition)
         if definition
-          resource.load_operation = DataOperation.new(
+          resource.load_operation = Operations::Data.new(
             request: define_request(definition['request']),
             path: underscore(definition['path'])
           )
@@ -139,27 +149,27 @@ module Aws
       end
 
       def define_operation(service, resource, name, definition)
-        resource.add_operation(underscore(name), Operation.new(
+        resource.add_operation(underscore(name), Operations::Basic.new(
           request: define_request(definition['request'])
         ))
       end
 
       def define_data_operation(service, resource, name, definition)
-        resource.add_operation(underscore(name), DataOperation.new(
+        resource.add_operation(underscore(name), Operations::Data.new(
           request: define_request(definition['request']),
           path: underscore(definition['path'])
         ))
       end
 
       def define_resource_operation(service, resource, name, definition)
-        resource.add_operation(underscore(name), ResourceOperation.new(
+        resource.add_operation(underscore(name), Operations::Resource.new(
           request: define_request(definition['request']),
           builder: define_builder(service, definition['resource'])
         ))
       end
 
       def define_enumerate_resource_operation(service, resource, name, definition)
-        resource.add_operation(underscore(name), EnumerateResourceOperation.new(
+        resource.add_operation(underscore(name), Operations::EnumerateResource.new(
           request: define_request(definition['request']),
           builder: define_builder(service, definition['resource']))
         )
@@ -201,7 +211,7 @@ module Aws
 
       def define_has_some(service, resource, has_some)
         has_some.each do |name, definition|
-          resource.add_operation(underscore(name), ReferenceOperation.new(
+          resource.add_operation(underscore(name), Operations::Reference.new(
             builder: define_builder(service, definition['resource'])
           ))
         end
@@ -209,7 +219,7 @@ module Aws
 
       def define_has_one(service, resource, has_one)
         has_one.each do |name, definition|
-          resource.add_operation(underscore(name), ReferenceOperation.new(
+          resource.add_operation(underscore(name), Operations::Reference.new(
             builder: define_builder(service, definition['resource'])
           ))
         end

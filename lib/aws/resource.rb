@@ -6,16 +6,10 @@ module Aws
     autoload :Definition, "#{SRC}/resource/definition"
     autoload :DefinitionValidator, "#{SRC}/resource/definition_validator"
     autoload :Errors, "#{SRC}/resource/errors"
+    autoload :Operations, "#{SRC}/resource/operations"
     autoload :Options, "#{SRC}/resource/options"
     autoload :Request, "#{SRC}/resource/request"
     autoload :RequestParams, "#{SRC}/resource/request_params"
-
-    autoload :DataOperation, "#{SRC}/resource/data_operation"
-    autoload :EnumerateDataOperation, "#{SRC}/resource/enumerate_data_operation"
-    autoload :EnumerateResourceOperation, "#{SRC}/resource/enumerate_resource_operation"
-    autoload :Operation, "#{SRC}/resource/operation"
-    autoload :ResourceOperation, "#{SRC}/resource/resource_operation"
-    autoload :ReferenceOperation, "#{SRC}/resource/reference_operation"
 
     # @option options [Seahorse::Client::Base] :client
     def initialize(options = {})
@@ -129,6 +123,14 @@ module Aws
         @identifiers << name
       end
 
+      # Registers a getter for a resource data attribute.
+      # @param [Symbol] names
+      def data_attr(*names)
+        names.flatten.each do |name|
+          define_method(name) { data[name] }
+        end
+      end
+
       # @param [Symbol] name
       # @return [Operation] Returns the named operation.
       # @raise [Errors::UnknownOperationError]
@@ -141,7 +143,7 @@ module Aws
       # @param [Operation] operation
       # @return [void]
       def add_operation(method_name, operation)
-        operation.is_a?(ReferenceOperation) ?
+        operation.is_a?(Operations::Reference) ?
           define_resource_getter(method_name, operation) :
           define_operation_method(method_name, operation)
         @operations[method_name.to_sym] = operation
@@ -166,7 +168,7 @@ module Aws
       private
 
       # @param [Symbol] method_name
-      # @param [ReferenceOperation] operation
+      # @param [Operations::Reference] operation
       def define_resource_getter(method_name, operation)
         if operation.builder.requires_argument?
           define_method(method_name) do |identifier|
