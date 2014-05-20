@@ -1,5 +1,5 @@
 module Aws
-  class Resource
+  module Resource
     module RequestParams
 
       # Base class for all request parameter types.

@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 module Aws
-  class Resource
+  module Resource
     describe RequestParams do
 
       describe RequestParams::Base do

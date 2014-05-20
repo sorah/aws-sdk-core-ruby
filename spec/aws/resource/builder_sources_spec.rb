@@ -1,15 +1,14 @@
 require 'spec_helper'
 
 module Aws
-  class Resource
-    describe BuilderSources do
-
-      describe BuilderSources::Base do
+  module Resource
+    module BuilderSources
+      describe Base do
 
         describe '#source' do
 
           it 'returns the given source' do
-            source = BuilderSources::Base.new('source-expression', :target)
+            source = Base.new('source-expression', :target)
             expect(source.source).to eq('source-expression')
           end
 
@@ -18,12 +17,12 @@ module Aws
         describe '#target' do
 
           it 'returns the target' do
-            source = BuilderSources::Base.new('source-expression', :target)
+            source = Base.new('source-expression', :target)
             expect(source.target).to eq(:target)
           end
 
           it 'symbolizes the target' do
-            source = BuilderSources::Base.new('source-expression', 'target')
+            source = Base.new('source-expression', 'target')
             expect(source.target).to eq(:target)
           end
 
@@ -32,12 +31,12 @@ module Aws
         describe '#plural?' do
 
           it 'returns true if the source expression has an expansion' do
-            source = BuilderSources::Base.new('source[]', :target)
+            source = Base.new('source[]', :target)
             expect(source.plural?).to be(true)
           end
 
           it 'returns false if the source expression has no expansion' do
-            source = BuilderSources::Base.new('source', :target)
+            source = Base.new('source', :target)
             expect(source.plural?).to be(false)
           end
 
@@ -46,7 +45,7 @@ module Aws
         describe '#extract' do
 
           it 'is not defined in the base class' do
-            source = BuilderSources::Base.new('source', :target)
+            source = Base.new('source', :target)
             expect {
               source.extract({})
             }.to raise_error(NotImplementedError)
@@ -56,10 +55,10 @@ module Aws
 
       end
 
-      describe BuilderSources::Argument do
+      describe Argument do
 
         it 'is a BuilderSources::Base' do
-          expect(described_class.ancestors).to include(BuilderSources::Base)
+          expect(described_class.ancestors).to include(Base)
         end
 
         it 'extracts the named argument' do
@@ -77,10 +76,10 @@ module Aws
 
       end
 
-      describe BuilderSources::Identifier do
+      describe Identifier do
 
         it 'is a BuilderSources::Base' do
-          expect(described_class.ancestors).to include(BuilderSources::Base)
+          expect(described_class.ancestors).to include(Base)
         end
 
         it 'extracts an identifier from the given resource' do
@@ -99,10 +98,10 @@ module Aws
 
       end
 
-      describe BuilderSources::DataMember do
+      describe DataMember do
 
         it 'is a BuilderSources::Base' do
-          expect(described_class.ancestors).to include(BuilderSources::Base)
+          expect(described_class.ancestors).to include(Base)
         end
 
         it 'extracts a data member from the given resource' do
@@ -122,10 +121,10 @@ module Aws
 
       end
 
-      describe BuilderSources::RequestParameter do
+      describe RequestParameter do
 
         it 'is a BuilderSources::Base' do
-          expect(described_class.ancestors).to include(BuilderSources::Base)
+          expect(described_class.ancestors).to include(Base)
         end
 
         it 'extracts a request parameter from the response context' do
@@ -145,10 +144,10 @@ module Aws
 
       end
 
-      describe BuilderSources::ResponsePath do
+      describe ResponsePath do
 
         it 'is a BuilderSources::Base' do
-          expect(described_class.ancestors).to include(BuilderSources::Base)
+          expect(described_class.ancestors).to include(Base)
         end
 
         it 'extracts a value from the response data' do
@@ -175,7 +174,6 @@ module Aws
         end
 
       end
-
     end
   end
 end

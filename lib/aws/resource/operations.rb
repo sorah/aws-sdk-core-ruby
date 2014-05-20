@@ -1,10 +1,12 @@
+require 'aws/resource/options'
+
 module Aws
-  class Resource
+  module Resource
     module Operations
 
-      # Basic operations make an API request using the resource client,
-      # returning the client response.
-      class Basic
+      # Makes an API request using the resource client, returning the client
+      # response.  Most operation classes extend this basic operation.
+      class Operation
 
         include Options
 
@@ -25,7 +27,7 @@ module Aws
 
       end
 
-      class Data < Basic
+      class DataOperation < Operation
 
         # @option options [required, Request] :request
         # @option options [required, String<JMESPath>] :path
@@ -52,7 +54,7 @@ module Aws
 
       end
 
-      class EnumerateData < Data
+      class EnumerateDataOperation < DataOperation
 
         # @option options [required, Resource] :resource
         # @option options [Hash] :params ({})
@@ -71,7 +73,7 @@ module Aws
 
       end
 
-      class Resource < Basic
+      class ResourceOperation < Operation
 
         # @option options [required, Request] :request
         # @option options [required, Builder] :builder
@@ -92,7 +94,7 @@ module Aws
 
       end
 
-      class EnumerateResource < Resource
+      class EnumerateResourceOperation < ResourceOperation
 
         # @option options [required, Resource] :resource
         # @option options [Hash] :params ({})
@@ -111,7 +113,7 @@ module Aws
 
       end
 
-      class Reference
+      class ReferenceOperation
 
         include Options
 
@@ -128,6 +130,12 @@ module Aws
         # @return [Resource]
         def invoke(options)
           @builder.build(options)
+        end
+
+        # @return [Boolean] Returns `true` if this builder requires user
+        #   input to specify an identifier
+        def requires_argument?
+          @builder.sources.any? { |s| BuilderSources::Argument === s }
         end
 
       end

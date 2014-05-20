@@ -1,8 +1,8 @@
 require 'spec_helper'
-require 'helpers/validator.rb'
+require 'helpers/validator'
 
 module Aws
-  class Resource
+  module Resource
     describe DefinitionValidator do
 
       include ValidatorHelpers

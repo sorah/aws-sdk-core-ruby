@@ -1,7 +1,7 @@
-require 'jamespath'
+require 'aws/resource/options'
 
 module Aws
-  class Resource
+  module Resource
     class Request
 
       include Options

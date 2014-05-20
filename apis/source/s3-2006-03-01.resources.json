@@ -26,7 +26,9 @@
   },
   "resources": {
     "Bucket": {
-      "identifiers": ["Name"],
+      "identifiers": [
+        { "name": "Name" }
+      ],
       "shape": "Bucket",
       "actions": {
         "Create": {
@@ -138,7 +140,9 @@
       }
     },
     "BucketAcl": {
-      "identifiers": ["BucketName"],
+      "identifiers": [
+        { "name": "BucketName" }
+      ],
       "shape": "GetBucketAclOutput",
       "load": {
         "request": {
@@ -161,7 +165,9 @@
       }
     },
     "BucketCors": {
-      "identifiers": ["BucketName"],
+      "identifiers": [
+        { "name": "BucketName" }
+      ],
       "shape": "GetBucketCorsOutput",
       "load": {
         "request": {
@@ -192,7 +198,9 @@
       }
     },
     "BucketLifecycle": {
-      "identifiers": ["BucketName"],
+      "identifiers": [
+        { "name": "BucketName" }
+      ],
       "shape": "GetBucketLifecycleOutput",
       "load": {
         "request": {
@@ -223,7 +231,9 @@
       }
     },
     "BucketLogging": {
-      "identifiers": ["BucketName"],
+      "identifiers": [
+        { "name": "BucketName" }
+      ],
       "shape": "GetBucketLoggingOutput",
       "load": {
         "request": {
@@ -246,7 +256,9 @@
       }
     },
     "BucketPolicy": {
-      "identifiers": ["BucketName"],
+      "identifiers": [
+        { "name": "BucketName" }
+      ],
       "shape": "Policy",
       "load": {
         "request": {
@@ -277,7 +289,9 @@
       }
     },
     "BucketNotification": {
-      "identifiers": ["BucketName"],
+      "identifiers": [
+        { "name": "BucketName" }
+      ],
       "shape": "GetBucketNotificationOutput",
       "load": {
         "request": {
@@ -300,7 +314,9 @@
       }
     },
     "BucketRequestPayment": {
-      "identifiers": ["BucketName"],
+      "identifiers": [
+        { "name": "BucketName" }
+      ],
       "shape": "GetBucketRequestPaymentOutput",
       "load": {
         "request": {
@@ -323,7 +339,9 @@
       }
     },
     "BucketTagging": {
-      "identifiers": ["BucketName"],
+      "identifiers": [
+        { "name": "BucketName" }
+      ],
       "shape": "GetBucketTaggingOutput",
       "load": {
         "request": {
@@ -354,7 +372,9 @@
       }
     },
     "BucketVersioning": {
-      "identifiers": ["BucketName"],
+      "identifiers": [
+        { "name": "BucketName" }
+      ],
       "shape": "GetBucketVersioningOutput",
       "load": {
         "request": {
@@ -397,7 +417,9 @@
       }
     },
     "BucketWebsite": {
-      "identifiers": ["BucketName"],
+      "identifiers": [
+        { "name": "BucketName" }
+      ],
       "shape": "GetBucketWebsiteOutput",
       "load": {
         "request": {
@@ -428,7 +450,11 @@
       }
     },
     "MultipartUpload": {
-      "identifiers": ["BucketName", "ObjectKey", "Id"],
+      "identifiers": [
+        { "name": "BucketName" },
+        { "name": "ObjectKey" },
+        { "name": "Id" }
+      ],
       "shape": "Upload",
       "actions": {
         "Abort": {
@@ -485,7 +511,10 @@
       }
     },
     "Object": {
-      "identifiers": ["BucketName", "Key"],
+      "identifiers": [
+        { "name": "BucketName" },
+        { "name": "Key" }
+      ],
       "shape": "Object",
       "load": {
         "request": {
@@ -565,7 +594,10 @@
       }
     },
     "ObjectAcl": {
-      "identifiers": ["BucketName", "ObjectKey"],
+      "identifiers": [
+        { "name": "BucketName" },
+        { "name": "ObjectKey" }
+      ],
       "shape": "GetObjectAclOutput",
       "load": {
         "request": {
@@ -590,7 +622,11 @@
       }
     },
     "ObjectVersion": {
-      "identifiers": ["BucketName","ObjectKey","Id"],
+      "identifiers": [
+        { "name": "BucketName" },
+        { "name": "ObjectKey" },
+        { "name": "Id" }
+      ],
       "shape": ["ObjectVersion", "DeleteMarkerEntry"],
       "actions": {
         "Delete": {

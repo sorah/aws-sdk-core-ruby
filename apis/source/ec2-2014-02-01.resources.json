@@ -67,7 +67,7 @@
   },
   "resources": {
     "Instance": {
-      "identifiers": ["Id"],
+      "identifiers": [{ "name": "Id" }],
       "shape": "Instance",
       "load": {
         "request": {
@@ -215,7 +215,7 @@
       }
     },
     "Subnet": {
-      "identifiers": ["Id"],
+      "identifiers": [{ "name": "Id" }],
       "shape": "Vpc",
       "load": {
         "request": {
@@ -281,7 +281,7 @@
       }
     },
     "Vpc": {
-      "identifiers": ["Id"],
+      "identifiers": [{ "name": "Id" }],
       "shape": "Vpc",
       "load": {
         "request": {

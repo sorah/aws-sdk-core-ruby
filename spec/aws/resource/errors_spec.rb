@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 module Aws
-  class Resource
+  module Resource
     module Errors
       describe UnknownOperationError do
 

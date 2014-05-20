@@ -1,7 +1,8 @@
+require 'aws/resource/options'
 require 'jamespath'
 
 module Aws
-  class Resource
+  module Resource
 
     # A {Builder} construct resource objects.  It extracts resource identifiers
     # for the objects it builds from another resource object and/or an
@@ -15,14 +16,6 @@ module Aws
       def initialize(options)
         @resource_class = option(:resource_class, options)
         @sources = options[:sources] || []
-        if @load_path = options[:load_path]
-          @sources << BuilderSources::ResponsePath.new(@load_path, :data)
-        end
-        @plural = @sources.any?(&:plural?)
-        arguments = @resource_class.identifiers - @sources.map(&:target)
-        arguments.each do |identifier|
-          @sources << BuilderSources::Argument.new(identifier.to_s, identifier)
-        end
       end
 
       # @return [Class<Resource>]
@@ -32,21 +25,10 @@ module Aws
       #   identifier sources.
       attr_reader :sources
 
-      # @return [String<JAMESPath>, nil] A JAMESPath expression that
-      #   points to the resource data for constructed objects in the
-      #   response.
-      attr_reader :load_path
-
       # @return [Boolean] Returns `true` if this builder returns an array
       #   of resource objects from #{build}.
-      attr_reader :plural
-
-      alias plural? plural
-
-      # @return [Boolean] Returns `true` if this builder requires user
-      #   input to specify an identifier
-      def requires_argument?
-        BuilderSources::Argument === @sources.last
+      def plural?
+        @sources.any?(&:plural?)
       end
 
       # @option [Resource] :resource
@@ -93,14 +75,6 @@ module Aws
 
       def client(options)
         options[:resource].client
-      end
-
-      def extract_data(options)
-        if @load_path == '$'
-          options[:response].data
-        elsif @load_path
-          Jamespath.search(@load_path, options[:response].data)
-        end
       end
 
     end

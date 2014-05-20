@@ -195,7 +195,10 @@
   },
   "resources": {
     "AccessKey": {
-      "identifiers": ["UserName", "Id"],
+      "identifiers": [
+        { "name": "UserName" },
+        { "name": "Id" }
+      ],
       "shape": "AccessKey",
       "actions": {
         "Activate": {
@@ -231,7 +234,9 @@
       }
     },
     "AccountAlias": {
-      "identifiers": ["Name"],
+      "identifiers": [
+        { "name": "Name" }
+      ],
       "actions": {
         "Delete": {
           "request": {
@@ -260,7 +265,9 @@
       }
     },
     "Group": {
-      "identifiers": ["Name"],
+      "identifiers": [
+        { "name": "Name" }
+      ],
       "shape": "Group",
       "load": {
         "request": {
@@ -372,7 +379,10 @@
       }
     },
     "GroupPolicy": {
-      "identifiers": ["GroupName", "Name"],
+      "identifiers": [
+        { "name": "GroupName" },
+        { "name": "Name" }
+      ],
       "shape": "GetGroupPolicyResponse",
       "load": {
         "request": {
@@ -406,7 +416,9 @@
       }
     },
     "InstanceProfile": {
-      "identifiers": ["Name"],
+      "identifiers": [
+        { "name": "Name" }
+      ],
       "shape": "InstanceProfile",
       "load": {
         "request": {
@@ -456,7 +468,9 @@
       }
     },
     "LoginProfile": {
-      "identifiers": ["UserName"],
+      "identifiers": [
+        { "name": "UserName" }
+      ],
       "shape": "LoginProfile",
       "load": {
         "request": {
@@ -495,7 +509,10 @@
       }
     },
     "MfaDevice": {
-      "identifiers": ["UserName","SerialNumber"],
+      "identifiers": [
+        { "name": "UserName" },
+        { "name": "SerialNumber" }
+      ],
       "shape": "MFADevice",
       "actions": {
         "Enable": {
@@ -528,7 +545,9 @@
       }
     },
     "Role": {
-      "identifiers": ["Name"],
+      "identifiers": [
+        { "name": "Name" }
+      ],
       "shape": "Role",
       "load": {
         "request": {
@@ -595,7 +614,10 @@
       }
     },
     "RolePolicy": {
-      "identifiers": ["RoleName", "Name"],
+      "identifiers": [
+        { "name": "RoleName" },
+        { "name": "Name" }
+      ],
       "shape": "GetRolePolicyResponse",
       "load": {
         "request": {
@@ -629,7 +651,9 @@
       }
     },
     "SamlProvider": {
-      "identifiers": ["Arn"],
+      "identifiers": [
+        { "name": "Arn" }
+      ],
       "shape": "GetSAMLProviderResponse",
       "load": {
         "request": {
@@ -660,7 +684,9 @@
       }
     },
     "ServerCertificate": {
-      "identifiers": ["Name"],
+      "identifiers": [
+        { "name": "Name" }
+      ],
       "shape": "ServerCertificate",
       "load": {
         "request": {
@@ -697,7 +723,9 @@
       }
     },
     "SigningCertificate": {
-      "identifiers": ["Id"],
+      "identifiers": [
+        { "name": "Id" }
+      ],
       "shape": "SigningCertificate",
       "actions": {
         "Activate": {
@@ -729,7 +757,9 @@
       }
     },
     "User": {
-      "identifiers": ["Name"],
+      "identifiers": [
+        { "name": "Name" }
+      ],
       "shape": "User",
       "load": {
         "request": {
@@ -901,7 +931,10 @@
       }
     },
     "UserPolicy": {
-      "identifiers": ["UserName", "Name"],
+      "identifiers": [
+        { "name": "UserName" },
+        { "name": "Name" }
+      ],
       "shape": "GetUserPolicyResponse",
       "load": {
         "request": {
@@ -935,7 +968,9 @@
       }
     },
     "VirtualMfaDevice": {
-      "identifiers": ["SerialNumber"],
+      "identifiers": [
+        { "name": "SerialNumber" }
+      ],
       "shape": "VirtualMFADevice",
       "actions": {
         "Delete": {

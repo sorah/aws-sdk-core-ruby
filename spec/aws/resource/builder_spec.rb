@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 module Aws
-  class Resource
+  module Resource
     describe Builder do
 
       # A builder object construct a resource object from the context of
@@ -100,16 +100,6 @@ module Aws
             BuilderSources::ResponsePath.new('path', 'response_path'),
           ])
           expect(builder.build(resource:parent,response:response)).to be(resource)
-        end
-
-        it 'uses :argument to fill in non-sourced identifiers' do
-          resource_class = Resource.define(double('client-class'))
-          resource_class.add_identifier(:name)
-          builder = Builder.new(resource_class:resource_class, sources:[])
-          resource = builder.build(
-            resource: double('parent', client:'client'),
-            argument:'foo')
-          expect(resource.name).to eq('foo')
         end
 
         it 'constructs multiple resources if any of its sources are plural' do

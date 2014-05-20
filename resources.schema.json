@@ -33,55 +33,21 @@
         "path": { "$ref": "#/definitions/JMESPathExpression" }
       }
     },
-    "HasManyDefinition": {
-      "type": "object",
-      "required": [
-        "request",
-        "resource"
-      ],
-      "additionalProperties": false,
-      "properties": {
-        "request": { "$ref": "#/definitions/Request" },
-        "resource": { "$ref": "#/definitions/ResourceReference" }
-      }
-    },
     "HasManyMap": {
       "type": "object",
       "additionalProperties": false,
       "patternProperties": {
-        "^([A-Z][a-z]+)+$": { "$ref": "#/definitions/HasManyDefinition" }
-      }
-    },
-    "HasOneDefinition": {
-      "type": "object",
-      "required": ["resource"],
-      "additionalProperties": false,
-      "properties": {
-        "resource": { "$ref": "#/definitions/ResourceReference" }
+        "^([A-Z][a-z]+)+$": { "$ref": "#/definitions/ResourceOperation" }
       }
     },
     "HasOneMap": {
       "type": "object",
       "additionalProperties": false,
       "patternProperties": {
-        "^([A-Z][a-z]+)+$": { "$ref": "#/definitions/HasOneDefinition" }
+        "^([A-Z][a-z]+)+$": { "$ref": "#/definitions/ResourceReference" }
       }
     },
-    "HasSomeDefinition": {
-      "type": "object",
-      "required": ["resource"],
-      "additionalProperties": false,
-      "properties": {
-        "resource": { "$ref": "#/definitions/ResourceReference" }
-      }
-    },
-    "HasSomeMap": {
-      "type": "object",
-      "additionalProperties": false,
-      "patternProperties": {
-        "^([A-Z][a-z]+)+$": { "$ref": "#/definitions/HasSomeDefinition" }
-      }
-    },
+    "HasSomeMap": { "$ref": "#/definitions/ResourceReference" },
     "JMESPathExpression": {
       "type": "string",
       "minLength": 1
@@ -185,6 +151,15 @@
         "subResources":     { "$ref": "#/definitions/SubResources" }
       }
     },
+    "ResourceBuilder": {
+      "type": "object",
+      "required": ["type", "identifiers"],
+      "additionalProperties": false,
+      "properties": {
+        "type": { "$ref": "#/definitions/ResourceName" },
+        "identifiers": { "$ref": "#/definitions/ResourceIdentifierList" }
+      }
+    },
     "ResourceMap": {
       "type": "object",
       "additionalProperties": false,
@@ -202,16 +177,16 @@
       "additionalProperties": false,
       "properties": {
         "request": { "$ref": "#/definitions/Request" },
-        "resource": { "$ref": "#/definitions/ResourceReference" }
+        "resource": { "$ref": "#/definitions/ResourceBuilder" },
+        "path": { "$ref": "#/definitions/JMESPathExpression" }
       }
     },
     "ResourceReference": {
       "type": "object",
-      "required": ["type", "identifiers"],
+      "required": ["resource"],
       "additionalProperties": false,
       "properties": {
-        "type": { "$ref": "#/definitions/ResourceName" },
-        "identifiers": { "$ref": "#/definitions/ResourceIdentifierList" },
+        "resource": { "$ref": "#/definitions/ResourceBuilder" },
         "path": { "$ref": "#/definitions/JMESPathExpression" }
       }
     },

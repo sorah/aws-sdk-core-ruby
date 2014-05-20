@@ -1,5 +1,5 @@
 module Aws
-  class Resource
+  module Resource
     module Errors
 
       class UnknownOperationError < ArgumentError

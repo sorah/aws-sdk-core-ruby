@@ -1,5 +1,8 @@
+require 'aws/resource/options'
+require 'jamespath'
+
 module Aws
-  class Resource
+  module Resource
     module BuilderSources
 
       # Used by a {Builder} to extract resource identifiers from an AWS

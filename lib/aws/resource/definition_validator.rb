@@ -2,7 +2,7 @@ require 'multi_json'
 require 'json-schema'
 
 module Aws
-  class Resource
+  module Resource
     class DefinitionValidator
 
       ID_DUPLICATED = "Resource '%s' has duplicate identifiers."
@@ -51,8 +51,7 @@ module Aws
       private
 
       def validate_against_schema
-        schema = MultiJson.load(File.read(SCHEMA_PATH))
-        @errors = JSON::Validator.fully_validate(schema, @definition)
+        @errors = self.class.validate_against_schema(@definition)
       end
 
       def validate_against_api
@@ -136,7 +135,7 @@ module Aws
 
       def validate_resource_load(name, resource)
         if resource['load']
-          require_shape(resource) do
+          require_shape(resource, LOAD_REQUIRES_SHAPE % [name]) do
             request = resource['load']['request']
             validate_resource_load_request(name, resource, request)
           end
@@ -248,6 +247,18 @@ module Aws
           yield(shape) if block_given?
           shape
         end
+      end
+
+      class << self
+
+        # @return [Array<String>] Returns an array of error messages.
+        #   Returns an empty array of the definition validates against
+        #   the schema.
+        def validate_against_schema(definition)
+          schema = MultiJson.load(File.read(SCHEMA_PATH))
+          JSON::Validator.fully_validate(schema, definition)
+        end
+
       end
 
     end

@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 module Aws
-  class Resource
+  module Resource
     describe Request do
 
       describe '#method_name' do

@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 module Aws
-  class Resource
+  module Resource
     describe Definition do
 
       describe '#source' do
@@ -26,6 +26,8 @@ module Aws
         }}
 
         let(:service_class) {
+          errors = DefinitionValidator.validate_against_schema(definition)
+          expect(errors).to be_empty, lambda { errors.join("\n") }
           Definition.new(definition).define_service('Svc', client_class)
         }
 
@@ -46,16 +48,18 @@ module Aws
 
           it 'defines a resource class for each named resource' do
             definition['resources'] = {
-              'Group' => { 'identifiers' => %w(Id) },
-              'User' => { 'identifiers' => %w(Name) }
+              'Group' => { 'identifiers' => [{ 'name' => 'Id' }] },
+              'User' => { 'identifiers' => [{ 'name' => 'Name' }] },
             }
 
+            expect(service_class.constants.sort).to eq([:Group, :User])
+
             user = service_class::User.new(name:'user-name')
-            expect(user).to be_kind_of(Resource)
+            expect(user).to be_kind_of(Resource::Base)
             expect(user.identifiers).to eq(name:'user-name')
 
             group = service_class::Group.new(id:'group-id')
-            expect(group).to be_kind_of(Resource)
+            expect(group).to be_kind_of(Resource::Base)
             expect(group.identifiers).to eq(id:'group-id')
           end
 
@@ -127,7 +131,7 @@ module Aws
                 },
                 'resources' => {
                   'Thing' => {
-                    'identifiers' => ['Name']
+                    'identifiers' => [{ 'name' => 'Name' }]
                   }
                 }
               )
@@ -145,7 +149,12 @@ module Aws
             end
 
             it 'accepts identifier names in place of request params' do
-              pending('not implemented yet')
+              # For this test case to work, request params must be renamed
+              # following the resource identifier soources.  In this example
+              # the "MakeThing" request requires a "ThingName" param, and
+              # we want the user to be able to specify "Name" (the idenitifer
+              # target) or "ThingName" (the request param).
+              pending('not implemented')
               definition.update(
                 'service' => {
                   'actions' => {
@@ -157,10 +166,6 @@ module Aws
                         'type' => 'Thing',
                         'identifiers' => [
                           {
-                            # very similar to the previous test except
-                            # expect the create method to accept the option
-                            # `:name => 'thing-name' instead of the default
-                            # `:thing_name => 'thing-name'`
                             'target' => 'Name',
                             'sourceType' => 'requestParameter',
                             'source' => 'ThingName'
@@ -172,7 +177,7 @@ module Aws
                 },
                 'resources' => {
                   'Thing' => {
-                    'identifiers' => ['Name']
+                    'identifiers' => [{ 'name' => 'Name' }]
                   }
                 }
               )
@@ -211,7 +216,7 @@ module Aws
                 },
                 'resources' => {
                   'Thing' => {
-                    'identifiers' => ['Name']
+                    'identifiers' => [{ 'name' => 'Name' }]
                   }
                 }
               )
@@ -250,14 +255,14 @@ module Aws
                             'source' => 'Things[].Name'
                           }
                         ],
-                        'path' => 'Things[]'
-                      }
+                      },
+                      'path' => 'Things[]'
                     }
                   }
                 },
                 'resources' => {
                   'Thing' => {
-                    'identifiers' => ['Name']
+                    'identifiers' => [{ 'name' => 'Name' }]
                   }
                 }
               )
@@ -296,15 +301,14 @@ module Aws
                           'source' => 'Things[].Name'
                         }
                       ],
-                      'path' => 'Things[]'
                     },
-                    'singularName' => 'Thing'
+                    'path' => 'Things[]'
                   }
                 }
               },
               'resources' => {
                 'Thing' => {
-                  'identifiers' => ['Name']
+                  'identifiers' => [{ 'name' => 'Name' }]
                 }
               }
             }}
@@ -332,7 +336,7 @@ module Aws
               expect(things.map(&:name)).to eq(%w(thing1 thing2 thing3 thing4))
             end
 
-            it 'defines getter helpers for sub-resources' do
+            it 'defines getter helpers for top-level resources' do
               thing = service.thing('thing-name')
               expect(thing).to be_kind_of(service_class::Thing)
               expect(thing.name).to eq('thing-name')
@@ -358,6 +362,220 @@ module Aws
           end
 
           describe 'actions' do
+
+            let(:thing) { service_class::Thing.new(name:'thing-name') }
+
+            it 'supports basic operations that return the client response' do
+              definition['resources'] = {
+                'Thing' => {
+                  'identifiers' => [
+                    { 'name' => 'Name' }
+                  ],
+                  'actions' => {
+                    'Delete' => {
+                      'request' => {
+                        'operation' => 'DeleteThing',
+                        'params' => [
+                          { "target" => "ThingName", "sourceType" => "identifier", "source" => "Name" }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+
+              client_resp = double('client-response')
+              expect(client).to receive(:delete_thing).
+                with(thing_name: 'thing-name', foo:'bar').
+                and_return(client_resp)
+
+              resp = thing.delete(foo:'bar')
+              expect(resp).to be(client_resp)
+            end
+
+            it 'supports operations that extract data' do
+              definition['resources'] = {
+                'Thing' => {
+                  'identifiers' => [
+                    { 'name' => 'Name' }
+                  ],
+                  'actions' => {
+                    'Deactivate' => {
+                      'request' => {
+                        'operation' => 'DeactivateThing',
+                        'params' => [
+                          { "target" => "ThingName", "sourceType" => "identifier", "source" => "Name" }
+                        ]
+                      },
+                      'path' => 'Thing.Status'
+                    }
+                  }
+                }
+              }
+
+              data = { 'thing' => { 'status' => 'inactive' } }
+              client_resp = double('client-response', data:data)
+              expect(client).to receive(:deactivate_thing).
+                and_return(client_resp)
+
+              expect(thing.deactivate).to eq('inactive')
+            end
+
+            it 'supports operations that return singular resources' do
+              definition['resources'] = {
+                'Thing' => {
+                  'identifiers' => [
+                    { 'name' => 'Name' }
+                  ],
+                  'actions' => {
+                    'Copy' => {
+                      'request' => {
+                        'operation' => 'CopyThing'
+                      },
+                      'resource' => {
+                        'type' => 'Thing',
+                        'identifiers' => [
+                          {
+                            'target' => 'Name',
+                            'sourceType' => 'requestParameter',
+                            'source' => 'ThingName'
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+
+              expect(client).to receive(:copy_thing).
+                with(thing_name:'new-thing-name') do |params|
+                  double('client-response',
+                    context: double('request-context', params:params))
+                end
+
+              new_thing = thing.copy(thing_name:'new-thing-name')
+              expect(new_thing).to be_kind_of(service_class::Thing)
+              expect(new_thing.client).to be(thing.client)
+              expect(new_thing.name).to eq('new-thing-name')
+            end
+
+            it 'can return an array of resources' do
+              definition['resources'] = {
+                'Thing' => {
+                  'identifiers' => [{ 'name' => 'Name' }],
+                  'actions' => {
+                    'CreateDooDad' => {
+                      'request' => {
+                        'operation' => 'CreateDooDad',
+                        'params' => [
+                          {
+                            'target' => 'ThingName',
+                            'sourceType' => 'identifier',
+                            'source' => 'Name'
+                          }
+                        ]
+                      },
+                      'resource' => {
+                        'type' => 'DooDad',
+                        'identifiers' => [
+                          {
+                            'target' => 'ThingName',
+                            'sourceType' => 'identifier',
+                            'source' => 'Name'
+                          },
+                          {
+                            'target' => 'Name',
+                            'sourceType' => 'responsePath',
+                            'source' => 'DooDad.DooDadName'
+                          }
+                        ]
+                      }
+                    }
+                  }
+                },
+                'DooDad' => {
+                  'identifiers' => [
+                    { 'name' => 'ThingName' },
+                    { 'name' => 'Name' }
+                  ]
+                }
+              }
+
+              client_response = double('client-response', data: {
+                'doo_dad' => {
+                  'doo_dad_name' => 'doo-dad-name'
+                }
+              })
+              expect(client).to receive(:create_doo_dad).
+                with(thing_name: 'thing-name').
+                and_return(client_response)
+
+              doo_dad = thing.create_doo_dad
+              expect(doo_dad).to be_an(service_class::DooDad)
+              expect(doo_dad.name).to eq('doo-dad-name')
+              expect(doo_dad.client).to be(thing.client)
+            end
+
+            it 'can return hydrated resources' do
+              definition['resources'] = {
+                'Thing' => {
+                  'identifiers' => [{ 'name' => 'Name' }],
+                  'actions' => {
+                    'CreateDooDad' => {
+                      'request' => {
+                        'operation' => 'CreateDooDad',
+                        'params' => [
+                          {
+                            'target' => 'ThingName',
+                            'sourceType' => 'identifier',
+                            'source' => 'Name'
+                          }
+                        ]
+                      },
+                      'resource' => {
+                        'type' => 'DooDad',
+                        'identifiers' => [
+                          {
+                            'target' => 'ThingName',
+                            'sourceType' => 'identifier',
+                            'source' => 'Name'
+                          },
+                          {
+                            'target' => 'Name',
+                            'sourceType' => 'responsePath',
+                            'source' => 'DooDad.DooDadName'
+                          }
+                        ]
+                      },
+                      'path' => 'DooDad'
+                    }
+                  }
+                },
+                'DooDad' => {
+                  'identifiers' => [
+                    { 'name' => 'ThingName' },
+                    { 'name' => 'Name' }
+                  ],
+                  'shape' => 'DooDadShape'
+                }
+              }
+
+              data = {
+                'doo_dad_name' => 'doo-dad-name',
+                'description' => 'desc'
+              }
+              client_response = double('client-response', data: {
+                'doo_dad' =>  data 
+              })
+              expect(client).to receive(:create_doo_dad).
+                with(thing_name: 'thing-name').
+                and_return(client_response)
+
+              doo_dad = thing.create_doo_dad
+              expect(doo_dad.data).to eq(data)
+            end
+
+
           end
 
           describe 'has many associations' do

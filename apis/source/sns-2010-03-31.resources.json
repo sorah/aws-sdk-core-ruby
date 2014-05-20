@@ -57,8 +57,10 @@
   },
   "resources" : {
     "Topic" : {
+      "identifiers": [
+        { "name": "Arn" }
+      ],
       "shape": "Topic",
-      "identifiers": ["Arn"],
       "load": {
         "request": {
           "operation": "GetTopicAttributes",
@@ -163,8 +165,11 @@
       }
     },
     "Subscription": {
+      "identifiers": [
+        { "name": "TopicArn" },
+        { "name": "Arn" }
+      ],
       "shape": "Subscription",
-      "identifiers": ["TopicArn", "Arn"],
       "load": {
         "request": {
           "operation": "GetSubscriptionAttributes",
@@ -195,7 +200,9 @@
     },
     "PlatformApplication": {
       "shape": "PlatformApplication",
-      "identifiers": ["Arn"],
+      "identifiers": [
+        { "name": "Arn" }
+      ],
       "load": {
         "request": {
           "operation": "GetPlatformApplicationAttributes",
@@ -263,8 +270,11 @@
       }
     },
     "PlatformEndpoint": {
+      "identifiers": [
+        { "name": "PlatformApplicationArn" },
+        { "name": "Arn" }
+      ],
       "shape": "PlatformEndpoint",
-      "identifiers": ["PlatformApplicationArn", "Arn"],
       "load": {
         "request": {
           "operation": "GetEndpointAttributes",
